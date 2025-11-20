@@ -1,0 +1,139 @@
+/* Pantalla dividida */
+.login-split-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  
+}
+/*LOGO*/
+.logo-text {
+  font-size: 52px;       
+  font-weight: 800;      
+  color: #155DFC;        
+  letter-spacing: -1px;  
+  margin: 0;
+}
+
+/* IZQUIERDA */
+.login-left {
+  background: #ffffff;
+  display: flex;
+  flex-direction: column; /* ⬅ ponemos todo vertical */
+  justify-content: flex-start; /* ⬅ lo pegamos arriba */
+  align-items: center;
+  padding: 40px;
+  gap: 40px; /* espacio entre logo y formulario */
+}
+
+/* Contenido centrado */
+.login-content {
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Inputs */
+.login-form input {
+  border-radius: 14px;
+  width: 100%;
+  border: 1px solid #d1d5db; 
+  border-radius: 6px;
+  background: white;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  padding: 15px;
+  margin:10px auto;
+}
+/* Contenedor de los botones juntos */
+.login-buttons-container {
+  display: flex;
+  gap: 15px;        /* espacio entre botones */
+  justify-content: flex-start;  /* alinea al inicio del contenedor */
+  align-items: center;
+}
+
+/* Botón login email */
+.btn-email-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #155DFC, #2B7FFF, #00D3F2);
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+
+  padding: 12px 30px;   /* mismo padding que Google */
+  height: 45px;         /* mismo alto que Google */
+  
+  flex: 1;
+  max-width: 200px;
+}
+
+/* Botón Google */
+.login-google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: white;    /* mantiene el color blanco */
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+
+  padding: 12px 30px;   /* mismo padding */
+  height: 45px;         /* mismo alto */
+  
+  gap: 12px;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+
+  flex: 1;
+  max-width: 200px;
+}
+
+/* Texto registro */
+.login-register-text {
+  text-align: center;   /* ⬅ Centra TODO el texto del párrafo */
+}
+.login-register-text a {
+  color: #155DFC;
+  font-weight: 600;
+  text-decoration: none;
+}
+/*H1*/
+.Login-title{
+    font-size: 50px;
+    display:flex;
+    margin:0 auto;
+}
+/* DERECHA */
+.login-right {
+  background: linear-gradient(180deg, #155DFC, #2B7FFF, #00D3F2);
+  display: flex;
+  justify-content: center;     /* centra horizontal */
+  align-items: center;         /* centra vertical */
+  padding: 40px;
+}
+
+.right-content {
+  max-width: 380px;            /* mismo ancho que el formulario */
+  color: white;                /* texto blanco sobre azul */
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.characteristics {
+    border-radius: 20;
+    background: rgba(255, 255, 255, 0.10);
+    padding:20px;
+}
+.right-title{
+    font-size: 25px;
+}
+h3{
+    font-size: 20px;
+}
+.p-right{
+    font-size: 17px;
+}
