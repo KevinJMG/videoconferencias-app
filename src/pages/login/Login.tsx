@@ -18,7 +18,7 @@ const Login: React.FC = () => {
         e.preventDefault();
         try {
             await loginWithGoogle();
-            navigate("/profile");
+            navigate("/dashboard");
         } catch (err) {
             console.error("Error al iniciar sesión con Google:", err);
         }

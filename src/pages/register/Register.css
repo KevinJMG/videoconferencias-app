@@ -3,7 +3,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   min-height: 100vh;
-  font-family: "Arimo", sans-serif;
+  
 }
 /*LOGO*/
 .logo-text {
@@ -124,7 +124,7 @@
 }
 
 .characteristics {
-    border-radius: 20;
+    border-radius: 20px;
     background: rgba(255, 255, 255, 0.10);
     padding:20px;
 }
