@@ -2,12 +2,22 @@ import React, { useState } from "react";
 import "./Dashboard.css";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../stores/useAuthStore";
+import useMeetingStore from "../../stores/useMeetingStore";
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
   const { logout } = useAuthStore();
+  const { getUpcomingMeetings, removeMeeting } = useMeetingStore();
 
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const upcomingMeetings = getUpcomingMeetings();
+
+  const handleDeleteMeeting = (id: string, meetingName: string) => {
+    if (window.confirm(`¿Estás seguro de eliminar la reunión "${meetingName}"?`)) {
+      removeMeeting(id);
+    }
+  };
 
   const handleLogout = () => {
     logout();
@@ -26,7 +36,7 @@ const Dashboard: React.FC = () => {
             <a href="/dashboard">Inicio</a>
             <a href="/calendar">Calendario</a>
             <a href="/history">Historial</a>
-            <a href="/mapa">Mapa del sitio</a>
+            <a href="/sitemap">Mapa del sitio</a>
           </nav>
         </div>
 
@@ -58,7 +68,7 @@ const Dashboard: React.FC = () => {
                     <h2 className="container-title">Reuniones premium  <br />para equipos premium</h2>
                     <p className="container-text">Conecta con tu equipo sin límites. Video HD, compartir pantalla y más.</p>
                     <div className="buttons-wrapper">
-                        <button className="container-button">
+                        <button className="container-button" onClick={() => navigate("/schedule-meeting")}>
                             Nueva reunión
                         </button>
 
@@ -72,33 +82,56 @@ const Dashboard: React.FC = () => {
                 </div>
             </div>
             <div className="principal-containers meetings-block">
-                <h2 className="container-title">Proximas reuniones</h2>
-                <div className="meets-container">
-                    <h3 className="meeting-title">Team Sync - Q4 Strategy</h3>
-                    <p className="meeting-text">10:00 AM - 11:00 AM</p>
-                    <div className="play-container">
-                        <img src="assets/images/play.svg"></img>
+                <h2 className="container-title">Próximas reuniones</h2>
+                {upcomingMeetings.length === 0 ? (
+                  <div className="no-meetings">
+                    <p>No hay reuniones programadas</p>
+                  </div>
+                ) : (
+                  upcomingMeetings.slice(0, 10).map((meeting) => (
+                    <div key={meeting.id} className="meets-container">
+                      <div className="meeting-info">
+                        <h3 className="meeting-title">{meeting.meetingName}</h3>
+                        <p className="meeting-text">
+                          {meeting.startTime} - {meeting.endTime || "Sin hora de cierre"}
+                        </p>
+                      </div>
+                      <div className="meeting-actions">
+                        <div
+                          className="play-container"
+                          onClick={() => navigate(`/conference/${meeting.id}`)}
+                          style={{ cursor: "pointer" }}
+                        >
+                          <img src="assets/images/play.svg" alt="Unirse"></img>
+                        </div>
+                        <button
+                          className="delete-meeting-btn"
+                          onClick={() => handleDeleteMeeting(meeting.id, meeting.meetingName)}
+                          title="Eliminar reunión"
+                        >
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            <line x1="10" y1="11" x2="10" y2="17"></line>
+                            <line x1="14" y1="11" x2="14" y2="17"></line>
+                          </svg>
+                        </button>
+                      </div>
                     </div>
-                </div>
-                 <div className="meets-container">
-                    <h3 className="meeting-title">Team Sync - Q6 Strategy</h3>
-                    <p className="meeting-text">16:00 PM - 18:00 PM</p>
-                    <div className="play-container">
-                        <img src="assets/images/play.svg"></img>
-                    </div>
-                </div>
+                  ))
+                )}
             </div>
         </div>
         <div className="right-content">
             <div className="secundary-container">
                 <h2 className="secundary-title">Acciones rápidas</h2>
-                    <div className="container-actions">
+                    <div className="container-actions" onClick={() => navigate("/schedule-meeting")} style={{ cursor: "pointer" }}>
                         <div className="action">
                             <div className="icon-container"><img src="assets/images/a-camera.svg"></img></div>
-                            <h3>Iniciar reunión instantánea</h3>
-                            <p>Sin programar</p>
+                            <h3>Programar videoconferencia</h3>
+                            <p>Configurar reunión</p>
                         </div>
-                        
+
                     </div>
                     <div className="container-actions">
                         <div className="action">

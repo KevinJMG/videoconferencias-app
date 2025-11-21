@@ -1,0 +1,398 @@
+/* CONTENEDOR PRINCIPAL */
+.about-container {
+  min-height: 100vh;
+  background: #f6f7fb;
+  font-family: "Arimo", sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER */
+.about-header {
+  width: 100%;
+  background: white;
+  padding: 16px 35px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  color: #666;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.back-button:hover {
+  color: #155DFC;
+  background: #f0f4ff;
+}
+
+.logo-text {
+  font-size: 28px;
+  font-weight: 800;
+  color: #155DFC;
+  margin: 0;
+}
+
+/* CONTENIDO PRINCIPAL */
+.about-content {
+  flex: 1;
+  padding: 60px 40px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* INTRO */
+.about-intro {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.about-title {
+  font-size: 42px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 16px 0;
+}
+
+.about-subtitle {
+  font-size: 18px;
+  color: #6b7280;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* MISIÓN Y VISIÓN */
+.mission-vision-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 28px;
+  margin-bottom: 70px;
+}
+
+.mission-card,
+.vision-card {
+  background: linear-gradient(135deg, #155DFC 0%, #2B7FFF 100%);
+  border-radius: 20px;
+  padding: 36px;
+  color: white;
+  box-shadow: 0 10px 25px rgba(21, 93, 252, 0.3);
+  transition: all 0.3s;
+}
+
+.mission-card:hover,
+.vision-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px rgba(21, 93, 252, 0.4);
+}
+
+.card-icon {
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.card-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+}
+
+.card-description {
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0;
+  opacity: 0.95;
+}
+
+/* ESTADÍSTICAS */
+.stats-section {
+  margin-bottom: 70px;
+}
+
+.section-title {
+  font-size: 34px;
+  font-weight: 700;
+  color: #1f2937;
+  text-align: center;
+  margin: 0 0 40px 0;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 18px;
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(21, 93, 252, 0.2);
+}
+
+.stat-icon {
+  margin-bottom: 16px;
+}
+
+.stat-number {
+  font-size: 36px;
+  font-weight: 800;
+  color: #155DFC;
+  margin: 0 0 8px 0;
+}
+
+.stat-label {
+  font-size: 15px;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* VALORES */
+.values-section {
+  margin-bottom: 70px;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.value-card {
+  background: white;
+  border-radius: 16px;
+  padding: 28px;
+  display: flex;
+  gap: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s;
+}
+
+.value-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(21, 93, 252, 0.15);
+}
+
+.value-icon {
+  flex-shrink: 0;
+}
+
+.value-content {
+  flex: 1;
+}
+
+.value-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 8px 0;
+}
+
+.value-description {
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* HISTORIA */
+.history-section {
+  margin-bottom: 70px;
+}
+
+.history-content {
+  background: linear-gradient(135deg, #155DFC 0%, #2B7FFF 100%);
+  border-radius: 20px;
+  padding: 48px;
+  color: white;
+  box-shadow: 0 10px 25px rgba(21, 93, 252, 0.3);
+}
+
+.history-content p {
+  font-size: 16px;
+  line-height: 1.8;
+  margin: 0 0 20px 0;
+}
+
+.history-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* CALL TO ACTION */
+.cta-section {
+  text-align: center;
+  background: white;
+  border-radius: 20px;
+  padding: 50px 40px;
+  margin-bottom: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.cta-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 12px 0;
+}
+
+.cta-text {
+  font-size: 17px;
+  color: #6b7280;
+  margin: 0 0 28px 0;
+}
+
+.cta-button {
+  padding: 16px 40px;
+  font-size: 17px;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  border: none;
+  background: linear-gradient(135deg, #155DFC 0%, #2B7FFF 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(21, 93, 252, 0.3);
+  transition: all 0.3s;
+  font-family: "Arimo", sans-serif;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(21, 93, 252, 0.4);
+}
+
+/* FOOTER */
+.about-footer {
+  background: white;
+  border-top: 1px solid #e5e7eb;
+  padding: 32px 40px;
+  margin-top: auto;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-links a {
+  color: #155DFC;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.footer-links a:hover {
+  color: #0d47d1;
+  text-decoration: underline;
+}
+
+.footer-links .separator {
+  color: #d1d5db;
+  font-size: 14px;
+}
+
+.footer-copyright {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+  text-align: center;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .about-content {
+    padding: 40px 24px 24px;
+  }
+
+  .about-title {
+    font-size: 32px;
+  }
+
+  .about-subtitle {
+    font-size: 16px;
+  }
+
+  .mission-vision-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mission-card,
+  .vision-card {
+    padding: 28px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .values-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .history-content {
+    padding: 32px 24px;
+  }
+
+  .cta-section {
+    padding: 40px 24px;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .footer-links .separator {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .value-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
