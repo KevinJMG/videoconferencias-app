@@ -41,7 +41,7 @@ const Dashboard: React.FC = () => {
 
             {menuOpen && (
               <div className="profile-dropdown">
-                <button onClick={() => navigate("/profile")}>Perfil</button>
+                <button onClick={() => navigate("/profile/edit")}>Perfil</button>
                 <button onClick={() => navigate("/settings")}>Configuración</button>
                 <button onClick={handleLogout}>Cerrar sesión</button>
               </div>

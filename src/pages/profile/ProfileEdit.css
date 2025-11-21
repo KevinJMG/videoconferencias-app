@@ -1,0 +1,88 @@
+/* Layout básico */
+.edit-profile-page {
+  padding: 28px;
+  font-family: "Arimo", sans-serif;
+}
+
+.edit-profile-page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
+.edit-grid {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 24px;
+  align-items: start;
+  max-width: 800px;
+}
+
+.card {
+  background: linear-gradient(180deg, #155DFC, #2B7FFF, #00D3F2);
+  color: white;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 8px 20px rgba(13, 71, 161, 0.12);
+}
+
+.profile-card {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  text-align: left;
+}
+
+.avatar img {
+  width: 86px;
+  height: 86px;
+  border-radius: 14px;
+  object-fit: cover;
+}
+.avatar-placeholder {
+  width: 86px;
+  height: 86px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e6eefc;
+  color: #155DFC;
+  font-weight: 700;
+  font-size: 28px;
+}
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* este valor crea el espacio entre los dos recuadros */
+}
+
+
+.profile-info h3 { margin: 0 0 6px 0; color: #fff }
+.profile-info p { margin: 0; color: rgba(255,255,255,0.85); }
+
+.stats-card h4 { margin-top: 0; color: #fff }
+.stats-card ul { padding-left: 16px; margin: 8px 0 0 0; color: rgba(255,255,255,0.95); }
+.stats-card li { margin-bottom: 8px; }
+
+.right-column { display: flex; flex-direction: column; gap: 16px; }
+.info-card h4, .privacy-card h4 { margin-top: 0; }
+
+.form-row { display: flex; gap: 12px; margin-bottom: 12px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.form-group.full { flex: 1 1 100%; }
+.form-group label { font-size: 13px; color: rgba(255,255,255,0.95); }
+.form-group input { padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.08); color: #fff }
+
+.privacy-item { display:flex; justify-content:space-between; align-items:center; padding: 8px 0; border-top: 1px solid rgba(255,255,255,0.08); }
+.privacy-item:first-of-type { border-top: none; }
+
+.actions { display:flex; gap: 12px; justify-content:flex-end; margin-top: 8px; }
+.btn { padding: 12px 20px; border-radius: 10px; cursor: pointer; border: none; font-weight: 600; }
+.btn.save { background: linear-gradient(90deg,#155DFC,#2B7FFF); color: white; border: none }
+.btn.delete { background: linear-gradient(90deg,#d32f2f,#ff3b30); color: white; border: none; box-shadow: 0 6px 18px rgba(211,47,47,0.18); }
+
+@media (max-width: 900px) {
+  .edit-grid { grid-template-columns: 1fr; }
+  .actions { justify-content: center; }
+}

@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Login from "../pages/login/Login";
-import Profile from "../pages/profile/Profile";
+import EditProfile from "../pages/profile/EditProfile";
 import Register from "../pages/register/Register";
 import Dashboard from "../pages/dashboard/Dashboard";
 export const routes = [
@@ -13,8 +13,8 @@ export const routes = [
         element: <Login />,
     },
     {
-        path: "/profile",
-        element: <Profile />,
+        path: "/profile/edit",
+        element: <EditProfile />,
     },
     {
         path: "/register",

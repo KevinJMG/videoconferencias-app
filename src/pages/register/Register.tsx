@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuthStore from "../../stores/useAuthStore"; 
 import "../login/Login.css";
+import PasswordField from '../../components/PasswordField';
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
@@ -143,8 +144,7 @@ const Register: React.FC = () => {
               required
             />
 
-            <input
-              type="password"
+            <PasswordField
               name="password"
               placeholder="Contraseña"
               value={form.password}
@@ -152,8 +152,7 @@ const Register: React.FC = () => {
               required
             />
 
-            <input
-              type="password"
+            <PasswordField
               name="confirmPassword"
               placeholder="Confirmar contraseña"
               value={form.confirmPassword}

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../../stores/useAuthStore';
 import { getAuth } from "firebase/auth";
 import "./Login.css";
+import PasswordField from '../../components/PasswordField';
 
 const Login: React.FC = () => {
     const navigate = useNavigate();
@@ -65,11 +66,6 @@ const Login: React.FC = () => {
             setError("Error en la conexión al backend");
         }
     };
-
-    const handleRegister = () => {
-        navigate("/register"); 
-    };
-
     return (
         <div className="login-split-container">
             <div className="login-left">
@@ -85,8 +81,7 @@ const Login: React.FC = () => {
                             onChange={(e) => setEmail(e.target.value)}
                             required
                         />
-                        <input
-                            type="password"
+                        <PasswordField
                             placeholder="Contraseña"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}

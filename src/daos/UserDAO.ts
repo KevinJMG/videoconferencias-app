@@ -10,6 +10,11 @@ export interface User {
     photoURL: string | null;
     createdAt?: any;
     updatedAt?: any;
+    phone?: string | null;
+    company?: string | null;
+    position?: string | null;
+    meetingsCount?: number;
+    hoursConnected?: number;
 }
 
 export type UserCreate = Omit<User, "createdAt" | "updatedAt">;
