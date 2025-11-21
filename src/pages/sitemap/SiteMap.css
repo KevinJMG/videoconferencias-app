@@ -1,0 +1,371 @@
+/* CONTENEDOR PRINCIPAL */
+.sitemap-container {
+  min-height: 100vh;
+  background: #f6f7fb;
+  font-family: "Arimo", sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER */
+.sitemap-header {
+  width: 100%;
+  background: white;
+  padding: 16px 35px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  color: #666;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.back-button:hover {
+  color: #155DFC;
+  background: #f0f4ff;
+}
+
+.logo-text {
+  font-size: 28px;
+  font-weight: 800;
+  color: #155DFC;
+  margin: 0;
+}
+
+/* CONTENIDO PRINCIPAL */
+.sitemap-content {
+  flex: 1;
+  padding: 60px 40px 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.sitemap-title {
+  font-size: 40px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 12px 0;
+  text-align: center;
+}
+
+.sitemap-subtitle {
+  font-size: 18px;
+  color: #6b7280;
+  margin: 0 0 50px 0;
+  text-align: center;
+}
+
+/* GRID DE TARJETAS */
+.sitemap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 60px;
+}
+
+.sitemap-card {
+  background: white;
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.sitemap-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #f0f4ff 0%, #e0f2fe 100%);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.card-header svg {
+  color: #155DFC;
+}
+
+.card-header h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+
+.card-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-links li {
+  color: #4b5563;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.card-links li:hover {
+  color: #155DFC;
+  background: #f0f4ff;
+  transform: translateX(4px);
+}
+
+/* INFORMACIÓN DE CONTACTO */
+.contact-info {
+  margin-bottom: 60px;
+}
+
+.contact-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 32px 0;
+  text-align: center;
+}
+
+.contact-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.contact-card {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+}
+
+.contact-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 20px -5px rgba(21, 93, 252, 0.2);
+}
+
+.contact-card svg {
+  margin-bottom: 16px;
+}
+
+.contact-card h4 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 8px 0;
+}
+
+.contact-card p {
+  font-size: 15px;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* REDES SOCIALES */
+.social-section {
+  margin-bottom: 60px;
+}
+
+.social-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 32px 0;
+  text-align: center;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.social-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  color: white;
+}
+
+.social-icon:hover {
+  transform: scale(1.1) translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.social-icon.facebook {
+  background: #1877f2;
+}
+
+.social-icon.twitter {
+  background: #1da1f2;
+}
+
+.social-icon.linkedin {
+  background: #0a66c2;
+}
+
+.social-icon.instagram {
+  background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+}
+
+.social-icon.youtube {
+  background: #ff0000;
+}
+
+/* SECCIÓN DE AYUDA */
+.help-section {
+  text-align: center;
+  margin-bottom: 60px;
+  padding: 40px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.help-text {
+  font-size: 18px;
+  color: #6b7280;
+  margin: 0 0 20px 0;
+}
+
+.help-button {
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  border: none;
+  background: linear-gradient(135deg, #155DFC 0%, #2B7FFF 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(21, 93, 252, 0.3);
+  transition: all 0.3s;
+  font-family: "Arimo", sans-serif;
+}
+
+.help-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(21, 93, 252, 0.4);
+}
+
+/* FOOTER */
+.sitemap-footer {
+  background: white;
+  border-top: 1px solid #e5e7eb;
+  padding: 32px 40px;
+  margin-top: auto;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-links a {
+  color: #155DFC;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.footer-links a:hover {
+  color: #0d47d1;
+  text-decoration: underline;
+}
+
+.footer-links .separator {
+  color: #d1d5db;
+  font-size: 14px;
+}
+
+.footer-copyright {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+  text-align: center;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .sitemap-content {
+    padding: 40px 24px 24px;
+  }
+
+  .sitemap-title {
+    font-size: 32px;
+  }
+
+  .sitemap-subtitle {
+    font-size: 16px;
+  }
+
+  .sitemap-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .social-icons {
+    gap: 16px;
+  }
+
+  .social-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .footer-links .separator {
+    display: none;
+  }
+}

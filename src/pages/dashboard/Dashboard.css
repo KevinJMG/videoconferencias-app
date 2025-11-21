@@ -240,13 +240,58 @@
   justify-content: space-between;
   align-items: center;
   border: 2px solid white;
+  transition: all 0.2s;
+}
 
-  
+.meets-container:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(4px);
+}
+
+.meeting-info {
+  flex: 1;
 }
 
 .meets-container h3 {
   margin: 0;
   font-size: 18px;
+}
+
+.meeting-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.delete-meeting-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 12px;
+  border-radius: 14px;
+  background: #FFF;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -4px rgba(0, 0, 0, 0.10);
+}
+
+.delete-meeting-btn:hover {
+  background: #f0f4ff;
+  transform: scale(1.05);
+  box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.15), 0 6px 8px -6px rgba(0, 0, 0, 0.10);
+}
+
+.delete-meeting-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: #155DFC;
+}
+
+.delete-meeting-btn:hover svg {
+  stroke: #0d47d1;
 }
 
 .play-container img {
@@ -258,6 +303,13 @@
   align-items: flex-start; /* para que el h2 quede arriba a la izquierda */
   height: auto;           /* que crezca según el contenido */
   gap: 20px;              /* que haya espacio entre h2 y meets */
+}
+.no-meetings {
+  width: 100%;
+  padding: 32px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 16px;
 }
 /*Meeting title and text*/
 .meeting-title,.meeting-text{
