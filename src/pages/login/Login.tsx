@@ -66,10 +66,6 @@ const Login: React.FC = () => {
         }
     };
 
-    const handleRegister = () => {
-        navigate("/register"); 
-    };
-
     return (
         <div className="login-split-container">
             <div className="login-left">
