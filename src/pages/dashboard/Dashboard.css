@@ -300,3 +300,195 @@
     align-items: center;
     flex-shrink: 0;         /* evita que el ícono se achique */
 }
+
+/* ------------------ RESPONSIVE ------------------ */
+/* Tablet and small desktops: stack columns into single column */
+@media (max-width: 900px) {
+  .dashboard-content {
+    grid-template-columns: 1fr;
+    padding: 20px;
+    gap: 18px;
+    display: flex; /* ensure strict linear stacking */
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* make left and right content flow naturally with auto rows */
+  .left-content,
+  .right-content {
+    /* make these simple block containers so children flow naturally */
+    display: block;
+    grid-template-rows: none;
+    gap: 18px;
+  }
+
+  /* ensure cards occupy full width and similar paddings */
+  .principal-containers,
+  .secundary-container {
+    width: 100%;
+    height: auto !important;
+    padding: 18px;
+    border-radius: 18px;
+    margin-bottom: 18px; /* consistent spacing between stacked cards */
+    position: static !important;
+    z-index: auto !important; /* avoid stacking context issues */
+    box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+  }
+
+  /* Make the main hero card stack vertically on small screens to avoid overflow/overlap */
+  .principal-containers {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .principal-containers .img-container {
+    margin-top: 16px;
+    width: 120px;
+    height: 120px;
+    align-self: flex-end;
+  }
+
+  /* Buttons should not stretch and on tablet stack if needed */
+  .buttons-wrapper {
+    justify-content: flex-start;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .container-button {
+    flex: none !important;
+    max-width: none;
+    width: auto;
+  }
+
+  /* Force child cards to full width and normal flow to avoid interleaving */
+  .dashboard-content > .left-content,
+  .dashboard-content > .right-content {
+    width: 100%;
+    display: block;
+  }
+
+  .left-content > *,
+  .right-content > * {
+    width: 100%;
+    box-sizing: border-box;
+    clear: both;
+    transform: none !important;
+  }
+
+  /* ensure cards are not positioned and will occupy normal flow */
+  .principal-containers,
+  .secundary-container {
+    position: static !important;
+    margin-top: 0 !important;
+  }
+
+  .img-container {
+    width: 140px;
+    height: 140px;
+  }
+
+  .buttons-wrapper {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .container-button {
+    max-width: none;
+    width: auto;
+  }
+
+  .right-content {
+    padding-top: 0;
+    align-items: stretch;
+  }
+}
+
+/* Mobile: tighter paddings, full-width buttons and smaller elements */
+@media (max-width: 480px) {
+  .dashboard-header {
+    padding: 12px 16px;
+  }
+
+  .nav-links {
+    display: none; /* simplify header on small screens */
+  }
+
+  .logo-text {
+    font-size: 22px;
+  }
+
+  .profile-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .dashboard-content {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .principal-containers,
+  .secundary-container {
+    padding: 14px;
+    border-radius: 14px;
+    margin-bottom: 14px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.06);
+  }
+
+  .left-content > *,
+  .right-content > * {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Flatten left/right containers so children flow strictly in DOM order
+     This prevents any remaining interleaving/overlap on very small screens. */
+  .left-content,
+  .right-content {
+    display: contents;
+  }
+
+  .img-container {
+    width: 100px;
+    height: 100px;
+  }
+
+  .container-title,
+  .secundary-title {
+    font-size: 22px;
+  }
+
+  .meets-container {
+    padding: 12px;
+  }
+
+  .play-container {
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+  }
+
+  .buttons-wrapper {
+    gap: 8px;
+  }
+
+  .container-button {
+    width: 100%;
+    max-width: none;
+    flex: none !important;
+  }
+
+  /* Ensure the hero card stacks cleanly on very small screens */
+  .principal-containers {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .principal-containers .img-container {
+    width: 80px;
+    height: 80px;
+    margin-top: 12px;
+    align-self: center;
+  }
+}
