@@ -341,15 +341,18 @@
   background: #2a2a2a;
   padding: 16px 24px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   border-top: 1px solid #3a3a3a;
   flex-shrink: 0;
 }
 
-.controls-left,
+.controls-left {
+  display: none;
+}
+
 .controls-right {
-  flex: 1;
+  display: none;
 }
 
 .meeting-time {
