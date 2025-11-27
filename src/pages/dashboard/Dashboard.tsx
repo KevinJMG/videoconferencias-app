@@ -7,7 +7,9 @@ import useMeetingStore from "../../stores/useMeetingStore";
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
   const { logout } = useAuthStore();
+  const { user } = useAuthStore() as any;
   const { getUpcomingMeetings, removeMeeting } = useMeetingStore();
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -25,6 +27,30 @@ const Dashboard: React.FC = () => {
   };
 
   return (
+    <>
+
+    {/*----------------MODAL--------------*/}
+
+      {showLogoutModal && (
+        <div className="modal-overlay">
+          <div className="modal-box">
+            <h3>¿Cerrar sesión?</h3>
+            <p>Tu sesión se cerrará y deberás volver a iniciar sesión.</p>
+
+            <div className="modal-actions">
+              <button className="modal-cancel" onClick={() => setShowLogoutModal(false)}>
+                Cancelar
+              </button>
+              <button className="modal-logout" onClick={handleLogout}>
+                Sí, cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+
+
     <div className="dashboard-container">
 
       {/* NAVBAR / HEADER */}
@@ -43,8 +69,8 @@ const Dashboard: React.FC = () => {
         <div className="header-right">
           <div className="profile-section">
             <img
-              src="/assets/images/profile-icon.png"
-              alt="Perfil"
+              src={user?.photoURL || "/assets/images/profile-icon.png"}
+              alt={user?.displayName || "Perfil"}
               className="profile-icon"
               onClick={() => setMenuOpen(!menuOpen)}
             />
@@ -53,7 +79,8 @@ const Dashboard: React.FC = () => {
               <div className="profile-dropdown">
                 <button onClick={() => navigate("/profile")}>Perfil</button>
                 <button onClick={() => navigate("/settings")}>Configuración</button>
-                <button onClick={handleLogout}>Cerrar sesión</button>
+                <button onClick={() => setShowLogoutModal(true)}>Cerrar sesión</button>
+
               </div>
             )}
           </div>
@@ -166,6 +193,7 @@ const Dashboard: React.FC = () => {
             
       </main>
     </div>
+   </>
   );
 };
 

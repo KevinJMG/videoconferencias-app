@@ -1,4 +1,4 @@
-import React, { StrictMode, useEffect } from 'react';
+import { StrictMode, useEffect } from 'react';
 import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 import { router } from './routes/router.tsx'
@@ -19,6 +19,7 @@ function AppWrapper() {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    <AppWrapper />
     <RouterProvider router={router} />
   </StrictMode>,
 )
