@@ -10,45 +10,46 @@ const Profile: React.FC = () => {
 
   const [editMode, setEditMode] = useState(false);
 
-  // Campos editables
+  // Editable fields
   const [firstName, setFirstName] = useState(user?.displayName?.split(' ')[0] || '');
   const [lastName, setLastName] = useState(user?.displayName?.split(' ').slice(1).join(' ') || '');
   const [age, setAge] = useState(user?.age || '');
   const [email, setEmail] = useState(user?.email || '');
   const [phoneNumber, setPhone] = useState(user?.phoneNumber || '');
-  const [company, setCompany] = useState(user?.company || '');
-  const [position, setPosition] = useState(user?.position || '');
   const [role, setRole] = useState(user?.role || '');
 
-  // Privacidad
+  // Privacy settings
   const [publicProfile, setPublicProfile] = useState(true);
   const [showEmail, setShowEmail] = useState(false);
   const [allowInvites, setAllowInvites] = useState(true);
 
-  // Stats
+  // User statistics (static example values)
   const [meetings] = useState(5);
   const [hoursConnected] = useState(12);
-  // Normalize createdAt from different backend shapes:
-  // - Firestore Timestamp: { seconds: number } or { _seconds: number }
-  // - ISO string
-  // - epoch number (ms)
+
+  /**
+   * Normalize and format "createdAt" from several possible backend formats:
+   * - Firestore Timestamp object (seconds or _seconds)
+   * - Timestamp with toDate() method
+   * - Numeric epoch (ms or seconds)
+   * - ISO date string
+   */
   const formatCreatedAt = (val: any) => {
     if (!val) return 'Desconocida';
     try {
-      // Firestore Timestamp v1: { seconds: number }
+      // Firestore Timestamp version 1: { seconds: number } or { _seconds: number }
       if (typeof val === 'object' && (val.seconds || val._seconds)) {
         const seconds = val.seconds ?? val._seconds;
         return new Date(seconds * 1000).toLocaleDateString();
       }
 
-      // If backend returned a toDate() method (Firestore admin sdk Timestamps)
+      // Firestore Timestamp with toDate() method
       if (val && typeof val.toDate === 'function') {
         return val.toDate().toLocaleDateString();
       }
 
-      // Numeric epoch (milliseconds)
+      // Numeric epoch (milliseconds or seconds)
       if (typeof val === 'number') {
-        // If it looks like seconds (10 digits), convert to ms
         const maybeMs = val < 1e12 ? val * 1000 : val;
         return new Date(maybeMs).toLocaleDateString();
       }
@@ -66,19 +67,19 @@ const Profile: React.FC = () => {
 
   const createdAtDate = formatCreatedAt(user?.createdAt);
 
-  // Cambio contraseña
+  // Local password change UI state
   const [showChangePass, setShowChangePass] = useState(false);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
 
-  // ---------------------------
-  // 🔥 GUARDAR CAMBIOS EN BACKEND
-  // ---------------------------
+  // ----------------------------------------
+  // 🔥 SAVE CHANGES TO BACKEND
+  // ----------------------------------------
   const handleSave = async () => {
     const displayName = `${firstName} ${lastName}`.trim();
 
-    // Build payload and sanitize types expected by the backend
+    // Build payload to send to backend
     const payload: any = {
       uid: user.uid,
       displayName,
@@ -89,27 +90,25 @@ const Profile: React.FC = () => {
       allowInvites
     };
 
-    // Age: backend expects a number — include only if a valid number is provided
+    // Age: include only if valid number
     if (age !== '' && age !== null && age !== undefined) {
       const ageNum = Number(age);
       if (!Number.isNaN(ageNum)) payload.age = ageNum;
     }
 
-    // Role: backend expects either 'host' or 'participant' — include only when non-empty
+    // Role: include only if non-empty and cleaned
     if (role && role.trim() !== '') {
       payload.role = role.trim();
     }
 
     try {
-      // Try to get a fresh ID token from Firebase auth first. Fall back to localStorage if present.
+      // Get fresh Firebase ID token (fallback to localStorage)
       const storedToken = localStorage.getItem("idToken");
       let token: string | null | undefined = storedToken;
 
       try {
-        // If there's a signed in user, request a current ID token (force refresh if needed).
         const currentUser = auth.currentUser;
         if (currentUser) {
-          // getIdToken will return a valid token; pass true to force refresh if you need a fresh one.
           token = await currentUser.getIdToken();
         }
       } catch (tokenErr) {
@@ -121,7 +120,7 @@ const Profile: React.FC = () => {
         return alert('No se encontró token. Por favor inicia sesión de nuevo.');
       }
 
-      console.log('Enviar PUT con token (first 20 chars):', token?.slice?.(0, 20));
+      console.log('Sending PUT with token (first 20 chars):', token?.slice?.(0, 20));
 
       const res = await fetch('http://localhost:3000/api/users/me', {
         method: 'PUT',
@@ -133,37 +132,37 @@ const Profile: React.FC = () => {
       });
 
       const data = await res.json().catch(() => ({}));
-      console.log('Respuesta backend:', data);
+      console.log('Backend response:', data);
 
       if (!res.ok) {
         console.error('Backend returned non-OK status', res.status, data);
-        return alert(`❌ Error guardando cambios: ${data?.error?.message || res.status}`);
+        return alert(`❌ Error saving changes: ${data?.error?.message || res.status}`);
       }
 
-      // Actualizar usuario en el store
+      // Update store user with new data
       setUser({ ...user, ...payload });
 
-      alert('✅ Cambios guardados correctamente');
+      alert('✅ Changes saved successfully');
       setEditMode(false);
 
     } catch (error) {
       console.error(error);
-      alert('❌ Error de conexión');
+      alert('❌ Connection error');
     }
   };
 
-  // ---------------------------
-  // ELIMINAR CUENTA
-  // ---------------------------
+  // ----------------------------------------
+  // DELETE ACCOUNT
+  // ----------------------------------------
   const handleDelete = async () => {
     if (!window.confirm('¿Seguro que deseas eliminar tu cuenta?')) return;
     logout();
     navigate('/');
   };
 
-  // ---------------------------
-  // CAMBIAR CONTRASEÑA (LOCAL)
-  // ---------------------------
+  // ----------------------------------------
+  // LOCAL CHANGE PASSWORD
+  // ----------------------------------------
   const handleChangePassword = async () => {
     if (newPassword !== confirmNewPassword) {
       return alert('Las contraseñas no coinciden');
@@ -174,7 +173,7 @@ const Profile: React.FC = () => {
     }
 
     try {
-      // Get token (try firebase auth first, fallback to localStorage)
+      // Try to retrieve token again
       const storedToken = localStorage.getItem('idToken');
       let token: string | null | undefined = storedToken;
 
@@ -206,21 +205,23 @@ const Profile: React.FC = () => {
 
       if (!res.ok) {
         console.error('Change password failed', res.status, data);
-        return alert(`❌ No se pudo cambiar la contraseña: ${data?.error?.message || res.status}`);
+        return alert(`❌ Could not change password: ${data?.error?.message || res.status}`);
       }
 
-      alert('✅ Contraseña cambiada correctamente');
-      // Clear password fields and hide the change form
+      alert('✅ Password changed successfully');
+
+      // Reset fields after success
       setCurrentPassword('');
       setNewPassword('');
       setConfirmNewPassword('');
       setShowChangePass(false);
     } catch (err) {
       console.error('Error changing password', err);
-      alert('❌ Error de conexión al cambiar contraseña');
+      alert('❌ Connection error while changing password');
     }
   };
 
+  // If user is not loaded yet
   if (!user) return <div>Cargando perfil...</div>;
 
   return (
@@ -228,10 +229,11 @@ const Profile: React.FC = () => {
       <div className="schedule-content">
         <div className="schedule-grid">
 
-          {/* IZQUIERDA - PREVIEW */}
+          {/* LEFT SIDE - PREVIEW */}
           <div className="preview-section">
             <div className="preview-card">
               <div className="preview-icon">
+                {/* Show user avatar or fallback initial */}
                 {user.photoURL ? (
                   <img src={user.photoURL} alt="Avatar" className="avatar-img" />
                 ) : (
@@ -241,6 +243,7 @@ const Profile: React.FC = () => {
 
               <h3 className="preview-title">{user.displayName}</h3>
 
+              {/* Basic user info */}
               <div className="preview-info">
                 <p className="preview-label">Email</p>
                 <p className="preview-value">{user.email}</p>
@@ -264,20 +267,21 @@ const Profile: React.FC = () => {
             </div>
           </div>
 
-          {/* DERECHA - FORM */}
+          {/* RIGHT SIDE - FORM */}
           <div className="form-section">
 
-            {/* DATOS PERSONALES */}
+            {/* PERSONAL INFORMATION */}
             <div className="form-card">
 
+              {/* View mode vs Edit mode */}
               {!editMode ? (
                 <>
+                  {/* Display user data */}
                   <div className="form-group"><label>Nombre:</label><p>{firstName}</p></div>
                   <div className="form-group"><label>Apellido:</label><p>{lastName}</p></div>
                   <div className="form-group"><label>Edad:</label><p>{age}</p></div>
                   <div className="form-group"><label>Email:</label><p>{email}</p></div>
                   <div className="form-group"><label>Teléfono:</label><p>{phoneNumber}</p></div>
-                  
 
                   <div className="action-buttons">
                     <button className="btn-submit" onClick={() => setEditMode(true)}>Editar perfil</button>
@@ -285,6 +289,7 @@ const Profile: React.FC = () => {
                 </>
               ) : (
                 <>
+                  {/* Edit mode inputs */}
                   <div className="form-row">
                     <div className="form-group">
                       <label>Nombre:</label>
@@ -299,10 +304,8 @@ const Profile: React.FC = () => {
                   <div className="form-group"><label>Edad:</label><input value={age} onChange={e => setAge(e.target.value)} /></div>
                   <div className="form-group"><label>Email:</label><input value={email} onChange={e => setEmail(e.target.value)} /></div>
                   <div className="form-group"><label>Teléfono:</label><input value={phoneNumber} onChange={e => setPhone(e.target.value)} /></div>
-                  
-                 
 
-                  {/* CAMBIAR CONTRASEÑA */}
+                  {/* CHANGE PASSWORD SECTION */}
                   <div className="form-group">
                     <button className="btn-cancel" onClick={() => setShowChangePass(s => !s)}>
                       {showChangePass ? 'Cancelar cambio contraseña' : 'Cambiar contraseña'}
@@ -318,6 +321,7 @@ const Profile: React.FC = () => {
                     )}
                   </div>
 
+                  {/* SAVE / CANCEL */}
                   <div className="action-buttons">
                     <button className="btn-submit" onClick={handleSave}>Guardar cambios</button>
                     <button className="btn-cancel" onClick={() => setEditMode(false)}>Cancelar</button>
@@ -327,11 +331,13 @@ const Profile: React.FC = () => {
 
             </div>
 
-            {/* PRIVACIDAD */}
+            {/* PRIVACY SETTINGS */}
             <div className="form-card" style={{ marginTop: 20 }}>
               <h3>Privacidad y Seguridad</h3>
 
               <div className="settings-list">
+
+                {/* Public profile toggle */}
                 <div className="setting-item">
                   <div className="setting-info">
                     <p className="setting-title">Perfil público</p>
@@ -343,6 +349,7 @@ const Profile: React.FC = () => {
                   </label>
                 </div>
 
+                {/* Show email toggle */}
                 <div className="setting-item">
                   <div className="setting-info">
                     <p className="setting-title">Mostrar email</p>
@@ -354,6 +361,7 @@ const Profile: React.FC = () => {
                   </label>
                 </div>
 
+                {/* Invites toggle */}
                 <div className="setting-item">
                   <div className="setting-info">
                     <p className="setting-title">Permitir invitaciones</p>
@@ -367,7 +375,7 @@ const Profile: React.FC = () => {
               </div>
             </div>
 
-            {/* ELIMINAR / SALIR */}
+            {/* DELETE / LOGOUT */}
             <div className="action-buttons">
               <button className="btn-delete" onClick={handleDelete}>Eliminar cuenta</button>
               <button className="btn-submit" onClick={() => { logout(); navigate('/'); }}>Cerrar sesión</button>
