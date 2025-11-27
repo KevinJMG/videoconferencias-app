@@ -20,16 +20,20 @@ export default class UserDAO {
 
     // 👉 Crear o actualizar usuario
     static async createUser(user: UserCreate) {
-        const ref = doc(this.collectionRef, user.uid);
+    const ref = doc(this.collectionRef, user.uid);
 
-        await setDoc(ref, {
-            ...user,
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp(),
-        }, { merge: true });
+    const data = {
+        ...user,
+        displayName: user.displayName || "Usuario sin nombre",
+        photoURL: user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.email || "U")}`,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+    };
 
-        console.log("🔥 User creado/actualizado en Firestore:", user.uid);
-    }
+    await setDoc(ref, data, { merge: true });
+
+    console.log("🔥 User creado/actualizado en Firestore:", data);
+}
 
     static async getUserById(uid: string) {
         const snap = await getDoc(doc(this.collectionRef, uid));

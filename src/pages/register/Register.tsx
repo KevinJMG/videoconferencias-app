@@ -3,10 +3,17 @@ import { Link, useNavigate } from "react-router-dom";
 import useAuthStore from "../../stores/useAuthStore"; 
 import "../login/Login.css";
 
+/**
+ * Register Component
+ * Handles user registration using email/password or Google authentication.
+ * Includes form validation and automatic login after successful registration.
+ */
 const Register: React.FC = () => {
   const navigate = useNavigate();
   const { loginWithGoogle } = useAuthStore();
+  const { setUser } = useAuthStore() as any;
 
+  // Local state for form fields
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -19,34 +26,46 @@ const Register: React.FC = () => {
 
   const [error, setError] = useState<string | null>(null);
 
+  /**
+   * Update local form state when input changes
+   */
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  /**
+   * Handles form submission:
+   * - Validates password, confirm password and age
+   * - Sends registration request
+   * - If backend returns token → store it
+   * - If not → login manually to get token
+   * - Fetches user info (/api/users/me) and stores it in Zustand
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
-    // Validación de contraseña
+    // Password validation: minimum 8 chars, 1 uppercase, 1 special character
     const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_\-+=\[\]{};:'",.<>/?\\|`~]).{8,}$/;
     if (!passwordRegex.test(form.password)) {
       setError("La contraseña debe tener mínimo 8 caracteres, una mayúscula y un carácter especial.");
       return;
     }
 
-    // Confirmar contraseña
+    // Confirm password validation
     if (form.password !== form.confirmPassword) {
       setError("Las contraseñas no coinciden");
       return;
     }
 
-    // Validar edad
+    // Age validation
     if (!form.age || isNaN(Number(form.age)) || Number(form.age) < 1) {
       setError("Ingresa una edad válida");
       return;
     }
 
     try {
+      // Registration request
       const resp = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -69,18 +88,69 @@ const Register: React.FC = () => {
       const data = await resp.json();
       console.log("Usuario registrado:", data);
 
-      // Guardar idToken si el backend lo devuelve
-      if (data.data?.idToken) {
-        localStorage.setItem("idToken", data.data.idToken);
+      /**
+       * Some backends return idToken on registration.
+       * If not provided → login after register to obtain token.
+       */
+      let idToken = data?.data?.idToken;
+
+      if (!idToken) {
+        try {
+          const loginResp = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: form.email, password: form.password }),
+          });
+
+          if (loginResp.ok) {
+            const loginData = await loginResp.json();
+            idToken = loginData?.data?.idToken;
+            if (idToken) localStorage.setItem('idToken', idToken);
+          } else {
+            console.warn('No se pudo iniciar sesión tras registro');
+          }
+        } catch (err) {
+          console.warn('Error logging in after register', err);
+        }
+      } else {
+        localStorage.setItem('idToken', idToken);
       }
 
-      navigate("/dashboard");
+      /**
+       * Once the token exists, request user data and store it in Zustand
+       */
+      if (idToken) {
+        try {
+          const meResp = await fetch(`${import.meta.env.VITE_API_URL}/api/users/me`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${idToken}`,
+            },
+          });
+
+          if (meResp.ok) {
+            const meData = await meResp.json();
+            if (meData?.data) setUser(meData.data);
+          } else {
+            console.warn('No se pudo obtener user desde /api/users/me tras registro');
+          }
+        } catch (err) {
+          console.warn('Error fetching /api/users/me after register', err);
+        }
+      }
+
+      // Redirect user to dashboard after successful registration
+      navigate('/dashboard');
     } catch (err) {
       console.error(err);
       setError("Error en la conexión con el backend");
     }
   };
 
+  /**
+   * Register/Login using Google Provider
+   */
   const handleRegisterWithGoogle = async () => {
     try {
       await loginWithGoogle();
@@ -93,12 +163,16 @@ const Register: React.FC = () => {
 
   return (
     <div className="login-split-container">
+      {/* Left side: registration form */}
       <div className="login-left">
         <h1 className="logo-text">JoinGo</h1>
         <div className="login-content">
           <h2 className="Login-title">Crear Cuenta</h2>
 
+          {/* Registration Form */}
           <form onSubmit={handleSubmit} className="login-form">
+
+            {/* Name */}
             <input
               type="text"
               name="name"
@@ -107,6 +181,8 @@ const Register: React.FC = () => {
               onChange={handleChange}
               required
             />
+
+            {/* Last Name */}
             <input
               type="text"
               name="lastName"
@@ -116,6 +192,7 @@ const Register: React.FC = () => {
               required
             />
 
+            {/* Organization field */}
             <input
               type="text"
               name="organization"
@@ -125,6 +202,7 @@ const Register: React.FC = () => {
               required
             />
 
+            {/* Email field */}
             <input
               type="email"
               name="email"
@@ -134,6 +212,7 @@ const Register: React.FC = () => {
               required
             />
 
+            {/* Age */}
             <input
               type="number"
               name="age"
@@ -143,6 +222,7 @@ const Register: React.FC = () => {
               required
             />
 
+            {/* Password */}
             <input
               type="password"
               name="password"
@@ -152,6 +232,7 @@ const Register: React.FC = () => {
               required
             />
 
+            {/* Confirm password */}
             <input
               type="password"
               name="confirmPassword"
@@ -161,44 +242,51 @@ const Register: React.FC = () => {
               required
             />
 
+            {/* Submit & Google buttons */}
             <div className="login-buttons-container">
               <button type="submit" className="btn-email-login">
                 Registrarme
               </button>
-              <button onClick={handleRegisterWithGoogle} type="button" className="login-google-btn">
-                <img
-                  src="/assets/images/google.png"
-                  alt="Google"
-                  width={24}
-                  height={24}
-                />
+
+              <button
+                onClick={handleRegisterWithGoogle}
+                type="button"
+                className="login-google-btn"
+              >
+                <img src="/assets/images/google.png" alt="Google" width={24} height={24} />
                 <span>Google</span>
               </button>
             </div>
 
+            {/* Error message */}
             {error && <p className="login-error">{error}</p>}
           </form>
 
+          {/* Link to login */}
           <p className="login-register-text">
             ¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>
           </p>
         </div>
       </div>
 
+      {/* Right side: static information */}
       <div className="login-right">
         <div className="right-content">
           <h2 className="right-title">Únete a tu equipo en segundos</h2>
           <p className="p-right">
             Videoconferencias rápidas, intuitivas y seguras para tu organización.
           </p>
+
           <div className="characteristics">
             <h3>Video HD</h3>
             <p className="p-right">Calidad 1080p sin cortes</p>
           </div>
+
           <div className="characteristics">
             <h3>Protección avanzada</h3>
             <p className="p-right">Encriptación extremo a extremo</p>
           </div>
+
           <div className="characteristics">
             <h3>Hasta 10 personas</h3>
             <p className="p-right">Reuniones privadas de alta calidad</p>

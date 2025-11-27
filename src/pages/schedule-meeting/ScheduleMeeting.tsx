@@ -83,13 +83,13 @@ const ScheduleMeeting: React.FC = () => {
   };
 
   const handleCancel = () => {
-    navigate("/dashboard");
+    navigate(-1);
   };
 
   return (
     <div className="schedule-container">
       <header className="schedule-header">
-        <button className="back-button" onClick={() => navigate("/dashboard")}>
+        <button className="back-button" onClick={() => navigate(-1)}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
