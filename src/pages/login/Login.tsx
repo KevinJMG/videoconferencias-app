@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../../stores/useAuthStore';
-import { getAuth } from "firebase/auth";
+import { getAuth, signInWithPopup, GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
 import "./Login.css";
 
 const Login: React.FC = () => {
@@ -10,43 +10,82 @@ const Login: React.FC = () => {
     const { setUser } = useAuthStore() as any;
 
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+       const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
+
+    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
     useEffect(() => {
         const unsub = initAuthObserver();
         return () => unsub();
     }, [initAuthObserver]);
 
-    // ✅ Login con Google
+    // ==============================
+    // LOGIN GOOGLE
+    // ==============================
     const handleLoginGoogle = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             await loginWithGoogle();
+             const provider = new GoogleAuthProvider();
 
-            // Obtener el idToken de Firebase desde el usuario actual
+            // FORZAR SIEMPRE SELECCIÓN DE CUENTA
+                provider.setCustomParameters({
+                    prompt: "select_account"
+            });
+
             const fbUser = getAuth().currentUser;
             const idToken = fbUser ? await fbUser.getIdToken() : null;
+
             if (idToken) {
                 localStorage.setItem("idToken", idToken);
-                console.log("🔥 idToken guardado para futuras requests:", idToken);
+                console.log("🔥 Token guardado:", idToken);
             }
 
             navigate("/dashboard");
         } catch (err) {
-            console.error("Error al iniciar sesión con Google:", err);
+            console.error("Error Google:", err);
             setError("No se pudo iniciar sesión con Google");
         }
     };
 
-    // ✅ Login con Email/Password
+    // ==============================
+    // LOGIN GITHUB
+    // ==============================
+    const handleLoginGithub = async () => {
+        try {
+            const auth = getAuth();
+            const provider = new GithubAuthProvider();
+                provider.setCustomParameters({
+                allow_signup: "false"
+            });
+
+            const result = await signInWithPopup(auth, provider);
+            const idToken = await result.user.getIdToken();
+
+            localStorage.setItem("idToken", idToken);
+
+            console.log("🐱 GitHub login OK:", result.user);
+            navigate("/dashboard");
+
+        } catch (err) {
+            console.error("GitHub error:", err);
+            setError("Error al iniciar sesión con GitHub");
+        }
+    };
+
+    // ==============================
+    
+    // ==============================
+    // LOGIN EMAIL / PASSWORD
+    // ==============================
     const handleLoginEmail = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const resp = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
+            const resp = await fetch(`${API_URL}/api/auth/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ email, password }),
             });
 
             if (!resp.ok) {
@@ -56,15 +95,14 @@ const Login: React.FC = () => {
             }
 
             const data = await resp.json();
-            // Guardamos idToken en localStorage
             localStorage.setItem("idToken", data.data.idToken);
-            console.log("🔥 idToken guardado:", data.data.idToken);
-            // Fetch user from backend and populate Zustand store
+
+            // Intentar obtener el usuario
             try {
-                const meResp = await fetch(`${import.meta.env.VITE_API_URL}/api/users/me`, {
-                    method: 'GET',
+                const meResp = await fetch(`${API_URL}/api/users/me`, {
+                    method: "GET",
                     headers: {
-                        'Content-Type': 'application/json',
+                        "Content-Type": "application/json",
                         Authorization: `Bearer ${data.data.idToken}`,
                     },
                 });
@@ -72,17 +110,16 @@ const Login: React.FC = () => {
                 if (meResp.ok) {
                     const meData = await meResp.json();
                     if (meData?.data) setUser(meData.data);
-                } else {
-                    console.warn('No se pudo obtener user desde /api/users/me tras login');
                 }
-            } catch (err) {
-                console.warn('Error fetching /api/users/me after login', err);
+            } catch (e) {
+                console.warn("Error get /users/me:", e);
             }
 
             navigate("/dashboard");
+
         } catch (err) {
             console.error(err);
-            setError("Error en la conexión al backend");
+            setError("Error al conectar al backend");
         }
     };
 
@@ -90,6 +127,7 @@ const Login: React.FC = () => {
         <div className="login-split-container">
             <div className="login-left">
                 <h1 className="logo-text">JoinGo</h1>
+
                 <div className="login-content">
                     <h2 className="Login-title">Iniciar Sesión</h2>
 
@@ -108,14 +146,24 @@ const Login: React.FC = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             required
                         />
+
                         <div className="login-buttons-container">
                             <button type="submit" className="btn-email-login">
                                 Iniciar Sesión
                             </button>
-                            <button onClick={handleLoginGoogle} className="login-google-btn">
+
+                            {/* GOOGLE */}
+                            <button onClick={handleLoginGoogle} type="button" className="login-google-btn">
                                 <img src="/assets/images/google.png" alt="Google" width={24} height={24} />
                                 <span>Google</span>
                             </button>
+
+                            {/* GITHUB */}
+                            <button onClick={handleLoginGithub} type="button" className="login-google-btn">
+                                <img src="/assets/images/github.png" alt="GitHub" width={24} height={24} />
+                                <span>GitHub</span>
+                            </button>
+
                         </div>
                     </form>
 
@@ -127,10 +175,13 @@ const Login: React.FC = () => {
                 </div>
             </div>
 
-            <div className="login-right"> 
+            <div className="login-right">
                 <div className="right-content">
                     <h2 className="right-title">Conecta con tu equipo desde cualquier lugar</h2>
-                    <p className="p-right">Videoconferencias de alta calidad, sin complicaciones. Reuniones seguras con hasta 10 participantes, grabación en la nube y mucho más.</p>
+                    <p className="p-right">
+                        Videoconferencias de alta calidad, sin complicaciones. Reuniones seguras con hasta 10
+                        participantes, grabación en la nube y mucho más.
+                    </p>
                     <div className="characteristics">
                         <h3>Video HD</h3>
                         <p className="p-right">Calidad 1080p</p>

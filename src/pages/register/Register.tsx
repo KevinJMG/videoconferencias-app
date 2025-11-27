@@ -12,6 +12,8 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
   const { loginWithGoogle } = useAuthStore();
   const { setUser } = useAuthStore() as any;
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
 
   // Local state for form fields
   const [form, setForm] = useState({
@@ -66,7 +68,7 @@ const Register: React.FC = () => {
 
     try {
       // Registration request
-      const resp = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
+        const resp = await fetch(`${API_URL}/api/auth/register`,  {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
