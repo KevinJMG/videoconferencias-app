@@ -43,7 +43,6 @@ const VideoConference: React.FC = () => {
           <span className="meeting-id">{meeting?.meetingName || "Reunión"}</span>
         </div>
         <div className="header-actions">
-          <button className="btn-minimize">_</button>
           <button className="btn-close" onClick={handleEndCall}>×</button>
         </div>
       </header>
