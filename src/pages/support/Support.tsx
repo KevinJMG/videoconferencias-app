@@ -89,9 +89,10 @@ const Support: React.FC = () => {
           <div className="faq-grid">
             <div className="faq-card">
               <div className="faq-icon">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2.5">
-                  <circle cx="12" cy="12" r="9"></circle>
-                  <path d="M12 8v4M12 16v1"></path>
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
                 </svg>
               </div>
               <h4 className="faq-question">¿Cómo creo una reunión?</h4>
@@ -102,9 +103,10 @@ const Support: React.FC = () => {
 
             <div className="faq-card">
               <div className="faq-icon">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2.5">
-                  <circle cx="12" cy="12" r="9"></circle>
-                  <path d="M12 8v4M12 16v1"></path>
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
                 </svg>
               </div>
               <h4 className="faq-question">¿Cuántos participantes puedo tener?</h4>
@@ -115,9 +117,10 @@ const Support: React.FC = () => {
 
             <div className="faq-card">
               <div className="faq-icon">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2.5">
-                  <circle cx="12" cy="12" r="9"></circle>
-                  <path d="M12 8v4M12 16v1"></path>
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
                 </svg>
               </div>
               <h4 className="faq-question">¿Puedo grabar mis reuniones?</h4>
@@ -128,9 +131,10 @@ const Support: React.FC = () => {
 
             <div className="faq-card">
               <div className="faq-icon">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2.5">
-                  <circle cx="12" cy="12" r="9"></circle>
-                  <path d="M12 8v4M12 16v1"></path>
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
                 </svg>
               </div>
               <h4 className="faq-question">¿Es segura mi información?</h4>
@@ -141,9 +145,10 @@ const Support: React.FC = () => {
 
             <div className="faq-card">
               <div className="faq-icon">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2.5">
-                  <circle cx="12" cy="12" r="9"></circle>
-                  <path d="M12 8v4M12 16v1"></path>
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
                 </svg>
               </div>
               <h4 className="faq-question">¿Funciona en móviles?</h4>
@@ -154,9 +159,10 @@ const Support: React.FC = () => {
 
             <div className="faq-card">
               <div className="faq-icon">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2.5">
-                  <circle cx="12" cy="12" r="9"></circle>
-                  <path d="M12 8v4M12 16v1"></path>
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
                 </svg>
               </div>
               <h4 className="faq-question">¿Cómo cancelo mi suscripción?</h4>
