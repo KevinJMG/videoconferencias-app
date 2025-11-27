@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import "./VideoConference.css";
 import { useNavigate, useParams } from "react-router-dom";
+import useMeetingStore from "../../stores/useMeetingStore";
 
 const VideoConference: React.FC = () => {
   const navigate = useNavigate();
   const { meetingId } = useParams();
+  const getMeetingById = useMeetingStore((state) => state.getMeetingById);
+  const meeting = meetingId ? getMeetingById(meetingId) : null;
 
   const [isMuted, setIsMuted] = useState(false);
   const [isVideoOff, setIsVideoOff] = useState(false);
-  const [isChatOpen, setIsChatOpen] = useState(true);
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([
     { id: 1, user: "Sistema", text: "Bienvenido a la videoconferencia", time: "10:00" },
@@ -37,7 +40,7 @@ const VideoConference: React.FC = () => {
       <header className="conference-header">
         <div className="header-info">
           <h1 className="logo-text">JoinGo</h1>
-          <span className="meeting-id">ID: {meetingId || "DEMO-123"}</span>
+          <span className="meeting-id">{meeting?.meetingName || "Reunión"}</span>
         </div>
         <div className="header-actions">
           <button className="btn-minimize">_</button>
