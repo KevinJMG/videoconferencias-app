@@ -25,37 +25,31 @@ const useAuthStore = create<AuthStore>((set) => ({
     setUser: (user) => set({ user }),
 
     initAuthObserver: () => {
-        const unsubscribe = onAuthStateChanged(
-            auth,
-            async (fbUser) => {
-                if (fbUser) {
+    const unsubscribe = onAuthStateChanged(auth, async (fbUser) => {
+        if (fbUser) {
 
-                    const userLogged: User = {
-                        uid: fbUser.uid,
-                        displayName: fbUser.displayName,
-                        email: fbUser.email,
-                        photoURL: fbUser.photoURL,
-                    };
+            // 1️⃣ Crear/actualizar usuario en Firestore
+            await UserDAO.createUser({
+                uid: fbUser.uid,
+                displayName: fbUser.displayName,
+                email: fbUser.email,
+                photoURL: fbUser.photoURL,
+            });
 
-                    // Guardar en Zustand
-                    set({ user: userLogged });
+            // 2️⃣ Obtener datos COMPLETOS desde Firestore
+            const userFromDb = await UserDAO.getUserById(fbUser.uid);
 
-                    // 🔥 Crear/actualizar usuario en Firestore
-                    await UserDAO.createUser({
-                        uid: fbUser.uid,
-                        displayName: fbUser.displayName,
-                        email: fbUser.email,
-                        photoURL: fbUser.photoURL,
-                    });
-                } else {
-                    set({ user: null });
-                }
-            },
-            (err) => console.error(err)
-        );
+            // 3️⃣ Guardar en Zustand
+            set({ user: userFromDb as any });
 
-        return unsubscribe;
-    },
+        } else {
+            set({ user: null });
+        }
+    });
+
+    return unsubscribe;
+},
+
 
     loginWithGoogle: async () => {
         try {

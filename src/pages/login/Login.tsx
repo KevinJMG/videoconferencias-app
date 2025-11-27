@@ -7,6 +7,7 @@ import "./Login.css";
 const Login: React.FC = () => {
     const navigate = useNavigate();
     const { loginWithGoogle, initAuthObserver } = useAuthStore();
+    const { setUser } = useAuthStore() as any;
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -58,6 +59,25 @@ const Login: React.FC = () => {
             // Guardamos idToken en localStorage
             localStorage.setItem("idToken", data.data.idToken);
             console.log("🔥 idToken guardado:", data.data.idToken);
+            // Fetch user from backend and populate Zustand store
+            try {
+                const meResp = await fetch(`${import.meta.env.VITE_API_URL}/api/users/me`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${data.data.idToken}`,
+                    },
+                });
+
+                if (meResp.ok) {
+                    const meData = await meResp.json();
+                    if (meData?.data) setUser(meData.data);
+                } else {
+                    console.warn('No se pudo obtener user desde /api/users/me tras login');
+                }
+            } catch (err) {
+                console.warn('Error fetching /api/users/me after login', err);
+            }
 
             navigate("/dashboard");
         } catch (err) {
