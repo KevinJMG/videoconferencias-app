@@ -145,7 +145,7 @@
 
 /* GRID DE PARTICIPANTES */
 .participants-grid {
-  display: flex;
+  display: none;
   gap: 12px;
   height: 120px;
 }
