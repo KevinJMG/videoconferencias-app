@@ -4,33 +4,52 @@ import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../stores/useAuthStore";
 import useMeetingStore from "../../stores/useMeetingStore";
 
+/**
+ * Dashboard Component
+ *
+ * Main dashboard page that displays:
+ * - User profile section with logout functionality
+ * - Navigation menu
+ * - Hero section with quick action buttons
+ * - List of upcoming meetings with action buttons (play, edit, delete)
+ * - Quick action panels for scheduling and joining meetings
+ * - Recent meetings section
+ */
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
-  const { logout } = useAuthStore();
-  const { user } = useAuthStore() as any;
+  const { logout, user } = useAuthStore();
   const { getUpcomingMeetings, removeMeeting } = useMeetingStore();
+
+  // Modal state for logout confirmation
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
+  // Profile dropdown menu state
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // Retrieve list of upcoming meetings from store
   const upcomingMeetings = getUpcomingMeetings();
 
-  const handleDeleteMeeting = (id: string, meetingName: string) => {
+  /**
+   * Handles meeting deletion with user confirmation
+   * Displays a confirmation dialog before removing the meeting
+   */
+  const handleDeleteMeeting = (id: string, meetingName: string): void => {
     if (window.confirm(`¿Estás seguro de eliminar la reunión "${meetingName}"?`)) {
       removeMeeting(id);
     }
   };
 
-  const handleLogout = () => {
+  /**
+   * Handles user logout and navigation to login page
+   */
+  const handleLogout = (): void => {
     logout();
     navigate("/login");
   };
 
   return (
     <>
-
-    {/*----------------MODAL--------------*/}
-
+      {/* LOGOUT CONFIRMATION MODAL */}
       {showLogoutModal && (
         <div className="modal-overlay">
           <div className="modal-box">
@@ -49,12 +68,9 @@ const Dashboard: React.FC = () => {
         </div>
       )}
 
-
-
-    <div className="dashboard-container">
-
-      {/* NAVBAR / HEADER */}
-      <header className="dashboard-header">
+      <div className="dashboard-container">
+        {/* NAVIGATION HEADER */}
+        <header className="dashboard-header">
         <div className="header-left">
           <h1 className="logo-text">JoinGo</h1>
 
@@ -87,110 +103,132 @@ const Dashboard: React.FC = () => {
         </div>
       </header>
 
-      {/* CONTENIDO DEL DASHBOARD */}
+      {/* MAIN DASHBOARD CONTENT */}
       <main className="dashboard-content">
+        {/* LEFT SECTION: Hero card and upcoming meetings */}
         <div className="left-content">
-            <div className="principal-containers">
-                <div>
-                    <h2 className="container-title">Reuniones premium  <br />para equipos premium</h2>
-                    <p className="container-text">Conecta con tu equipo sin límites. Video HD, compartir pantalla y más.</p>
-                    <div className="buttons-wrapper">
-                        <button className="container-button" onClick={() => navigate("/schedule-meeting")}>
-                            Nueva reunión
-                        </button>
+          {/* HERO SECTION: Welcome card with quick action buttons */}
+          <div className="principal-containers">
+            <div>
+              <h2 className="container-title">Reuniones premium  <br />para equipos premium</h2>
+              <p className="container-text">Conecta con tu equipo sin límites. Video HD, compartir pantalla y más.</p>
+              <div className="buttons-wrapper">
+                <button className="container-button" onClick={() => navigate("/schedule-meeting")}>
+                  Nueva reunión
+                </button>
 
-                        <button className="container-button">
-                            Unirse con código
-                        </button>
-                    </div>
-                </div>
-                <div className="img-container">
-                        <img src="assets/images/camara.svg" alt="camara" />
-                </div>
+                <button className="container-button">
+                  Unirse con código
+                </button>
+              </div>
             </div>
-            <div className="principal-containers meetings-block">
-                <h2 className="container-title">Próximas reuniones</h2>
-                {upcomingMeetings.length === 0 ? (
-                  <div className="no-meetings">
-                    <p>No hay reuniones programadas</p>
+            <div className="img-container">
+              <img src="assets/images/camara.svg" alt="camara" />
+            </div>
+          </div>
+
+          {/* UPCOMING MEETINGS SECTION: List of scheduled meetings with action buttons */}
+          <div className="principal-containers meetings-block">
+            <h2 className="container-title">Próximas reuniones</h2>
+            {upcomingMeetings.length === 0 ? (
+              <div className="no-meetings">
+                <p>No hay reuniones programadas</p>
+              </div>
+            ) : (
+              upcomingMeetings.slice(0, 10).map((meeting) => (
+                <div key={meeting.id} className="meets-container">
+                  <div className="meeting-info">
+                    <h3 className="meeting-title">{meeting.meetingName}</h3>
+                    <p className="meeting-text">
+                      {meeting.startTime} - {meeting.endTime || "Sin hora de cierre"}
+                    </p>
                   </div>
-                ) : (
-                  upcomingMeetings.slice(0, 10).map((meeting) => (
-                    <div key={meeting.id} className="meets-container">
-                      <div className="meeting-info">
-                        <h3 className="meeting-title">{meeting.meetingName}</h3>
-                        <p className="meeting-text">
-                          {meeting.startTime} - {meeting.endTime || "Sin hora de cierre"}
-                        </p>
-                      </div>
-                      <div className="meeting-actions">
-                        <div
-                          className="play-container"
-                          onClick={() => navigate(`/conference/${meeting.id}`)}
-                          style={{ cursor: "pointer" }}
-                        >
-                          <img src="assets/images/play.svg" alt="Unirse"></img>
-                        </div>
-                        <button
-                          className="delete-meeting-btn"
-                          onClick={() => handleDeleteMeeting(meeting.id, meeting.meetingName)}
-                          title="Eliminar reunión"
-                        >
-                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <polyline points="3 6 5 6 21 6"></polyline>
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                            <line x1="10" y1="11" x2="10" y2="17"></line>
-                            <line x1="14" y1="11" x2="14" y2="17"></line>
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                  ))
-                )}
-            </div>
-        </div>
-        <div className="right-content">
-            <div className="secundary-container">
-                <h2 className="secundary-title">Acciones rápidas</h2>
-                    <div className="container-actions" onClick={() => navigate("/schedule-meeting")} style={{ cursor: "pointer" }}>
-                        <div className="action">
-                            <div className="icon-container"><img src="assets/images/a-camera.svg"></img></div>
-                            <h3>Programar videoconferencia</h3>
-                            <p>Configurar reunión</p>
-                        </div>
-
-                    </div>
-                    <div className="container-actions">
-                        <div className="action">
-                            <div className="icon-container"><img src="assets/images/meeting.svg"></img></div>
-                            <h3>Unirse a reunión</h3>
-                            <p>Con código o enlace</p>
-                        </div>
-                    </div>
-            </div>
-             <div className="secundary-container">
-                    <h2 className="secundary-title">Reuniones recientes</h2>
-
-                    <div className="container-actions">
-                        <div className="icon-container"></div>
-
-                        <div className="text-container">
-                            <h3>Diseño UI/UX Review</h3>
-                            <p>Ayer, 3:00 PM</p>
-                        </div>
+                  <div className="meeting-actions">
+                    {/* Join meeting button */}
+                    <div
+                      className="play-container"
+                      onClick={() => navigate(`/conference/${meeting.id}`)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <img src="assets/images/play.svg" alt="Unirse"></img>
                     </div>
 
-                    <div className="container-actions">
-                        <div className="icon-container"></div>
+                    {/* Edit meeting button */}
+                    <button
+                      className="edit-meeting-btn"
+                      onClick={() => navigate(`/edit-meeting/${meeting.id}`)}
+                      title="Editar reunión"
+                    >
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                      </svg>
+                    </button>
 
-                        <div className="text-container">
-                            <h3>Sprint Planning</h3>
-                            <p>13 Nov, 10:00 AM</p>
-                        </div>
-                    </div>
+                    {/* Delete meeting button */}
+                    <button
+                      className="delete-meeting-btn"
+                      onClick={() => handleDeleteMeeting(meeting.id, meeting.meetingName)}
+                      title="Eliminar reunión"
+                    >
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                      </svg>
+                    </button>
+                  </div>
                 </div>
-        </div>       
-            
+              ))
+            )}
+          </div>
+        </div>
+
+        {/* RIGHT SECTION: Quick actions and recent meetings */}
+        <div className="right-content">
+          {/* QUICK ACTIONS PANEL: Shortcuts to common tasks */}
+          <div className="secundary-container">
+            <h2 className="secundary-title">Acciones rápidas</h2>
+            <div className="container-actions" onClick={() => navigate("/schedule-meeting")} style={{ cursor: "pointer" }}>
+              <div className="action">
+                <div className="icon-container"><img src="assets/images/a-camera.svg"></img></div>
+                <h3>Programar videoconferencia</h3>
+                <p>Configurar reunión</p>
+              </div>
+            </div>
+            <div className="container-actions">
+              <div className="action">
+                <div className="icon-container"><img src="assets/images/meeting.svg"></img></div>
+                <h3>Unirse a reunión</h3>
+                <p>Con código o enlace</p>
+              </div>
+            </div>
+          </div>
+
+          {/* RECENT MEETINGS PANEL: Display recent meeting history */}
+          <div className="secundary-container">
+            <h2 className="secundary-title">Reuniones recientes</h2>
+
+            <div className="container-actions">
+              <div className="icon-container"></div>
+
+              <div className="text-container">
+                <h3>Diseño UI/UX Review</h3>
+                <p>Ayer, 3:00 PM</p>
+              </div>
+            </div>
+
+            <div className="container-actions">
+              <div className="icon-container"></div>
+
+              <div className="text-container">
+                <h3>Sprint Planning</h3>
+                <p>13 Nov, 10:00 AM</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </main>
     </div>
    </>

@@ -264,6 +264,7 @@
   gap: 12px;
 }
 
+.edit-meeting-btn,
 .delete-meeting-btn {
   display: flex;
   align-items: center;
@@ -279,18 +280,21 @@
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -4px rgba(0, 0, 0, 0.10);
 }
 
+.edit-meeting-btn:hover,
 .delete-meeting-btn:hover {
   background: #f0f4ff;
   transform: scale(1.05);
   box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.15), 0 6px 8px -6px rgba(0, 0, 0, 0.10);
 }
 
+.edit-meeting-btn svg,
 .delete-meeting-btn svg {
   width: 20px;
   height: 20px;
   stroke: #155DFC;
 }
 
+.edit-meeting-btn:hover svg,
 .delete-meeting-btn:hover svg {
   stroke: #0d47d1;
 }
@@ -301,9 +305,9 @@
 }
 .meetings-block {
   flex-direction: column;
-  align-items: flex-start; /* para que el h2 quede arriba a la izquierda */
-  height: auto;           /* que crezca según el contenido */
-  gap: 20px;              /* que haya espacio entre h2 y meets */
+  align-items: flex-start; /* So the h2 stays at the top left */
+  height: auto;           /* Grows according to content */
+  gap: 20px;              /* Space between h2 and meets */
 }
 .no-meetings {
   width: 100%;
@@ -325,7 +329,7 @@
     padding: 0px;
     border-radius: 14px;
     background: rgba(255, 255, 255, 0.20);
-    height: auto; /* ⬅️ evita que se rompa */
+    height: auto; /* Prevents breaking */
 }
 /*secundary-title*/
 .secundary-title{
