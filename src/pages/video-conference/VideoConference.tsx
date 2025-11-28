@@ -48,10 +48,6 @@ const VideoConference: React.FC = () => {
   const [isVideoOff, setIsVideoOff] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isParticipantsOpen, setIsParticipantsOpen] = useState(false);
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([
-    { id: 1, user: "Sistema", text: "Bienvenido a la videoconferencia", time: "10:00" },
-  ]);
   const [participants] = useState([
     { id: 1, name: "Usuario Principal" },
     { id: 2, name: "Usuario 1" },
@@ -63,23 +59,9 @@ const VideoConference: React.FC = () => {
     if (meetingId) setIsChatOpen(true);
   }, [meetingId]);
 
-  /**
-   * Sends a chat message in the conference
-   * Adds message to chat history with timestamp
-   * Clears input field after sending
-   */
-  const handleSendMessage = () => {
-    if (message.trim()) {
-      const newMessage = {
-        id: messages.length + 1,
-        user: "You",
-        text: message,
-        time: new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }),
-      };
-      setMessages([...messages, newMessage]);
-      setMessage("");
-    }
-  };
+  // Chat messages are handled by the `ChatPanel` component and the global store.
+  // Local optimistic message state was removed to avoid duplication and unused-symbol
+  // TypeScript errors. Use the chat store or `ChatPanel`'s API to send messages.
 
   /**
    * Ends the current call and returns to dashboard

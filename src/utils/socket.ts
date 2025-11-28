@@ -31,11 +31,13 @@ export async function initSocket(getToken: () => Promise<string | null>, url?: s
     try {
       if (msg && msg.toLowerCase().includes('auth-unavailable')) {
         console.error('Chat service auth unavailable — stopping socket retries.');
-        // prevent further reconnection attempts
-        socket?.io && (socket.io.opts.reconnection = false);
-        // disconnect and clear instance
-        socket.disconnect();
-        socket = null;
+        // Capture current socket instance into a local variable to satisfy strict null checks
+        const s = socket;
+        if (s) {
+          if (s.io) s.io.opts.reconnection = false;
+          s.disconnect();
+          socket = null;
+        }
       }
     } catch (_e) {
       // ignore
