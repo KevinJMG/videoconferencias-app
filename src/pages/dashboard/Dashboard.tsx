@@ -110,8 +110,7 @@ const Dashboard: React.FC = () => {
           {/* HERO SECTION: Welcome card with quick action buttons */}
           <div className="principal-containers">
             <div>
-              <h2 className="container-title">Reuniones premium  <br />para equipos premium</h2>
-              <p className="container-text">Conecta con tu equipo sin límites. Video HD, compartir pantalla y más.</p>
+              <h2 className="container-title">Espacio para programar <br />reunión o unirse</h2>
               <div className="buttons-wrapper">
                 <button className="container-button" onClick={() => navigate("/schedule-meeting")}>
                   Nueva reunión
