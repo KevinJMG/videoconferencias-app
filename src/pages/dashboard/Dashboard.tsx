@@ -94,9 +94,7 @@ const Dashboard: React.FC = () => {
             {menuOpen && (
               <div className="profile-dropdown">
                 <button onClick={() => navigate("/profile")}>Perfil</button>
-                <button onClick={() => navigate("/settings")}>Configuración</button>
                 <button onClick={() => setShowLogoutModal(true)}>Cerrar sesión</button>
-
               </div>
             )}
           </div>
