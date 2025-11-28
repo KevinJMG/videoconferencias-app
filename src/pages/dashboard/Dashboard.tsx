@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Dashboard.css";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../stores/useAuthStore";
@@ -9,11 +9,27 @@ const Dashboard: React.FC = () => {
   const { logout } = useAuthStore();
   const { user } = useAuthStore() as any;
   const { getUpcomingMeetings, removeMeeting } = useMeetingStore();
+  const { fetchMyMeetings } = useMeetingStore();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showJoinModal, setShowJoinModal] = useState(false);
+  const [joinCode, setJoinCode] = useState('');
+  const [joinError, setJoinError] = useState<string | null>(null);
 
   const upcomingMeetings = getUpcomingMeetings();
+
+  useEffect(() => {
+    // load meetings for current user once auth is ready
+    if (!user) return;
+    (async () => {
+      try {
+        await fetchMyMeetings();
+      } catch (e) {
+        // errors handled in store; ignore here
+      }
+    })();
+  }, [fetchMyMeetings, user]);
 
   const handleDeleteMeeting = (id: string, meetingName: string) => {
     if (window.confirm(`¿Estás seguro de eliminar la reunión "${meetingName}"?`)) {
@@ -99,8 +115,8 @@ const Dashboard: React.FC = () => {
                             Nueva reunión
                         </button>
 
-                        <button className="container-button">
-                            Unirse con código
+                        <button className="container-button" onClick={() => { setShowJoinModal(true); setJoinCode(''); setJoinError(null); }}>
+                          Unirse con código
                         </button>
                     </div>
                 </div>
@@ -148,6 +164,52 @@ const Dashboard: React.FC = () => {
                   ))
                 )}
             </div>
+              {/* Join by code modal */}
+              {showJoinModal && (
+                <div className="modal-overlay">
+                  <div className="modal-box">
+                    <h3>Unirse con código</h3>
+                    <p>Introduce el ID de la reunión para unirte.</p>
+                    <input
+                      aria-label="meeting-code"
+                      className="join-code-input"
+                      value={joinCode}
+                      onChange={(e) => setJoinCode(e.target.value.trim())}
+                      placeholder="Introduce el ID de la reunión"
+                    />
+                    {joinError && <div className="form-error">{joinError}</div>}
+                    <div className="modal-actions">
+                      <button className="modal-cancel" onClick={() => setShowJoinModal(false)}>Cancelar</button>
+                      <button
+                        className="modal-logout"
+                        onClick={async () => {
+                          setJoinError(null);
+                          if (!joinCode) {
+                            setJoinError('Por favor ingresa un ID válido');
+                            return;
+                          }
+                          try {
+                            const API_BASE = (import.meta.env.VITE_API_BASE as string) || 'http://localhost:3000';
+                            const res = await fetch(`${API_BASE}/api/meetings/${encodeURIComponent(joinCode)}`);
+                            if (!res.ok) {
+                              if (res.status === 404) setJoinError('Reunión no encontrada');
+                              else setJoinError('Error al verificar la reunión');
+                              return;
+                            }
+                            // success -> navigate to conference
+                            setShowJoinModal(false);
+                            navigate(`/conference/${encodeURIComponent(joinCode)}`);
+                          } catch (err) {
+                            setJoinError('Error de red al verificar la reunión');
+                          }
+                        }}
+                      >
+                        Unirse
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
         </div>
         <div className="right-content">
             <div className="secundary-container">

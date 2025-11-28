@@ -43,6 +43,20 @@
   box-shadow: 0 4px 12px rgba(21, 93, 252, 0.3);
 }
 
+.btn-copy-meeting {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.btn-copy-meeting:hover {
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.12);
+}
+
 .header-actions {
   display: flex;
   gap: 8px;
@@ -251,6 +265,32 @@
   border-radius: 12px;
   animation: slideIn 0.3s ease;
 }
+
+/* New chat message item styles (component uses chat-message-item) */
+.chat-message-item {
+  max-width: 72%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #2f3136;
+  color: #fff;
+  word-break: break-word;
+  animation: slideIn 0.2s ease;
+}
+.chat-message-item.incoming {
+  align-self: flex-start;
+  background: linear-gradient(180deg, #3a3a3a, #2f2f2f);
+}
+.chat-message-item.outgoing {
+  align-self: flex-end;
+  background: linear-gradient(180deg, #155DFC, #1246C0);
+}
+.chat-message-header { display:flex; justify-content:space-between; gap:8px; align-items:center }
+.chat-message-user { font-weight:600; color:#fff; font-size:13px }
+.chat-message-time { font-size:11px; color:#e6e6e6; opacity:0.8 }
+.chat-message-body { font-size:14px; color: #fff }
 
 @keyframes slideIn {
   from {
