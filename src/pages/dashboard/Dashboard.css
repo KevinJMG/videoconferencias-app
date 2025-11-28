@@ -105,10 +105,10 @@
 
 /* MAIN CONTENT */
 .dashboard-content {
-  padding: 30px;
+  padding: 20px;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 30px;
+  gap: 16px;
 }
 
 /* Fill remaining height so inner grids can distribute rows */
@@ -123,11 +123,11 @@
     flex-direction: row;           /* Row layout: text left, image right */
     justify-content: space-between; /* Separate text and image */
     align-items: center;           /* Vertically center */
-  padding: 24px;
+  padding: 16px;
     border-radius: 24px;
     background: linear-gradient(135deg, #155DFC 0%, #2B7FFF 50%, #00D3F2 100%);
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    gap: 24px;                  /* Internal spacing */
+    gap: 16px;                  /* Internal spacing */
   box-sizing: border-box;
 
 }
@@ -136,7 +136,7 @@
 .left-content {
   display: grid;
   grid-template-rows: auto auto;
-  gap: 24px;
+  gap: 16px;
   min-height: 0; /* Important for child 100% heights in flex column */
 }
 
@@ -241,7 +241,7 @@
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -4px rgba(0, 0, 0, 0.10);
 }
 .meets-container {
-  padding: 16px;
+  padding: 12px;
   border-radius: 16px;
   width: 100%;
   display: flex;
@@ -314,7 +314,8 @@
   flex-direction: column;
   align-items: flex-start; /* So the h2 stays at the top left */
   height: auto;           /* Grows according to content */
-  gap: 20px;              /* Space between h2 and meets */
+  gap: 12px;              /* Space between h2 and meets */
+  padding: 16px;
 }
 .no-meetings {
   width: 100%;
