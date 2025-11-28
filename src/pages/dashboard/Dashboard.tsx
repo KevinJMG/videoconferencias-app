@@ -183,50 +183,6 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* RIGHT SECTION: Quick actions and recent meetings */}
-        <div className="right-content">
-          {/* QUICK ACTIONS PANEL: Shortcuts to common tasks */}
-          <div className="secundary-container">
-            <h2 className="secundary-title">Acciones rápidas</h2>
-            <div className="container-actions" onClick={() => navigate("/schedule-meeting")} style={{ cursor: "pointer" }}>
-              <div className="action">
-                <div className="icon-container"><img src="assets/images/a-camera.svg"></img></div>
-                <h3>Programar videoconferencia</h3>
-                <p>Configurar reunión</p>
-              </div>
-            </div>
-            <div className="container-actions">
-              <div className="action">
-                <div className="icon-container"><img src="assets/images/meeting.svg"></img></div>
-                <h3>Unirse a reunión</h3>
-                <p>Con código o enlace</p>
-              </div>
-            </div>
-          </div>
-
-          {/* RECENT MEETINGS PANEL: Display recent meeting history */}
-          <div className="secundary-container">
-            <h2 className="secundary-title">Reuniones recientes</h2>
-
-            <div className="container-actions">
-              <div className="icon-container"></div>
-
-              <div className="text-container">
-                <h3>Diseño UI/UX Review</h3>
-                <p>Ayer, 3:00 PM</p>
-              </div>
-            </div>
-
-            <div className="container-actions">
-              <div className="icon-container"></div>
-
-              <div className="text-container">
-                <h3>Sprint Planning</h3>
-                <p>13 Nov, 10:00 AM</p>
-              </div>
-            </div>
-          </div>
-        </div>
       </main>
     </div>
    </>

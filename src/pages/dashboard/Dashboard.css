@@ -107,8 +107,8 @@
 .dashboard-content {
   padding: 30px;
   display: grid;
-  grid-template-columns: 60% 40%; /* Right column has more space */
-  gap: 30px; /* Gap between columns */
+  grid-template-columns: 1fr;
+  gap: 30px;
 }
 
 /* Fill remaining height so inner grids can distribute rows */
@@ -135,7 +135,7 @@
 /* LEFT COLUMN: Main content area */
 .left-content {
   display: grid;
-  grid-template-rows: repeat(2, 1fr); /* Two equal rows: top and bottom */
+  grid-template-rows: auto auto;
   gap: 24px;
   min-height: 0; /* Important for child 100% heights in flex column */
 }
