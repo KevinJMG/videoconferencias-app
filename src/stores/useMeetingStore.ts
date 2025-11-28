@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { auth } from '../lib/firebase.config';
+import useAuthStore from './useAuthStore';
 
 // Prefer `VITE_API_URL` in deployments. Fall back to legacy `VITE_API_BASE` or relative path ''
 const API_BASE = (import.meta.env.VITE_API_URL as string) || (import.meta.env.VITE_API_BASE as string) || '';
@@ -42,8 +43,11 @@ const useMeetingStore = create<MeetingStore>()(
 
           // Persist meeting to backend and then store locally. Returns the created meeting from server.
           addMeeting: async (meetingData) => {
-            try {
-              const token = auth.currentUser ? await auth.currentUser.getIdToken() : null;
+              try {
+              // Ensure we have a fresh ID token (force refresh) before calling protected endpoints.
+              // This will help avoid using an expired token which would cause a 401.
+              const token = auth.currentUser ? await auth.currentUser.getIdToken(true) : null;
+              console.debug('[useMeetingStore] addMeeting token present:', !!token);
               const res = await fetch(`${API_BASE_CLEAN}/api/meetings`, {
                 method: 'POST',
                 headers: {
@@ -53,14 +57,22 @@ const useMeetingStore = create<MeetingStore>()(
                 body: JSON.stringify({ metadata: meetingData }),
               });
               if (!res.ok) {
-                console.error('Failed to create meeting on server', await res.text());
-                // Fallback: still create a local meeting entry
-                const newMeeting: Meeting = {
-                  ...meetingData,
-                  id: `meeting-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-                  createdAt: new Date().toISOString(),
-                };
-                set((state) => ({ meetings: [...state.meetings, newMeeting] }));
+                const bodyText = await res.text();
+                // If the server says the request is unauthorized, sign the user out and redirect to login.
+                if (res.status === 401) {
+                  console.error('Failed to create meeting on server - unauthorized. Signing out.', bodyText);
+                  try {
+                    // Trigger the standard logout flow (clears firebase state)
+                    await useAuthStore.getState().logout();
+                  } catch (e) {
+                    console.error('Error during auto-logout after 401', e);
+                  }
+                  // Redirect to login page so user can re-authenticate
+                  window.location.replace('/login');
+                  return;
+                }
+                // For other errors, log and return without silently creating a local-only meeting.
+                console.error('Failed to create meeting on server', res.status, bodyText);
                 return;
               }
 
@@ -84,21 +96,18 @@ const useMeetingStore = create<MeetingStore>()(
                 set((state) => ({ meetings: [...state.meetings, normalized] }));
               }
             } catch (err) {
+              // Network or unexpected error — log and propagate. Do not silently create local-only meetings.
               console.error('Error creating meeting', err);
-              // Fallback local create
-              const newMeeting: Meeting = {
-                ...meetingData,
-                id: `meeting-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-                createdAt: new Date().toISOString(),
-              };
-              set((state) => ({ meetings: [...state.meetings, newMeeting] }));
+              return;
             }
           },
 
       // Fetch meetings owned by the authenticated user from backend
       fetchMyMeetings: async () => {
-        try {
-          const token = auth.currentUser ? await auth.currentUser.getIdToken() : null;
+          try {
+          // Force-refresh token to avoid expired token causing 401.
+          const token = auth.currentUser ? await auth.currentUser.getIdToken(true) : null;
+          console.debug('[useMeetingStore] fetchMyMeetings token present:', !!token);
           const res = await fetch(`${API_BASE_CLEAN}/api/meetings`, {
             method: 'GET',
             headers: {
@@ -106,7 +115,18 @@ const useMeetingStore = create<MeetingStore>()(
             },
           });
           if (!res.ok) {
-            console.error('Failed to fetch meetings for user', await res.text());
+            const body = await res.text();
+            if (res.status === 401) {
+              console.error('Failed to fetch meetings for user - unauthorized. Signing out.', body);
+              try {
+                await useAuthStore.getState().logout();
+              } catch (e) {
+                console.error('Error during auto-logout after 401', e);
+              }
+              window.location.replace('/login');
+              return;
+            }
+            console.error('Failed to fetch meetings for user', res.status, body);
             return;
           }
           const payload = await res.json();
