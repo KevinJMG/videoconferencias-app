@@ -1,32 +1,83 @@
 import React, { useState } from "react";
 import "./VideoConference.css";
 import { useNavigate, useParams } from "react-router-dom";
+import useMeetingStore from "../../stores/useMeetingStore";
 
+/**
+ * VideoConference Component
+ *
+ * Main video conferencing interface providing:
+ * - Main video display area for the primary speaker
+ * - Participant grid showing connected users
+ * - Real-time chat functionality
+ * - Participant list panel
+ * - Full control bar with audio/video/screen share controls
+ * - Meeting timer
+ * - Call end functionality
+ *
+ * @component
+ * @param meetingId - URL parameter containing the meeting identifier
+ * @returns {JSX.Element} The video conference interface
+ *
+ * @example
+ * ```tsx
+ * <VideoConference /> // Route: /conference/:meetingId
+ * ```
+ *
+ * @remarks
+ * - Displays main video feed with participant name overlay
+ * - Shows up to 3 additional participants in a grid
+ * - Supports muting/unmuting microphone
+ * - Allows toggling camera on/off
+ * - Provides screen sharing option
+ * - Real-time chat messaging with timestamp
+ * - Participant roster with live count
+ * - Responsive layout for different screen sizes
+ * - End call button returns to dashboard
+ *
+ * @see useMeetingStore - For meeting data retrieval
+ */
 const VideoConference: React.FC = () => {
   const navigate = useNavigate();
   const { meetingId } = useParams();
+  const getMeetingById = useMeetingStore((state) => state.getMeetingById);
+  const meeting = meetingId ? getMeetingById(meetingId) : null;
 
   const [isMuted, setIsMuted] = useState(false);
   const [isVideoOff, setIsVideoOff] = useState(false);
-  const [isChatOpen, setIsChatOpen] = useState(true);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isParticipantsOpen, setIsParticipantsOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([
     { id: 1, user: "Sistema", text: "Bienvenido a la videoconferencia", time: "10:00" },
   ]);
+  const [participants] = useState([
+    { id: 1, name: "Usuario Principal" },
+    { id: 2, name: "Usuario 1" },
+    { id: 3, name: "Usuario 2" },
+  ]);
 
+  /**
+   * Sends a chat message in the conference
+   * Adds message to chat history with timestamp
+   * Clears input field after sending
+   */
   const handleSendMessage = () => {
     if (message.trim()) {
       const newMessage = {
         id: messages.length + 1,
-        user: "Tú",
+        user: "You",
         text: message,
-        time: new Date().toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" }),
+        time: new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }),
       };
       setMessages([...messages, newMessage]);
       setMessage("");
     }
   };
 
+  /**
+   * Ends the current call and returns to dashboard
+   */
   const handleEndCall = () => {
     navigate(-1);
   };
@@ -37,11 +88,7 @@ const VideoConference: React.FC = () => {
       <header className="conference-header">
         <div className="header-info">
           <h1 className="logo-text">JoinGo</h1>
-          <span className="meeting-id">ID: {meetingId || "DEMO-123"}</span>
-        </div>
-        <div className="header-actions">
-          <button className="btn-minimize">_</button>
-          <button className="btn-close" onClick={handleEndCall}>×</button>
+          <span className="meeting-id">{meeting?.meetingName || "Reunión"}</span>
         </div>
       </header>
 
@@ -120,6 +167,26 @@ const VideoConference: React.FC = () => {
             </div>
           </div>
         )}
+
+        {/* Participants Panel */}
+        {isParticipantsOpen && (
+          <div className="participants-panel">
+            <div className="participants-header">
+              <h3>Participantes</h3>
+              <button className="btn-close-participants" onClick={() => setIsParticipantsOpen(false)}>×</button>
+            </div>
+            <div className="participants-list">
+              {participants.map((participant) => (
+                <div key={participant.id} className="participant-item">
+                  <div className="participant-avatar">
+                    <div className="avatar-circle">{participant.name.charAt(0)}</div>
+                  </div>
+                  <span className="participant-name-text">{participant.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Controls Bar */}
@@ -156,7 +223,7 @@ const VideoConference: React.FC = () => {
           <button
             className={`control-btn ${isVideoOff ? "active" : ""}`}
             onClick={() => setIsVideoOff(!isVideoOff)}
-            title={isVideoOff ? "Activar cámara" : "Desactivar cámara"}
+            title={isVideoOff ? "Activar cámara" : "Detener video"}
           >
             {isVideoOff ? (
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -183,29 +250,34 @@ const VideoConference: React.FC = () => {
 
           <button
             className="control-btn"
+            onClick={() => setIsParticipantsOpen(!isParticipantsOpen)}
+            title="Participantes"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <span>Participantes</span>
+          </button>
+
+          <button
+            className="control-btn"
             onClick={() => setIsChatOpen(!isChatOpen)}
             title="Chat"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
             </svg>
-            <span>Chat</span>
+            <span>Mensaje</span>
           </button>
 
-          <button className="control-btn btn-end-call" onClick={handleEndCall} title="Finalizar llamada">
+          <button className="control-btn btn-end-call" onClick={handleEndCall} title="Terminar llamada">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M23 1L1 23M1 1l22 22"></path>
             </svg>
             <span>Salir</span>
-          </button>
-        </div>
-
-        <div className="controls-right">
-          <button className="control-btn" title="Configuración">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="12" cy="12" r="3"></circle>
-              <path d="M12 1v6m0 6v6m9-9h-6m-6 0H3"></path>
-            </svg>
           </button>
         </div>
       </div>

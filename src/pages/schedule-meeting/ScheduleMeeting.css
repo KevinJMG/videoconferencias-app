@@ -1,4 +1,4 @@
-/* CONTENEDOR PRINCIPAL */
+/* MAIN CONTAINER */
 .schedule-container {
   min-height: 100vh;
   background: #f6f7fb;
@@ -43,123 +43,32 @@
   margin: 0;
 }
 
-/* CONTENIDO PRINCIPAL */
+/* MAIN CONTENT */
 .schedule-content {
   padding: 40px;
-  max-width: 1400px;
+  max-width: 600px;
   margin: 0 auto;
 }
 
-.schedule-title {
-  font-size: 32px;
-  font-weight: 700;
-  color: #1f2937;
-  margin: 0 0 8px 0;
-}
-
-.schedule-subtitle {
-  font-size: 16px;
-  color: #6b7280;
-  margin: 0 0 32px 0;
-}
-
-/* GRID LAYOUT */
-.schedule-grid {
-  display: grid;
-  grid-template-columns: 350px 1fr;
-  gap: 32px;
-}
-
-/* VISTA PREVIA */
-.preview-section {
-  position: sticky;
-  top: 40px;
-  height: fit-content;
-}
-
-.preview-card {
-  background: linear-gradient(135deg, #155DFC 0%, #2B7FFF 50%, #00D3F2 100%);
-  border-radius: 24px;
-  padding: 32px;
-  color: white;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-}
-
-.preview-icon {
-  width: 80px;
-  height: 80px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 24px;
-}
-
-.preview-title {
-  font-size: 24px;
-  font-weight: 700;
-  margin: 0 0 24px 0;
-}
-
-.preview-info {
-  margin-bottom: 16px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.preview-info:last-child {
-  border-bottom: none;
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
-
-.preview-label {
-  font-size: 14px;
-  margin: 0 0 4px 0;
-  opacity: 0.9;
-}
-
-.preview-value {
-  font-size: 16px;
-  font-weight: 600;
-  margin: 0;
-}
-
-/* SECCIÓN DE FORMULARIO */
-.form-section {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.form-card {
+/* FORM CARD */
+.schedule-card {
   background: white;
   border-radius: 20px;
-  padding: 28px;
+  padding: 40px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
-.form-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 24px;
-}
-
-.form-header h3 {
-  font-size: 20px;
+.schedule-title {
+  font-size: 28px;
   font-weight: 700;
   color: #1f2937;
-  margin: 0;
+  margin: 0 0 32px 0;
+  text-align: center;
 }
 
+/* FORM GROUPS */
 .form-group {
-  margin-bottom: 20px;
-}
-
-.form-group:last-child {
-  margin-bottom: 0;
+  margin-bottom: 24px;
 }
 
 .form-group label {
@@ -171,7 +80,7 @@
 }
 
 .form-group input,
-.form-group textarea {
+.form-group select {
   width: 100%;
   padding: 12px 16px;
   font-size: 15px;
@@ -180,33 +89,106 @@
   background: #f9fafb;
   transition: all 0.2s;
   font-family: "Arimo", sans-serif;
+  box-sizing: border-box;
 }
 
 .form-group input:focus,
-.form-group textarea:focus {
+.form-group select:focus {
   outline: none;
   border-color: #155DFC;
   background: white;
   box-shadow: 0 0 0 3px rgba(21, 93, 252, 0.1);
 }
 
-.form-group textarea {
-  resize: vertical;
-  min-height: 100px;
+/* TIME - HOURS AND MINUTES */
+.time-selectors {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
 }
 
+.time-select {
+  padding: 12px 10px;
+  font-size: 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  background: #f9fafb;
+  transition: all 0.2s;
+  font-family: "Arimo", sans-serif;
+  cursor: pointer;
+  text-align: center;
+}
+
+.hours-select {
+  flex: 0.8;
+  min-width: 70px;
+}
+
+.minutes-select {
+  flex: 0.8;
+  min-width: 70px;
+}
+
+.ampm-select {
+  flex: 1;
+  min-width: 110px;
+}
+
+.time-select:focus {
+  outline: none;
+  border-color: #155DFC;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(21, 93, 252, 0.1);
+}
+
+.time-separator {
+  font-size: 20px;
+  font-weight: 600;
+  color: #374151;
+  padding: 0 2px;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+/* ERROR MESSAGE */
+.error-message {
+  padding: 12px 16px;
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  border-radius: 12px;
+  color: #dc2626;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* FORM ROW */
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
-/* PARTICIPANTES */
+/* PARTICIPANTS */
+.participants-section {
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 32px 0;
+}
+
 .participants-input {
   display: flex;
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .participants-input input {
@@ -246,48 +228,42 @@
   box-shadow: 0 4px 12px rgba(21, 93, 252, 0.4);
 }
 
+/* PARTICIPANTS LIST */
 .participants-list {
-  max-height: 200px;
-  overflow-y: auto;
-}
-
-.no-participants {
-  text-align: center;
-  color: #9ca3af;
-  font-size: 14px;
-  padding: 24px;
-  background: #f9fafb;
-  border-radius: 12px;
-  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: inherit;
 }
 
 .participant-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px;
-  background: #f9fafb;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: white;
   border-radius: 12px;
-  margin-bottom: 8px;
-}
-
-.participant-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #155DFC, #00D3F2);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 16px;
+  border: 1px solid #e5e7eb;
 }
 
 .participant-email {
-  flex: 1;
   font-size: 14px;
   color: #374151;
+}
+
+.schedule-card .participants-list .participant-item {
+  background: white;
+  border: 1px solid #e5e7eb;
+  color: inherit;
+}
+
+.schedule-card .participant-email {
+  color: #374151;
+}
+
+.schedule-card .remove-button {
+  background: #fee2e2;
+  color: #dc2626;
 }
 
 .remove-button {
@@ -304,6 +280,7 @@
   justify-content: center;
   transition: all 0.2s;
   line-height: 1;
+  flex-shrink: 0;
 }
 
 .remove-button:hover {
@@ -311,142 +288,11 @@
   transform: scale(1.1);
 }
 
-/* CONFIGURACIÓN */
-.settings-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.setting-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px;
-  background: #f9fafb;
-  border-radius: 14px;
-  transition: all 0.2s;
-}
-
-.setting-item:hover {
-  background: #f3f4f6;
-}
-
-.setting-info {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex: 1;
-}
-
-.setting-info svg {
-  flex-shrink: 0;
-}
-
-.setting-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: #1f2937;
-  margin: 0 0 4px 0;
-}
-
-.setting-description {
-  font-size: 13px;
-  color: #6b7280;
-  margin: 0;
-}
-
-/* TOGGLE SWITCH */
-.toggle {
-  position: relative;
-  width: 52px;
-  height: 28px;
-  cursor: pointer;
-}
-
-.toggle input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.toggle-slider {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #d1d5db;
-  border-radius: 28px;
-  transition: 0.3s;
-}
-
-.toggle-slider:before {
-  content: "";
-  position: absolute;
-  height: 22px;
-  width: 22px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  border-radius: 50%;
-  transition: 0.3s;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.toggle input:checked + .toggle-slider {
-  background: linear-gradient(135deg, #155DFC, #2B7FFF);
-}
-
-.toggle input:checked + .toggle-slider:before {
-  transform: translateX(24px);
-}
-
-/* OPCIONES AVANZADAS */
-.advanced-options {
-  background: #fffbeb;
-  border: 1px solid #fef3c7;
-}
-
-.advanced-content {
-  padding-top: 8px;
-}
-
-.advanced-note {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: #92400e;
-  margin: 0 0 16px 0;
-  padding: 12px;
-  background: #fef3c7;
-  border-radius: 10px;
-}
-
-.advanced-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.advanced-list li {
-  font-size: 14px;
-  color: #78716c;
-  padding: 8px 0;
-  border-bottom: 1px solid #fef3c7;
-}
-
-.advanced-list li:last-child {
-  border-bottom: none;
-}
-
-/* BOTONES DE ACCIÓN */
+/* ACTION BUTTONS */
 .action-buttons {
   display: flex;
   gap: 16px;
   justify-content: flex-end;
-  padding-top: 12px;
 }
 
 .btn-cancel,
@@ -465,6 +311,7 @@
   background: white;
   color: #6b7280;
   border: 2px solid #e5e7eb;
+  flex: 1;
 }
 
 .btn-cancel:hover {
@@ -476,6 +323,7 @@
   background: linear-gradient(135deg, #155DFC 0%, #2B7FFF 100%);
   color: white;
   box-shadow: 0 4px 12px rgba(21, 93, 252, 0.3);
+  flex: 1;
 }
 
 .btn-submit:hover {
@@ -483,32 +331,784 @@
   box-shadow: 0 6px 16px rgba(21, 93, 252, 0.4);
 }
 
-/* RESPONSIVE */
+/* RESPONSIVE - Tablets */
 @media (max-width: 1024px) {
-  .schedule-grid {
-    grid-template-columns: 1fr;
+  .schedule-content {
+    max-width: 100%;
   }
 
-  .preview-section {
-    position: static;
+  .schedule-card {
+    max-width: 100%;
   }
 }
 
+/* RESPONSIVE - Tablets and Medium Screens */
 @media (max-width: 768px) {
+  .schedule-header {
+    padding: 12px 20px;
+    gap: 12px;
+  }
+
+  .back-button {
+    padding: 6px 8px;
+    font-size: 14px;
+  }
+
+  .logo-text {
+    font-size: 24px;
+  }
+
   .schedule-content {
-    padding: 24px;
+    padding: 16px;
+    max-width: 100%;
+  }
+
+  .schedule-card {
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .schedule-title {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-group label {
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+
+  .form-group input,
+  .form-group select {
+    padding: 10px 12px;
+    font-size: 14px;
   }
 
   .form-row {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .action-buttons {
-    flex-direction: column;
+    flex-direction: row;
+    gap: 12px;
   }
 
   .btn-cancel,
   .btn-submit {
-    width: 100%;
+    padding: 12px 20px;
+    font-size: 15px;
+    flex: 1;
+  }
+
+  .participants-input {
+    flex-direction: row;
+    gap: 12px;
+  }
+
+  .participants-input input {
+    flex: 1;
+  }
+
+  .add-button {
+    white-space: nowrap;
+  }
+
+  .participants-section {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+  }
+
+  .section-title {
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+
+  .participants-input input {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .participant-item {
+    padding: 10px 12px;
+  }
+
+  .participant-email {
+    font-size: 13px;
+  }
+
+  .error-message {
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+}
+
+/* RESPONSIVE - Small Screens */
+@media (max-width: 480px) {
+  .schedule-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .schedule-header {
+    padding: 8px 12px;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .back-button {
+    padding: 4px 6px;
+    font-size: 12px;
+    gap: 4px;
+  }
+
+  .back-button svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .logo-text {
+    font-size: 20px;
+  }
+
+  .schedule-content {
+    padding: 12px;
+    max-width: 100%;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .schedule-card {
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  }
+
+  .schedule-title {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .form-group {
+    margin-bottom: 12px;
+  }
+
+  .form-group label {
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  .form-group input,
+  .form-group select {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .action-buttons {
+    gap: 8px;
+    flex-direction: row;
+  }
+
+  .btn-cancel,
+  .btn-submit {
+    padding: 10px 16px;
+    font-size: 14px;
+    flex: 1;
+  }
+
+  .participants-section {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .participants-input {
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  .participants-input input {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .add-button {
+    padding: 8px 12px;
+    font-size: 12px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .participant-item {
+    padding: 8px 10px;
+  }
+
+  .participant-email {
+    font-size: 12px;
+    word-break: break-all;
+  }
+
+  .remove-button {
+    width: 24px;
+    height: 24px;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .error-message {
+    font-size: 12px;
+    padding: 8px 10px;
+    margin-bottom: 16px;
+  }
+}
+
+/* RESPONSIVE - Landscape on small devices (max-height) */
+@media (max-width: 480px) and (max-height: 500px) {
+  .schedule-content {
+    padding: 8px;
+  }
+
+  .schedule-card {
+    padding: 12px;
+  }
+
+  .schedule-title {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  .form-group {
+    margin-bottom: 8px;
+  }
+
+  .form-group label {
+    font-size: 11px;
+    margin-bottom: 2px;
+  }
+
+  .form-group input,
+  .form-group select {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .participants-section {
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+  }
+
+  .section-title {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .add-button {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+
+  .btn-cancel,
+  .btn-submit {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+}
+
+/* RESPONSIVE - Reduced height (Short screens) */
+@media (max-height: 800px) {
+  .schedule-container {
+    min-height: auto;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .schedule-header {
+    flex-shrink: 0;
+    padding: 10px 20px;
+  }
+
+  .schedule-content {
+    padding: 16px;
+    max-width: 100%;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .schedule-card {
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  }
+
+  .schedule-title {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .form-group {
+    margin-bottom: 12px;
+  }
+
+  .form-group label {
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  .form-group input,
+  .form-group select {
+    padding: 9px 10px;
+    font-size: 13px;
+  }
+
+  .time-selectors {
+    gap: 3px;
+  }
+
+  .time-select {
+    padding: 9px 8px;
+    font-size: 13px;
+  }
+
+  .time-separator {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .participants-section {
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+  }
+
+  .section-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .participants-input {
+    gap: 8px;
+    flex-direction: row;
+  }
+
+  .participants-input input {
+    flex: 1;
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .add-button {
+    padding: 8px 14px;
+    font-size: 13px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .participants-list {
+    max-height: 70px;
+    overflow-y: auto;
+    margin-bottom: 8px;
+    background: inherit;
+  }
+
+  .action-buttons {
+    gap: 8px;
+    margin-top: 10px;
+    flex-direction: row;
+  }
+
+  .btn-cancel,
+  .btn-submit {
+    padding: 10px 16px;
+    font-size: 13px;
+    flex: 1;
+  }
+
+  .error-message {
+    padding: 8px 10px;
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+}
+
+/* RESPONSIVE - Orientation Landscape (wide and short screens) */
+@media (min-aspect-ratio: 4/3) and (max-height: 600px) {
+  .schedule-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .schedule-header {
+    flex-shrink: 0;
+    padding: 8px 20px;
+  }
+
+  .schedule-content {
+    flex: 1;
+    padding: 8px 20px;
+    overflow-y: auto;
+  }
+
+  .schedule-card {
+    padding: 12px;
+  }
+
+  .schedule-title {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  .form-group {
+    margin-bottom: 8px;
+  }
+
+  .form-group label {
+    font-size: 11px;
+    margin-bottom: 2px;
+  }
+
+  .form-group input,
+  .form-group select {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .participants-section {
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .participants-input {
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  .participants-input input {
+    flex: 1;
+  }
+
+  .add-button {
+    padding: 8px 12px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .participants-list {
+    max-height: 50px;
+    overflow-y: auto;
+  }
+
+  .action-buttons {
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .btn-cancel,
+  .btn-submit {
+    padding: 8px 14px;
+    font-size: 12px;
+    flex: 1;
+  }
+
+  .error-message {
+    font-size: 11px;
+    padding: 6px 8px;
+    margin-bottom: 8px;
+  }
+}
+
+@media (max-height: 700px) {
+  .schedule-container {
+    min-height: auto;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .schedule-header {
+    padding: 8px 16px;
+    flex-shrink: 0;
+  }
+
+  .schedule-content {
+    padding: 10px;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .schedule-card {
+    padding: 12px;
+  }
+
+  .schedule-title {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .form-group {
+    margin-bottom: 8px;
+  }
+
+  .form-group label {
+    font-size: 11px;
+    margin-bottom: 2px;
+  }
+
+  .form-group input,
+  .form-group select {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+
+  .time-selectors {
+    gap: 2px;
+    align-items: center;
+  }
+
+  .time-select {
+    padding: 6px 6px;
+    font-size: 11px;
+  }
+
+  .time-separator {
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .participants-section {
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+  }
+
+  .section-title {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  .participants-input {
+    gap: 6px;
+    flex-direction: row;
+  }
+
+  .participants-input input {
+    flex: 1;
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+
+  .add-button {
+    padding: 6px 10px;
+    font-size: 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .participants-list {
+    max-height: 50px;
+    overflow-y: auto;
+    margin-bottom: 6px;
+    background: inherit;
+  }
+
+  .participant-item {
+    padding: 4px 8px;
+    min-height: auto;
+  }
+
+  .participant-email {
+    font-size: 10px;
+  }
+
+  .remove-button {
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+  }
+
+  .action-buttons {
+    gap: 6px;
+    margin-top: 8px;
+    flex-direction: row;
+  }
+
+  .btn-cancel,
+  .btn-submit {
+    padding: 8px 10px;
+    font-size: 11px;
+    flex: 1;
+  }
+
+  .error-message {
+    padding: 6px 8px;
+    font-size: 10px;
+    margin-bottom: 8px;
+  }
+}
+
+@media (max-height: 600px) {
+  .schedule-container {
+    min-height: 100vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .schedule-header {
+    padding: 6px 16px;
+    flex-shrink: 0;
+  }
+
+  .back-button {
+    padding: 3px 6px;
+    font-size: 11px;
+  }
+
+  .back-button svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .logo-text {
+    font-size: 18px;
+  }
+
+  .schedule-content {
+    padding: 8px;
+    max-width: 100%;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .schedule-card {
+    padding: 10px;
+  }
+
+  .schedule-title {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .form-group {
+    margin-bottom: 8px;
+  }
+
+  .form-group label {
+    font-size: 10px;
+    margin-bottom: 2px;
+  }
+
+  .form-group input,
+  .form-group select {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+
+  .time-selectors {
+    gap: 2px;
+    align-items: center;
+  }
+
+  .time-select {
+    padding: 6px 5px;
+    font-size: 11px;
+  }
+
+  .time-separator {
+    font-size: 14px;
+    margin-bottom: 4px;
+    padding: 0 1px;
+  }
+
+  .form-row {
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .participants-section {
+    max-height: 70px;
+    overflow-y: auto;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .section-title {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  .participants-input {
+    gap: 6px;
+    flex-direction: row;
+  }
+
+  .participants-input input {
+    flex: 1;
+    padding: 6px 8px;
+    font-size: 10px;
+  }
+
+  .add-button {
+    padding: 6px 8px;
+    font-size: 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .participant-item {
+    padding: 4px 8px;
+  }
+
+  .participant-email {
+    font-size: 10px;
+  }
+
+  .remove-button {
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+  }
+
+  .action-buttons {
+    gap: 6px;
+    margin-top: 6px;
+    flex-direction: row;
+  }
+
+  .btn-cancel,
+  .btn-submit {
+    padding: 7px 10px;
+    font-size: 11px;
+    flex: 1;
+  }
+
+  .error-message {
+    padding: 6px 8px;
+    font-size: 10px;
+    margin-bottom: 8px;
   }
 }

@@ -1,4 +1,4 @@
-/* CONTENEDOR PRINCIPAL */
+/* MAIN CONTAINER */
 .sitemap-container {
   min-height: 100vh;
   background: #f6f7fb;
@@ -45,7 +45,7 @@
   margin: 0;
 }
 
-/* CONTENIDO PRINCIPAL */
+/* MAIN CONTENT */
 .sitemap-content {
   flex: 1;
   padding: 60px 40px 40px;
@@ -69,7 +69,7 @@
   text-align: center;
 }
 
-/* GRID DE TARJETAS */
+/* CARDS GRID */
 .sitemap-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -136,7 +136,7 @@
   transform: translateX(4px);
 }
 
-/* INFORMACIÓN DE CONTACTO */
+/* CONTACT INFORMATION */
 .contact-info {
   margin-bottom: 60px;
 }
@@ -186,7 +186,7 @@
   margin: 0;
 }
 
-/* REDES SOCIALES */
+/* SOCIAL NETWORKS */
 .social-section {
   margin-bottom: 60px;
 }
@@ -244,7 +244,7 @@
   background: #ff0000;
 }
 
-/* SECCIÓN DE AYUDA */
+/* HELP SECTION */
 .help-section {
   text-align: center;
   margin-bottom: 60px;
@@ -329,26 +329,89 @@
   text-align: center;
 }
 
-/* RESPONSIVE */
+/* RESPONSIVE - Tablet */
 @media (max-width: 768px) {
+  .sitemap-header {
+    padding: 12px 20px;
+    gap: 12px;
+  }
+
+  .back-button {
+    padding: 6px 8px;
+    font-size: 14px;
+  }
+
+  .logo-text {
+    font-size: 24px;
+  }
+
   .sitemap-content {
     padding: 40px 24px 24px;
   }
 
   .sitemap-title {
     font-size: 32px;
+    margin-bottom: 10px;
   }
 
   .sitemap-subtitle {
     font-size: 16px;
+    margin-bottom: 40px;
   }
 
   .sitemap-grid {
     grid-template-columns: 1fr;
+    gap: 18px;
+    margin-bottom: 48px;
+  }
+
+  .sitemap-card {
+    padding: 24px;
+    border-radius: 16px;
+  }
+
+  .card-header h3 {
+    font-size: 18px;
+  }
+
+  .card-links li {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+
+  .contact-info {
+    margin-bottom: 48px;
+  }
+
+  .contact-title {
+    font-size: 26px;
+    margin-bottom: 24px;
   }
 
   .contact-cards {
     grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .contact-card {
+    padding: 24px;
+  }
+
+  .contact-card h4 {
+    font-size: 16px;
+  }
+
+  .contact-card p {
+    font-size: 14px;
+  }
+
+  .social-section {
+    margin-bottom: 48px;
+  }
+
+  .social-title {
+    font-size: 26px;
+    margin-bottom: 24px;
   }
 
   .social-icons {
@@ -360,12 +423,551 @@
     height: 48px;
   }
 
+  .help-section {
+    padding: 32px 24px;
+    margin-bottom: 48px;
+  }
+
+  .help-text {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  .help-button {
+    padding: 12px 28px;
+    font-size: 15px;
+  }
+
+  .sitemap-footer {
+    padding: 24px 20px;
+  }
+
   .footer-links {
     flex-direction: column;
     gap: 8px;
   }
 
+  .footer-links a {
+    font-size: 14px;
+  }
+
   .footer-links .separator {
     display: none;
+  }
+
+  .footer-copyright {
+    font-size: 13px;
+  }
+}
+
+/* RESPONSIVE - Mobile */
+@media (max-width: 480px) {
+  .sitemap-header {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .back-button {
+    padding: 4px 6px;
+    font-size: 12px;
+    gap: 4px;
+  }
+
+  .back-button svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .logo-text {
+    font-size: 20px;
+  }
+
+  .sitemap-content {
+    padding: 24px 12px 12px;
+  }
+
+  .sitemap-title {
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+
+  .sitemap-subtitle {
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+
+  .sitemap-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+
+  .sitemap-card {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .card-header {
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+  }
+
+  .card-header h3 {
+    font-size: 16px;
+  }
+
+  .card-links {
+    gap: 8px;
+  }
+
+  .card-links li {
+    font-size: 13px;
+    padding: 6px 8px;
+  }
+
+  .contact-info {
+    margin-bottom: 32px;
+  }
+
+  .contact-title {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .contact-cards {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .contact-card {
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  .contact-card svg {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 12px;
+  }
+
+  .contact-card h4 {
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+
+  .contact-card p {
+    font-size: 13px;
+  }
+
+  .social-section {
+    margin-bottom: 32px;
+  }
+
+  .social-title {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .social-icons {
+    gap: 12px;
+  }
+
+  .social-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
+
+  .social-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .help-section {
+    padding: 24px 16px;
+    margin-bottom: 32px;
+    border-radius: 12px;
+  }
+
+  .help-text {
+    font-size: 14px;
+    margin-bottom: 14px;
+  }
+
+  .help-button {
+    padding: 10px 24px;
+    font-size: 14px;
+  }
+
+  .sitemap-footer {
+    padding: 16px 12px;
+  }
+
+  .footer-content {
+    gap: 12px;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .footer-links a {
+    font-size: 13px;
+  }
+
+  .footer-copyright {
+    font-size: 12px;
+  }
+}
+
+/* RESPONSIVE - Reduced height (Short screens) */
+@media (max-height: 800px) {
+  .sitemap-container {
+    min-height: auto;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sitemap-header {
+    flex-shrink: 0;
+    padding: 12px 20px;
+  }
+
+  .sitemap-content {
+    padding: 30px 40px 30px;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .sitemap-title {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+
+  .sitemap-subtitle {
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+
+  .sitemap-grid {
+    margin-bottom: 40px;
+    gap: 16px;
+  }
+
+  .sitemap-card {
+    padding: 20px;
+  }
+
+  .contact-info {
+    margin-bottom: 40px;
+  }
+
+  .contact-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  .contact-card {
+    padding: 24px;
+  }
+
+  .social-section {
+    margin-bottom: 40px;
+  }
+
+  .social-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  .help-section {
+    padding: 32px;
+    margin-bottom: 40px;
+  }
+
+  .help-button {
+    padding: 12px 28px;
+    font-size: 15px;
+  }
+
+  .sitemap-footer {
+    flex-shrink: 0;
+    padding: 20px;
+  }
+}
+
+@media (max-height: 700px) {
+  .sitemap-container {
+    min-height: auto;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sitemap-header {
+    flex-shrink: 0;
+    padding: 12px 16px;
+  }
+
+  .sitemap-content {
+    padding: 20px 30px 20px;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .sitemap-title {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  .sitemap-subtitle {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .sitemap-grid {
+    margin-bottom: 24px;
+    gap: 12px;
+  }
+
+  .sitemap-card {
+    padding: 16px;
+  }
+
+  .card-header h3 {
+    font-size: 16px;
+  }
+
+  .card-links li {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  .contact-info {
+    margin-bottom: 24px;
+  }
+
+  .contact-title {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .contact-card {
+    padding: 16px;
+  }
+
+  .contact-card h4 {
+    font-size: 14px;
+  }
+
+  .contact-card p {
+    font-size: 12px;
+  }
+
+  .social-section {
+    margin-bottom: 24px;
+  }
+
+  .social-title {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .social-icons {
+    gap: 10px;
+  }
+
+  .social-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .help-section {
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+
+  .help-text {
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+
+  .help-button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .sitemap-footer {
+    flex-shrink: 0;
+    padding: 16px;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .footer-links a {
+    font-size: 12px;
+  }
+
+  .footer-copyright {
+    font-size: 11px;
+  }
+}
+
+@media (max-height: 600px) {
+  .sitemap-container {
+    min-height: auto;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sitemap-header {
+    flex-shrink: 0;
+    padding: 8px 12px;
+  }
+
+  .logo-text {
+    font-size: 20px;
+  }
+
+  .sitemap-content {
+    padding: 16px 20px 16px;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .sitemap-title {
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+
+  .sitemap-subtitle {
+    font-size: 12px;
+    margin-bottom: 16px;
+  }
+
+  .sitemap-grid {
+    margin-bottom: 16px;
+    gap: 10px;
+  }
+
+  .sitemap-card {
+    padding: 12px;
+    border-radius: 10px;
+  }
+
+  .card-header {
+    gap: 8px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+  }
+
+  .card-header h3 {
+    font-size: 14px;
+  }
+
+  .card-links {
+    gap: 6px;
+  }
+
+  .card-links li {
+    font-size: 11px;
+    padding: 3px 6px;
+  }
+
+  .contact-info {
+    margin-bottom: 16px;
+  }
+
+  .contact-title {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .contact-card {
+    padding: 12px;
+  }
+
+  .contact-card svg {
+    width: 28px;
+    height: 28px;
+    margin-bottom: 8px;
+  }
+
+  .contact-card h4 {
+    font-size: 13px;
+  }
+
+  .contact-card p {
+    font-size: 11px;
+  }
+
+  .social-section {
+    margin-bottom: 16px;
+  }
+
+  .social-title {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .social-icons {
+    gap: 8px;
+  }
+
+  .social-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+
+  .social-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .help-section {
+    padding: 16px;
+    margin-bottom: 16px;
+    border-radius: 12px;
+  }
+
+  .help-text {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+
+  .help-button {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+
+  .sitemap-footer {
+    flex-shrink: 0;
+    padding: 12px;
+  }
+
+  .footer-content {
+    gap: 8px;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .footer-links a {
+    font-size: 11px;
+  }
+
+  .footer-copyright {
+    font-size: 10px;
   }
 }

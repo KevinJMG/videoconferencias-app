@@ -24,6 +24,7 @@ type MeetingStore = {
   meetings: Meeting[];
   addMeeting: (meeting: Omit<Meeting, 'id' | 'createdAt'>) => void;
   removeMeeting: (id: string) => void;
+  updateMeeting: (id: string, meeting: Omit<Meeting, 'id' | 'createdAt'>) => void;
   getMeetingById: (id: string) => Meeting | undefined;
   getUpcomingMeetings: () => Meeting[];
 };
@@ -48,6 +49,21 @@ const useMeetingStore = create<MeetingStore>()(
       removeMeeting: (id) => {
         set((state) => ({
           meetings: state.meetings.filter((meeting) => meeting.id !== id),
+        }));
+      },
+
+      updateMeeting: (id, meetingData) => {
+        set((state) => ({
+          meetings: state.meetings.map((meeting) =>
+            meeting.id === id
+              ? {
+                  ...meeting,
+                  ...meetingData,
+                  id: meeting.id, // Mantener el ID original
+                  createdAt: meeting.createdAt, // Mantener la fecha de creación
+                }
+              : meeting
+          ),
         }));
       },
 

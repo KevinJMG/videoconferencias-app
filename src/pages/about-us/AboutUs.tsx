@@ -2,6 +2,29 @@ import React from "react";
 import "./AboutUs.css";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * AboutUs Component
+ *
+ * Displays comprehensive information about JoinGo, including:
+ * - Company mission and vision
+ * - Key statistics and metrics
+ * - Core values and principles
+ * - Company history and background
+ * - Call-to-action for user registration
+ *
+ * @component
+ * @returns {JSX.Element} The About Us page with full company information
+ *
+ * @example
+ * ```tsx
+ * <AboutUs />
+ * ```
+ *
+ * @remarks
+ * - Responsive design with mobile and desktop layouts
+ * - Navigation back to dashboard via back button
+ * - Includes social links and footer information
+ */
 const AboutUs: React.FC = () => {
   const navigate = useNavigate();
 
@@ -19,18 +42,18 @@ const AboutUs: React.FC = () => {
         <h1 className="logo-text">JoinGo</h1>
       </header>
 
-      {/* Contenido Principal */}
+      {/* Main Content */}
       <main className="about-content">
-        {/* Título */}
+        {/* Title */}
         <section className="about-intro">
           <h1 className="about-title">Sobre Nosotros</h1>
           <p className="about-subtitle">
-            Nuestra misión es conectar al mundo a través de videoconferencias simples, seguras
-            y de alta calidad. Creemos que la comunicación efectiva no debe tener fronteras.
+            Nuestra misión es conectar al mundo a través de videoconferencias simples, seguras y de alta calidad.
+            Creemos que la comunicación efectiva no debe tener fronteras.
           </p>
         </section>
 
-        {/* Misión y Visión */}
+        {/* Mission and Vision */}
         <section className="mission-vision-grid">
           <div className="mission-card">
             <div className="card-icon">
@@ -43,10 +66,9 @@ const AboutUs: React.FC = () => {
             </div>
             <h3 className="card-title">Nuestra Misión</h3>
             <p className="card-description">
-              Desarrollar la plataforma de videoconferencias más accesible,
-              intuitiva y potente del mercado. Nuestra plataforma que permite a
-              equipos, familias y organizaciones conectarse sin importar donde se
-              encuentren. Creemos en la comunicación.
+              Desarrollar la plataforma de videoconferencia más accesible, intuitiva y poderosa del mercado.
+              Nuestra plataforma permite que equipos, familias y organizaciones se conecten sin importar dónde estén.
+              Creemos en la comunicación.
             </p>
           </div>
 
@@ -59,15 +81,14 @@ const AboutUs: React.FC = () => {
             </div>
             <h3 className="card-title">Nuestra Visión</h3>
             <p className="card-description">
-              Ser la plataforma de videoconferencias líder mundial, reconocida
-              por su fiabilidad de calidad. Visualizar y potenciar las
-              herramientas que transforman la comunicación en valor agregado y
-              oportunidades de crecimiento en cada sector.
+              Ser la plataforma de videoconferencia líder en el mundo, reconocida por su confiabilidad y calidad.
+              Visualizar y potenciar las herramientas que transforman la comunicación en valor agregado y
+              oportunidades de crecimiento en todos los sectores.
             </p>
           </div>
         </section>
 
-        {/* JoinGo en Números */}
+        {/* JoinGo by the Numbers */}
         <section className="stats-section">
           <h2 className="section-title">JoinGo en Números</h2>
           <div className="stats-grid">
@@ -81,7 +102,7 @@ const AboutUs: React.FC = () => {
                 </svg>
               </div>
               <h3 className="stat-number">1.0M+</h3>
-              <p className="stat-label">Usuarios activos</p>
+              <p className="stat-label">Usuarios Activos</p>
             </div>
 
             <div className="stat-card">
@@ -104,7 +125,7 @@ const AboutUs: React.FC = () => {
                 </svg>
               </div>
               <h3 className="stat-number">99.9%</h3>
-              <p className="stat-label">Uptime</p>
+              <p className="stat-label">Disponibilidad</p>
             </div>
 
             <div className="stat-card">
@@ -115,12 +136,12 @@ const AboutUs: React.FC = () => {
                 </svg>
               </div>
               <h3 className="stat-number">50M+</h3>
-              <p className="stat-label">Reuniones mensuales</p>
+              <p className="stat-label">Reuniones Mensuales</p>
             </div>
           </div>
         </section>
 
-        {/* Nuestros Valores */}
+        {/* Our Values */}
         <section className="values-section">
           <h2 className="section-title">Nuestros Valores</h2>
           <div className="values-grid">
@@ -133,7 +154,7 @@ const AboutUs: React.FC = () => {
               <div className="value-content">
                 <h4 className="value-title">Pasión por la Conexión</h4>
                 <p className="value-description">
-                  Creemos en el valor de la conexión de equipos de diversas
+                  Creemos en el valor de conectar equipos de diferentes
                   partes del mundo sin importar la distancia o ubicación.
                 </p>
               </div>
@@ -149,7 +170,7 @@ const AboutUs: React.FC = () => {
               <div className="value-content">
                 <h4 className="value-title">Seguridad y Privacidad</h4>
                 <p className="value-description">
-                  Tu información está protegida con cifrado de extremo a extremo
+                  Tu información está protegida con encriptación de extremo a extremo
                   y cumplimos con los más altos estándares de seguridad global.
                 </p>
               </div>
@@ -166,7 +187,7 @@ const AboutUs: React.FC = () => {
                 <h4 className="value-title">Innovación Constante</h4>
                 <p className="value-description">
                   Nos mantenemos a la vanguardia creando soluciones adaptadas a
-                  las últimas tecnologías y los cambios.
+                  las últimas tecnologías y cambios.
                 </p>
               </div>
             </div>
@@ -182,7 +203,7 @@ const AboutUs: React.FC = () => {
               <div className="value-content">
                 <h4 className="value-title">Accesibilidad Universal</h4>
                 <p className="value-description">
-                  Nuestra plataforma está diseñada para todos, sin importar el
+                  Nuestra plataforma está diseñada para todos, sin importar
                   dispositivo, ubicación o experiencia técnica.
                 </p>
               </div>
@@ -190,34 +211,34 @@ const AboutUs: React.FC = () => {
           </div>
         </section>
 
-        {/* Nuestra Historia */}
+        {/* Our History */}
         <section className="history-section">
           <h2 className="section-title">Nuestra Historia</h2>
           <div className="history-content">
             <p>
-              JoinGo nació en 2025 con una visión clara: hacer la comunicación
-              por video tan simple como presionar un botón. En un mundo cada vez
-              más conectado pero físicamente distante, vimos la necesidad de una
-              plataforma que reuniera tecnología de punta con facilidad de uso sin
+              JoinGo nació en 2025 con una visión clara: hacer que la comunicación por video
+              sea tan simple como presionar un botón. En un mundo cada vez más
+              conectado pero físicamente distante, vimos la necesidad de una
+              plataforma que combinara tecnología de punta con facilidad de uso sin
               sacrificar la privacidad.
             </p>
             <p>
-              Comenzamos como un equipo pequeño de ingenieros de sistemas y
+              Comenzamos como un pequeño equipo de ingenieros de sistemas y
               comunicación, y hoy servimos a millones de usuarios en todo el mundo.
-              Nuestro crecimiento se basa en escuchar a nuestros usuarios, mejorar
-              continuamente e incorporar nuevas funciones que realmente marquen la
-              diferencia en su día a día.
+              Nuestro crecimiento se basa en escuchar a nuestros usuarios, mejorar continuamente
+              e incorporar nuevas características que realmente hacen una
+              diferencia en su vida diaria.
             </p>
             <p>
-              Nuestra dedicación a la excelencia, la seguridad y la innovación nos
-              ha llevado a ser reconocidos como uno de los principales proveedores
-              de videoconferencias del mundo, y seguimos comprometidos en llevar
+              Nuestra dedicación a la excelencia, seguridad e innovación nos ha
+              llevado a ser reconocidos como uno de los principales proveedores
+              de videoconferencias en el mundo, y nos comprometemos a ofrecer
               conexiones de clase mundial a todos.
             </p>
           </div>
         </section>
 
-        {/* ¿Listo para conectarte? */}
+        {/* Ready to connect? */}
         <section className="cta-section">
           <h2 className="cta-title">¿Listo para conectarte?</h2>
           <p className="cta-text">
@@ -234,9 +255,9 @@ const AboutUs: React.FC = () => {
       <footer className="about-footer">
         <div className="footer-content">
           <div className="footer-links">
-            <a href="#" onClick={(e) => { e.preventDefault(); navigate("/dashboard"); }}>Página principal</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); navigate("/dashboard"); }}>Inicio</a>
             <span className="separator">•</span>
-            <a href="#" onClick={(e) => { e.preventDefault(); navigate("/sitemap"); }}>Mapa del sitio</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); navigate("/sitemap"); }}>Mapa del Sitio</a>
             <span className="separator">•</span>
             <a href="#" onClick={(e) => { e.preventDefault(); navigate("/support"); }}>Soporte</a>
           </div>

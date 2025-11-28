@@ -4,6 +4,7 @@ import Profile from "../pages/profile/Profile";
 import Register from "../pages/register/Register";
 import Dashboard from "../pages/dashboard/Dashboard";
 import ScheduleMeeting from "../pages/schedule-meeting/ScheduleMeeting";
+import EditMeeting from "../pages/edit-meeting/EditMeeting";
 import VideoConference from "../pages/video-conference/VideoConference";
 import SiteMap from "../pages/sitemap/SiteMap";
 import AboutUs from "../pages/about-us/AboutUs";
@@ -32,6 +33,10 @@ export const routes = [
     {
         path: "/schedule-meeting",
         element: <ScheduleMeeting />,
+    },
+    {
+        path: "/edit-meeting/:meetingId",
+        element: <EditMeeting />,
     },
     {
         path: "/conference/:meetingId",

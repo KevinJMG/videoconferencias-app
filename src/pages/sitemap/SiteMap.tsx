@@ -2,6 +2,37 @@ import React from "react";
 import "./SiteMap.css";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * SiteMap Component
+ *
+ * Provides comprehensive navigation structure for the application with:
+ * - Organized sections for all major features and pages
+ * - Quick access to account and support resources
+ * - Contact information (email, phone, live chat)
+ * - Social media links
+ * - Legal and company information
+ * - Help and suggestion section
+ *
+ * @component
+ * @returns {JSX.Element} The site map with organized navigation
+ *
+ * @example
+ * ```tsx
+ * <SiteMap />
+ * ```
+ *
+ * @remarks
+ * - Categorizes site content into logical sections:
+ *   - Principal (Home, Features, Plans, Downloads)
+ *   - Meetings (New, Join, Schedule, Recordings)
+ *   - Account (Login, Register, Profile, Settings)
+ *   - Support (Help Center, FAQ, Tutorials, Contact)
+ *   - Company (About, Blog, Careers, Press)
+ *   - Legal (Terms, Privacy, Cookies, Security)
+ * - Includes contact options: Email, Phone, Live Chat
+ * - Social media integration
+ * - Responsive design for all devices
+ */
 const SiteMap: React.FC = () => {
   const navigate = useNavigate();
 
@@ -24,7 +55,7 @@ const SiteMap: React.FC = () => {
         <p className="sitemap-subtitle">Encuentra fácilmente lo que buscas en JoinGo</p>
 
         <div className="sitemap-grid">
-          {/* Principal */}
+          {/* Main */}
           <div className="sitemap-card">
             <div className="card-header">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -41,7 +72,7 @@ const SiteMap: React.FC = () => {
             </ul>
           </div>
 
-          {/* Reuniones */}
+          {/* Meetings */}
           <div className="sitemap-card">
             <div className="card-header">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -58,7 +89,7 @@ const SiteMap: React.FC = () => {
             </ul>
           </div>
 
-          {/* Cuenta */}
+          {/* Account */}
           <div className="sitemap-card">
             <div className="card-header">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -76,7 +107,7 @@ const SiteMap: React.FC = () => {
             </ul>
           </div>
 
-          {/* Soporte y Recursos */}
+          {/* Support and Resources */}
           <div className="sitemap-card">
             <div className="card-header">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -96,7 +127,7 @@ const SiteMap: React.FC = () => {
             </ul>
           </div>
 
-          {/* Empresa */}
+          {/* Company */}
           <div className="sitemap-card">
             <div className="card-header">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -110,7 +141,7 @@ const SiteMap: React.FC = () => {
               <li>Blog</li>
               <li>Carreras</li>
               <li>Prensa</li>
-              <li>Partners</li>
+              <li>Asociados</li>
             </ul>
           </div>
 
@@ -145,8 +176,8 @@ const SiteMap: React.FC = () => {
                 <rect x="2" y="4" width="20" height="16" rx="2"></rect>
                 <path d="M22 7l-10 7L2 7"></path>
               </svg>
-              <h4>Email</h4>
-              <p>soporte@joingo.com</p>
+              <h4>Correo</h4>
+              <p>support@joingo.com</p>
             </div>
             <div className="contact-card">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2">
@@ -200,7 +231,7 @@ const SiteMap: React.FC = () => {
         {/* Help Section */}
         <div className="help-section">
           <p className="help-text">¿No encuentras lo que buscas?</p>
-          <button className="help-button">Sugerir o ayuda</button>
+          <button className="help-button">Sugerir o ayudar</button>
         </div>
       </main>
 
@@ -208,7 +239,7 @@ const SiteMap: React.FC = () => {
       <footer className="sitemap-footer">
         <div className="footer-content">
           <div className="footer-links">
-            <a href="#" onClick={(e) => { e.preventDefault(); navigate("/dashboard"); }}>Página principal</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); navigate("/dashboard"); }}>Inicio</a>
             <span className="separator">•</span>
             <a href="#" onClick={(e) => { e.preventDefault(); navigate("/about"); }}>Sobre nosotros</a>
             <span className="separator">•</span>

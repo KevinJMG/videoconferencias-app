@@ -2,6 +2,34 @@ import React, { useState } from "react";
 import "./Support.css";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Support Component
+ *
+ * Comprehensive support center providing:
+ * - Multiple contact options (Email, Phone, Live Chat)
+ * - Frequently Asked Questions (FAQ) section
+ * - Contact form for detailed inquiries
+ * - Additional resources (Documentation, Videos, Community)
+ * - Quick troubleshooting guide
+ * - Help and suggestions section
+ *
+ * @component
+ * @returns {JSX.Element} The support center page with help resources
+ *
+ * @example
+ * ```tsx
+ * <Support />
+ * ```
+ *
+ * @remarks
+ * - Contact methods: Email (24hr response), Phone (9AM-6PM weekdays), Live Chat (24/7)
+ * - FAQ covers common topics like meeting creation, recordings, security, mobile access
+ * - Contact form allows users to report issues and ask questions
+ * - Includes links to additional resources and community
+ * - Responsive design for all devices
+ *
+ * @state formData - Manages form input fields for contact inquiries
+ */
 const Support: React.FC = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -11,14 +39,23 @@ const Support: React.FC = () => {
     message: "",
   });
 
+  /**
+   * Handles form input changes and updates state
+   * @param e - Change event from input, textarea, or select element
+   */
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  /**
+   * Handles form submission
+   * Shows confirmation message and resets form fields
+   * @param e - Form submit event
+   */
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Tu mensaje ha sido enviado. Nos pondremos en contacto contigo pronto.");
+    alert("Tu mensaje ha sido enviado. Nos pondremos en contacto pronto.");
     setFormData({ name: "", email: "", subject: "", message: "" });
   };
 
@@ -36,9 +73,9 @@ const Support: React.FC = () => {
         <h1 className="logo-text">JoinGo</h1>
       </header>
 
-      {/* Contenido Principal */}
+      {/* Main Content */}
       <main className="support-content">
-        {/* Título */}
+        {/* Title */}
         <section className="support-intro">
           <h1 className="support-title">Centro de Soporte</h1>
           <p className="support-subtitle">
@@ -46,7 +83,7 @@ const Support: React.FC = () => {
           </p>
         </section>
 
-        {/* Opciones de Contacto Rápido */}
+        {/* Quick Contact Options */}
         <section className="contact-options">
           <div className="contact-card">
             <div className="contact-icon email">
@@ -55,7 +92,7 @@ const Support: React.FC = () => {
                 <polyline points="22,6 12,13 2,6"></polyline>
               </svg>
             </div>
-            <h3 className="contact-title">Email</h3>
+            <h3 className="contact-title">Correo</h3>
             <p className="contact-description">support@joingo.com</p>
             <p className="contact-time">Respuesta en 24 horas</p>
           </div>
@@ -83,88 +120,52 @@ const Support: React.FC = () => {
           </div>
         </section>
 
-        {/* Preguntas Frecuentes */}
+        {/* Frequently Asked Questions */}
         <section className="faq-section">
           <h2 className="section-title">Preguntas Frecuentes</h2>
           <div className="faq-grid">
             <div className="faq-card">
-              <div className="faq-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                </svg>
-              </div>
+              <div className="faq-icon">?</div>
               <h4 className="faq-question">¿Cómo creo una reunión?</h4>
               <p className="faq-answer">
-                Haz clic en "Nueva reunión" en el dashboard, completa los detalles y comparte el enlace con los participantes.
+                Haz clic en "Nueva reunión" en el panel, completa los detalles y comparte el enlace con los participantes.
               </p>
             </div>
 
             <div className="faq-card">
-              <div className="faq-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                </svg>
-              </div>
+              <div className="faq-icon">?</div>
               <h4 className="faq-question">¿Cuántos participantes puedo tener?</h4>
               <p className="faq-answer">
-                Las cuentas gratuitas permiten hasta 100 participantes. Los planes premium ofrecen hasta 1000 participantes.
+                Puedes tener hasta 10 participantes en tus reuniones.
               </p>
             </div>
 
             <div className="faq-card">
-              <div className="faq-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                </svg>
-              </div>
+              <div className="faq-icon">?</div>
               <h4 className="faq-question">¿Puedo grabar mis reuniones?</h4>
               <p className="faq-answer">
-                Sí, puedes grabar tus reuniones con un solo clic. Las grabaciones se guardan en la nube y están disponibles por 30 días.
+                Sí, puedes grabar tus reuniones con un solo clic. Las grabaciones se guardan en la nube y están disponibles durante 30 días.
               </p>
             </div>
 
             <div className="faq-card">
-              <div className="faq-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                </svg>
-              </div>
-              <h4 className="faq-question">¿Es segura mi información?</h4>
+              <div className="faq-icon">?</div>
+              <h4 className="faq-question">¿Mi información es segura?</h4>
               <p className="faq-answer">
-                Absolutamente. Usamos encriptación de extremo a extremo y cumplimos con los estándares de seguridad más altos.
+                Absolutamente. Utilizamos cifrado de extremo a extremo y cumplimos con los más altos estándares de seguridad.
               </p>
             </div>
 
             <div className="faq-card">
-              <div className="faq-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                </svg>
-              </div>
-              <h4 className="faq-question">¿Funciona en móviles?</h4>
+              <div className="faq-icon">?</div>
+              <h4 className="faq-question">¿Funciona en dispositivos móviles?</h4>
               <p className="faq-answer">
-                Sí, JoinGo funciona perfectamente en navegadores móviles y tenemos apps nativas para iOS y Android.
+                Sí, JoinGo funciona perfectamente en navegadores móviles y tenemos aplicaciones nativas para iOS y Android.
               </p>
             </div>
 
             <div className="faq-card">
-              <div className="faq-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                </svg>
-              </div>
+              <div className="faq-icon">?</div>
               <h4 className="faq-question">¿Cómo cancelo mi suscripción?</h4>
               <p className="faq-answer">
                 Puedes cancelar tu suscripción en cualquier momento desde la configuración de tu cuenta, sin penalizaciones.
@@ -173,7 +174,7 @@ const Support: React.FC = () => {
           </div>
         </section>
 
-        {/* Formulario de Contacto */}
+        {/* Contact Form */}
         <section className="contact-form-section">
           <h2 className="section-title">¿No encuentras lo que buscas?</h2>
           <p className="form-subtitle">Envíanos un mensaje y te responderemos lo antes posible</p>
@@ -193,14 +194,14 @@ const Support: React.FC = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="email">Correo electrónico</label>
+                <label htmlFor="email">Correo</label>
                 <input
                   type="email"
                   id="email"
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  placeholder="tu@email.com"
+                  placeholder="tu@correo.com"
                   required
                 />
               </div>
@@ -219,7 +220,7 @@ const Support: React.FC = () => {
                 <option value="tecnico">Problema técnico</option>
                 <option value="facturacion">Facturación y pagos</option>
                 <option value="cuenta">Gestión de cuenta</option>
-                <option value="funcionalidad">Consulta sobre funcionalidad</option>
+                <option value="funcionalidad">Consulta de función</option>
                 <option value="otro">Otro</option>
               </select>
             </div>
@@ -247,7 +248,7 @@ const Support: React.FC = () => {
           </form>
         </section>
 
-        {/* Recursos Adicionales */}
+        {/* Additional Resources */}
         <section className="resources-section">
           <h2 className="section-title">Recursos Adicionales</h2>
           <div className="resources-grid">
@@ -260,7 +261,7 @@ const Support: React.FC = () => {
                 <polyline points="10 9 9 9 8 9"></polyline>
               </svg>
               <h4>Documentación</h4>
-              <p>Guías completas y tutoriales</p>
+              <p>Guías y tutoriales completos</p>
             </div>
 
             <div className="resource-card">
@@ -268,7 +269,7 @@ const Support: React.FC = () => {
                 <polygon points="23 7 16 12 23 17 23 7"></polygon>
                 <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
               </svg>
-              <h4>Video Tutoriales</h4>
+              <h4>Tutoriales de Video</h4>
               <p>Aprende con videos paso a paso</p>
             </div>
 
@@ -290,11 +291,11 @@ const Support: React.FC = () => {
       <footer className="support-footer">
         <div className="footer-content">
           <div className="footer-links">
-            <a href="#" onClick={(e) => { e.preventDefault(); navigate("/dashboard"); }}>Página principal</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); navigate("/dashboard"); }}>Inicio</a>
             <span className="separator">•</span>
             <a href="#" onClick={(e) => { e.preventDefault(); navigate("/about"); }}>Sobre nosotros</a>
             <span className="separator">•</span>
-            <a href="#" onClick={(e) => { e.preventDefault(); navigate("/sitemap"); }}>Mapa del sitio</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); navigate("/sitemap"); }}>Mapa del Sitio</a>
           </div>
           <p className="footer-copyright">
             Copyright ©2025 JoinGo Communications, Inc. Todos los derechos reservados.

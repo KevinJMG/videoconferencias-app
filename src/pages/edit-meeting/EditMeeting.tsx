@@ -1,39 +1,41 @@
-import React, { useState } from "react";
-import "./ScheduleMeeting.css";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import "../schedule-meeting/ScheduleMeeting.css";
+import { useNavigate, useParams } from "react-router-dom";
 import useMeetingStore from "../../stores/useMeetingStore";
 
 /**
- * ScheduleMeeting Component
+ * EditMeeting Component
  *
- * Provides interface for creating new scheduled video meetings with:
- * - Meeting name and description
- * - Date and time selection (with AM/PM format)
- * - Participant email list management
+ * Allows users to edit existing scheduled video meetings with:
+ * - Meeting name modification
+ * - Date and time updates (with AM/PM format)
+ * - Participant list management
  * - Meeting settings configuration
  * - Form validation and error handling
  * - Responsive design for mobile and desktop
  *
  * @component
- * @returns {JSX.Element} The meeting scheduling form
+ * @param meetingId - URL parameter containing the unique meeting identifier
+ * @returns {JSX.Element} The meeting editing form
  *
  * @example
  * ```tsx
- * <ScheduleMeeting />
+ * <EditMeeting /> // Route: /edit-meeting/:meetingId
  * ```
  *
  * @remarks
- * - Validates meeting name, date, and time
- * - Prevents scheduling meetings in the past
- * - Ensures end time is after start time
- * - Supports adding/removing multiple participants
- * - Stores meeting data in meeting store on submission
+ * - Loads existing meeting data on component mount
+ * - Converts 24-hour time format to 12-hour AM/PM display
+ * - Validates meeting details before saving
+ * - Prevents scheduling in the past or with invalid times
+ * - Redirects to dashboard if meeting not found
  *
- * @see useMeetingStore - For meeting data persistence
+ * @see useMeetingStore - For meeting data retrieval and updates
  */
-const ScheduleMeeting: React.FC = () => {
+const EditMeeting: React.FC = () => {
   const navigate = useNavigate();
-  const { addMeeting } = useMeetingStore();
+  const { meetingId } = useParams<{ meetingId: string }>();
+  const { getMeetingById, updateMeeting } = useMeetingStore();
 
   const [meetingName, setMeetingName] = useState("");
   const [date, setDate] = useState("");
@@ -53,9 +55,41 @@ const ScheduleMeeting: React.FC = () => {
   });
 
   /**
-   * Adds a participant email to the meeting
-   * Validates that email is not empty and not already added
+   * Loads meeting data from store on component mount
+   * Converts stored 24-hour times to 12-hour AM/PM format for display
+   * Redirects to dashboard if meeting ID is invalid or not found
    */
+  useEffect(() => {
+    if (!meetingId) {
+      navigate("/dashboard");
+      return;
+    }
+
+    const meeting = getMeetingById(meetingId);
+    if (!meeting) {
+      navigate("/dashboard");
+      return;
+    }
+
+    setMeetingName(meeting.meetingName);
+    setDate(meeting.date);
+    setParticipants(meeting.participants);
+
+    // Convert startTime from 24h to format with options (h-m-AM/PM)
+    const [startHour, startMinute] = meeting.startTime.split(':');
+    const startHourNum = parseInt(startHour);
+    const isPMStart = startHourNum >= 12;
+    const display12HourStart = startHourNum === 0 ? 12 : startHourNum > 12 ? startHourNum - 12 : startHourNum;
+    setStartTime(`${display12HourStart}-${startMinute}-${isPMStart ? 'PM' : 'AM'}`);
+
+    // Convert endTime from 24h to format with options (h-m-AM/PM)
+    const [endHour, endMinute] = meeting.endTime.split(':');
+    const endHourNum = parseInt(endHour);
+    const isPMEnd = endHourNum >= 12;
+    const display12HourEnd = endHourNum === 0 ? 12 : endHourNum > 12 ? endHourNum - 12 : endHourNum;
+    setEndTime(`${display12HourEnd}-${endMinute}-${isPMEnd ? 'PM' : 'AM'}`);
+  }, [meetingId, getMeetingById, navigate]);
+
   const handleAddParticipant = () => {
     if (participantEmail && !participants.includes(participantEmail)) {
       setParticipants([...participants, participantEmail]);
@@ -63,29 +97,22 @@ const ScheduleMeeting: React.FC = () => {
     }
   };
 
-  /**
-   * Removes a participant email from the meeting
-   * @param email - The email address to remove
-   */
   const handleRemoveParticipant = (email: string) => {
     setParticipants(participants.filter((p) => p !== email));
   };
 
   const convertTo24h = (h: string): string => {
     const hour = parseInt(h);
-    // h is 1-12, convert to 0-23
-    if (hour === 12) return "00"; // 12 AM is 00:xx
+    if (hour === 12) return "00";
     return String(hour).padStart(2, '0');
   };
 
   const convertTo24hPM = (h: string): string => {
     const hour = parseInt(h);
-    // h is 1-12 PM, convert to 12-23 (24h format)
-    if (hour === 12) return "12"; // 12 PM is 12:xx
+    if (hour === 12) return "12";
     return String(hour + 12).padStart(2, '0');
   };
 
-  // Generate time options with AM/PM included
   const generateTimeOptions = () => {
     const options = [];
     for (let h = 1; h <= 12; h++) {
@@ -142,7 +169,7 @@ const ScheduleMeeting: React.FC = () => {
 
     // Validate date and time
     const now = new Date();
-    const currentDate = now.toISOString().split('T')[0]; // YYYY-MM-DD
+    const currentDate = now.toISOString().split('T')[0];
 
     // Parse times
     const [startH, startM, startPeriod] = startTime.split('-');
@@ -154,14 +181,12 @@ const ScheduleMeeting: React.FC = () => {
     const startTimeStr = `${startHour24}:${String(startM).padStart(2, '0')}`;
     const endTimeStr = `${endHour24}:${String(endM).padStart(2, '0')}`;
 
-    // The date from input type="date" already comes in YYYY-MM-DD format
     const dateFormatted = date;
 
     const startDateTime = new Date(`${dateFormatted}T${startTimeStr}`);
     const endDateTime = new Date(`${dateFormatted}T${endTimeStr}`);
 
     // Detect errors
-    // Compare dates in YYYY-MM-DD format
     const isDatePast = dateFormatted.localeCompare(currentDate) < 0;
     const isStartTimeInvalid = startDateTime < now;
     const isEndTimeInvalid = endDateTime < now;
@@ -193,7 +218,9 @@ const ScheduleMeeting: React.FC = () => {
       return;
     }
 
-    addMeeting({
+    if (!meetingId) return;
+
+    updateMeeting(meetingId, {
       meetingName: meetingName,
       description: "",
       date: date,
@@ -207,18 +234,14 @@ const ScheduleMeeting: React.FC = () => {
     navigate("/dashboard");
   };
 
-  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDate(e.target.value);
-  };
-
   const handleCancel = () => {
-    navigate(-1);
+    navigate("/dashboard");
   };
 
   return (
     <div className="schedule-container">
       <header className="schedule-header">
-        <button className="back-button" onClick={() => navigate(-1)}>
+        <button className="back-button" onClick={() => navigate("/dashboard")}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
@@ -229,7 +252,7 @@ const ScheduleMeeting: React.FC = () => {
 
       <main className="schedule-content">
         <div className="schedule-card">
-          <h2 className="schedule-title">Programar Reunión</h2>
+          <h2 className="schedule-title">Editar Reunión</h2>
 
           <div className="form-group">
             <label>Nombre de la reunión *</label>
@@ -246,7 +269,7 @@ const ScheduleMeeting: React.FC = () => {
             <input
               type="date"
               value={date}
-              onChange={handleDateChange}
+              onChange={(e) => setDate(e.target.value)}
             />
           </div>
 
@@ -328,7 +351,7 @@ const ScheduleMeeting: React.FC = () => {
               Cancelar
             </button>
             <button type="button" className="btn-submit" onClick={handleSubmit}>
-              Programar Reunión
+              Guardar Cambios
             </button>
           </div>
         </div>
@@ -337,4 +360,4 @@ const ScheduleMeeting: React.FC = () => {
   );
 };
 
-export default ScheduleMeeting;
+export default EditMeeting;
