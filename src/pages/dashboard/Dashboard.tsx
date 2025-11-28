@@ -189,8 +189,13 @@ const Dashboard: React.FC = () => {
                             return;
                           }
                           try {
-                            const API_BASE = (import.meta.env.VITE_API_BASE as string) || 'http://localhost:3000';
-                            const res = await fetch(`${API_BASE}/api/meetings/${encodeURIComponent(joinCode)}`);
+                            // Prefer `VITE_API_URL` (set in deployment). Fall back to legacy `VITE_API_BASE` or
+                            // a relative path so the app works when backend is served from same origin.
+                            const API_BASE = (import.meta.env.VITE_API_URL as string)
+                              || (import.meta.env.VITE_API_BASE as string)
+                              || '';
+                            const base = API_BASE.replace(/\/$/, '');
+                            const res = await fetch(`${base}/api/meetings/${encodeURIComponent(joinCode)}`);
                             if (!res.ok) {
                               if (res.status === 404) setJoinError('Reunión no encontrada');
                               else setJoinError('Error al verificar la reunión');
