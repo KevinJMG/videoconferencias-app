@@ -135,7 +135,7 @@
 /* LEFT COLUMN: Main content area */
 .left-content {
   display: grid;
-  grid-template-rows: auto auto;
+  grid-template-rows: auto auto auto;
   gap: 16px;
   min-height: 0; /* Important for child 100% heights in flex column */
 }

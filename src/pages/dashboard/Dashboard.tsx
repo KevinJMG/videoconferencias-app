@@ -181,6 +181,29 @@ const Dashboard: React.FC = () => {
               ))
             )}
           </div>
+
+          {/* RECENT MEETINGS PANEL: Display recent meeting history */}
+          <div className="principal-containers meetings-block">
+            <h2 className="container-title">Reuniones recientes</h2>
+
+            <div className="container-actions">
+              <div className="icon-container"></div>
+
+              <div className="text-container">
+                <h3>Diseño UI/UX Review</h3>
+                <p>Ayer, 3:00 PM</p>
+              </div>
+            </div>
+
+            <div className="container-actions">
+              <div className="icon-container"></div>
+
+              <div className="text-container">
+                <h3>Sprint Planning</h3>
+                <p>13 Nov, 10:00 AM</p>
+              </div>
+            </div>
+          </div>
         </div>
 
       </main>
