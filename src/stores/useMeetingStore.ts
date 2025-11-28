@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { auth } from '../lib/firebase.config';
-import useAuthStore from './useAuthStore';
 
 // Prefer `VITE_API_URL` in deployments. Fall back to legacy `VITE_API_BASE` or relative path ''
 const API_BASE = (import.meta.env.VITE_API_URL as string) || (import.meta.env.VITE_API_BASE as string) || '';
@@ -84,13 +83,12 @@ const useMeetingStore = create<MeetingStore>()(
               if (!res.ok) {
                 const bodyText = await res.text().catch(() => '');
                 if (res.status === 401) {
-                  console.error('Failed to create meeting on server - unauthorized after retry. Signing out.', bodyText);
-                  try {
-                    await useAuthStore.getState().logout();
-                  } catch (e) {
-                    console.error('Error during auto-logout after 401', e);
-                  }
-                  window.location.replace('/login');
+                  // NOTE: auto-logout on 401 disabled to allow debugging in deployed environments.
+                  // Previously we forced sign-out and redirected to /login here which prevented
+                  // developers from inspecting failing requests in production. Instead, log the
+                  // condition and return so the UI can surface an error without disrupting the
+                  // current session.
+                  console.warn('Failed to create meeting on server - unauthorized after retry. Auto-logout disabled for debugging.', bodyText);
                   return;
                 }
                 console.error('Failed to create meeting on server', res.status, bodyText);
@@ -150,13 +148,10 @@ const useMeetingStore = create<MeetingStore>()(
             // If unauthorized after retry, force logout. For other errors, log for debugging.
             const body = await res.text().catch(() => '');
             if (res.status === 401) {
-              console.error('[useMeetingStore] fetchMyMeetings: unauthorized after retry — signing out.', body);
-              try {
-                await useAuthStore.getState().logout();
-              } catch (e) {
-                console.error('Error during auto-logout after 401', e);
-              }
-              window.location.replace('/login');
+              // NOTE: auto-logout on 401 disabled to allow debugging and inspection of
+              // failing requests. Keep the user signed in and surface a warning instead
+              // of forcing a redirect that makes reproduction and debugging harder.
+              console.warn('[useMeetingStore] fetchMyMeetings: unauthorized after retry — auto-logout disabled for debugging.', body);
               return;
             }
             console.error('[useMeetingStore] fetchMyMeetings: non-OK response', res.status, body);
