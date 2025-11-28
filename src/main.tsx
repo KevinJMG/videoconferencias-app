@@ -6,11 +6,14 @@ import './index.css';
 import useAuthStore from './stores/useAuthStore';
 
 function AppWrapper() {
-  const initAuthObserver = useAuthStore((state) => state.initAuthObserver);
-
   useEffect(() => {
-    const unsub = initAuthObserver();
-    return () => unsub();
+    // Use getState() to avoid subscribing this component to the store
+    // which can cause re-renders when the auth state updates.
+    const initAuthObserver = useAuthStore.getState().initAuthObserver;
+    const unsub = initAuthObserver && initAuthObserver();
+    return () => {
+      if (typeof unsub === 'function') unsub();
+    };
   }, []);
 
   return <RouterProvider router={router} />;

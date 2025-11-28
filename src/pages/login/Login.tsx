@@ -13,7 +13,8 @@ const Login: React.FC = () => {
        const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
 
-    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+    const rawApi = (import.meta.env.VITE_API_URL as string) || (import.meta.env.VITE_API_BASE as string) || '';
+    const API_URL = rawApi.replace(/\/$/, '');
 
     useEffect(() => {
         const unsub = initAuthObserver();
@@ -160,7 +161,7 @@ const Login: React.FC = () => {
 
                             {/* GITHUB */}
                             <button onClick={handleLoginGithub} type="button" className="login-google-btn">
-                                <img src="/assets/images/github.png" alt="GitHub" width={24} height={24} />
+                                <img src="/assets/images/github-mark.png" alt="GitHub" width={24} height={24} />
                                 <span>GitHub</span>
                             </button>
 
