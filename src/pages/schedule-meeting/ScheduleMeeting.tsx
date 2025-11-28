@@ -18,9 +18,7 @@ import useMeetingStore from "../../stores/useMeetingStore";
  * @returns {JSX.Element} The meeting scheduling form
  *
  * @example
- * ```tsx
  * <ScheduleMeeting />
- * ```
  *
  * @remarks
  * - Validates meeting name, date, and time
@@ -71,27 +69,24 @@ const ScheduleMeeting: React.FC = () => {
     setParticipants(participants.filter((p) => p !== email));
   };
 
+  // --- Convert 12h to 24h ---
   const convertTo24h = (h: string): string => {
     const hour = parseInt(h);
-    // h is 1-12, convert to 0-23
-    if (hour === 12) return "00"; // 12 AM is 00:xx
-    return String(hour).padStart(2, '0');
+    return hour === 12 ? "00" : String(hour).padStart(2, "0");
   };
 
   const convertTo24hPM = (h: string): string => {
     const hour = parseInt(h);
-    // h is 1-12 PM, convert to 12-23 (24h format)
-    if (hour === 12) return "12"; // 12 PM is 12:xx
-    return String(hour + 12).padStart(2, '0');
+    return hour === 12 ? "12" : String(hour + 12).padStart(2, "0");
   };
 
-  // Generate time options with AM/PM included
+  // --- Generate time options with AM/PM included ---
   const generateTimeOptions = () => {
     const options = [];
     for (let h = 1; h <= 12; h++) {
       for (const m of [0, 15, 30, 45]) {
-        const hourStr = String(h).padStart(2, '0');
-        const minStr = String(m).padStart(2, '0');
+        const hourStr = String(h).padStart(2, "0");
+        const minStr = String(m).padStart(2, "0");
         options.push({
           value: `${h}-${m}-AM`,
           label: `${hourStr}:${minStr} a.m.`,
@@ -103,8 +98,8 @@ const ScheduleMeeting: React.FC = () => {
     }
     for (let h = 1; h <= 12; h++) {
       for (const m of [0, 15, 30, 45]) {
-        const hourStr = String(h).padStart(2, '0');
-        const minStr = String(m).padStart(2, '0');
+        const hourStr = String(h).padStart(2, "0");
+        const minStr = String(m).padStart(2, "0");
         options.push({
           value: `${h}-${m}-PM`,
           label: `${hourStr}:${minStr} p.m.`,
@@ -117,6 +112,14 @@ const ScheduleMeeting: React.FC = () => {
     return options;
   };
 
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDate(e.target.value);
+  };
+
+  const handleCancel = () => {
+    navigate(-1);
+  };
+
   const handleSubmit = () => {
     setError("");
 
@@ -124,95 +127,75 @@ const ScheduleMeeting: React.FC = () => {
       setError("Por favor ingresa el nombre de la reunión");
       return;
     }
-
     if (!date) {
       setError("Por favor selecciona una fecha");
       return;
     }
-
     if (!startTime) {
       setError("Por favor selecciona la hora de inicio");
       return;
     }
-
     if (!endTime) {
       setError("Por favor selecciona la hora de cierre");
       return;
     }
 
-    // Validate date and time
+    // --- Validate date and time ---
     const now = new Date();
-    const currentDate = now.toISOString().split('T')[0]; // YYYY-MM-DD
+    const currentDate = now.toISOString().split("T")[0];
 
-    // Parse times
-    const [startH, startM, startPeriod] = startTime.split('-');
-    const [endH, endM, endPeriod] = endTime.split('-');
+    const [startH, startM, startPeriod] = startTime.split("-");
+    const [endH, endM, endPeriod] = endTime.split("-");
 
-    const startHour24 = startPeriod === 'PM' ? convertTo24hPM(startH) : convertTo24h(startH);
-    const endHour24 = endPeriod === 'PM' ? convertTo24hPM(endH) : convertTo24h(endH);
+    const startHour24 = startPeriod === "PM" ? convertTo24hPM(startH) : convertTo24h(startH);
+    const endHour24 = endPeriod === "PM" ? convertTo24hPM(endH) : convertTo24h(endH);
 
-    const startTimeStr = `${startHour24}:${String(startM).padStart(2, '0')}`;
-    const endTimeStr = `${endHour24}:${String(endM).padStart(2, '0')}`;
+    const startTimeStr = `${startHour24}:${String(startM).padStart(2, "0")}`;
+    const endTimeStr = `${endHour24}:${String(endM).padStart(2, "0")}`;
 
-    // The date from input type="date" already comes in YYYY-MM-DD format
-    const dateFormatted = date;
+    const startDateTime = new Date(`${date}T${startTimeStr}`);
+    const endDateTime = new Date(`${date}T${endTimeStr}`);
 
-    const startDateTime = new Date(`${dateFormatted}T${startTimeStr}`);
-    const endDateTime = new Date(`${dateFormatted}T${endTimeStr}`);
-
-    // Detect errors
-    // Compare dates in YYYY-MM-DD format
-    const isDatePast = dateFormatted.localeCompare(currentDate) < 0;
+    const isDatePast = date.localeCompare(currentDate) < 0;
     const isStartTimeInvalid = startDateTime < now;
     const isEndTimeInvalid = endDateTime < now;
     const isEndBeforeStart = endTimeStr <= startTimeStr;
 
-    // Show appropriate error based on cases
     if (isDatePast && (isStartTimeInvalid || isEndTimeInvalid)) {
       setError("Fecha y hora inválidas");
       return;
     }
-
     if (isDatePast) {
       setError("Fecha inválida");
       return;
     }
-
     if (isStartTimeInvalid) {
       setError("Hora inválida");
       return;
     }
-
     if (isEndTimeInvalid) {
       setError("Hora inválida");
       return;
     }
-
     if (isEndBeforeStart) {
       setError("Hora inválida");
       return;
     }
 
+    // --- Add meeting to store ---
     addMeeting({
-      meetingName: meetingName,
+      meetingName,
       description: "",
-      date: date,
+      date,
       startTime: startTimeStr,
       endTime: endTimeStr,
       duration: "",
-      participants: participants,
-      settings: settings,
+      participants,
+      settings,
     });
 
+    // --- Redirect to dashboard ---
     navigate("/dashboard");
-  };
-
-  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDate(e.target.value);
-  };
-
-  const handleCancel = () => {
-    navigate(-1);
   };
 
   return (
@@ -243,21 +226,12 @@ const ScheduleMeeting: React.FC = () => {
 
           <div className="form-group">
             <label>Fecha *</label>
-            <input
-              type="date"
-              value={date}
-              onChange={handleDateChange}
-            />
+            <input type="date" value={date} onChange={handleDateChange} />
           </div>
 
           <div className="form-group">
             <label>Hora de inicio *</label>
-            <select
-              value={startTime}
-              onChange={(e) => setStartTime(e.target.value)}
-              className="time-select"
-              style={{ width: '100%' }}
-            >
+            <select value={startTime} onChange={(e) => setStartTime(e.target.value)} className="time-select">
               <option value="">Seleccionar hora</option>
               {generateTimeOptions().map((option) => (
                 <option key={option.value} value={option.value}>
@@ -269,12 +243,7 @@ const ScheduleMeeting: React.FC = () => {
 
           <div className="form-group">
             <label>Hora de cierre *</label>
-            <select
-              value={endTime}
-              onChange={(e) => setEndTime(e.target.value)}
-              className="time-select"
-              style={{ width: '100%' }}
-            >
+            <select value={endTime} onChange={(e) => setEndTime(e.target.value)} className="time-select">
               <option value="">Seleccionar hora</option>
               {generateTimeOptions().map((option) => (
                 <option key={option.value} value={option.value}>
@@ -284,13 +253,8 @@ const ScheduleMeeting: React.FC = () => {
             </select>
           </div>
 
-          {error && (
-            <div className="error-message">
-              {error}
-            </div>
-          )}
+          {error && <div className="error-message">{error}</div>}
 
-          {/* Participants */}
           <div className="participants-section">
             <h3 className="section-title">Invitar participantes</h3>
             <div className="participants-input">
@@ -310,11 +274,7 @@ const ScheduleMeeting: React.FC = () => {
                 {participants.map((email) => (
                   <div key={email} className="participant-item">
                     <span className="participant-email">{email}</span>
-                    <button
-                      type="button"
-                      className="remove-button"
-                      onClick={() => handleRemoveParticipant(email)}
-                    >
+                    <button type="button" className="remove-button" onClick={() => handleRemoveParticipant(email)}>
                       ×
                     </button>
                   </div>

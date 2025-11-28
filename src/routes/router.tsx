@@ -9,51 +9,21 @@ import VideoConference from "../pages/video-conference/VideoConference";
 import SiteMap from "../pages/sitemap/SiteMap";
 import AboutUs from "../pages/about-us/AboutUs";
 import Support from "../pages/support/Support";
+import Chat from "../pages/chat/chat"; 
+
 export const routes = [
-    {
-        path: "/",
-        element: <Navigate to="/login" replace />,
-    },
-    {
-        path: "/login",
-        element: <Login />,
-    },
-    {
-        path: "/profile",
-        element: <Profile />,
-    },
-    {
-        path: "/register",
-        element: <Register />,   
-    },
-    {
-        path: "/dashboard",
-        element: <Dashboard />,
-    },
-    {
-        path: "/schedule-meeting",
-        element: <ScheduleMeeting />,
-    },
-    {
-        path: "/edit-meeting/:meetingId",
-        element: <EditMeeting />,
-    },
-    {
-        path: "/conference/:meetingId",
-        element: <VideoConference />,
-    },
-    {
-        path: "/sitemap",
-        element: <SiteMap />,
-    },
-    {
-        path: "/about",
-        element: <AboutUs />,
-    },
-    {
-        path: "/support",
-        element: <Support />,
-    },
-]
+    { path: "/", element: <Navigate to="/login" replace /> },
+    { path: "/login", element: <Login /> },
+    { path: "/profile", element: <Profile /> },
+    { path: "/register", element: <Register /> },
+    { path: "/dashboard", element: <Dashboard /> },
+    { path: "/schedule-meeting", element: <ScheduleMeeting /> },
+    { path: "/edit-meeting/:meetingId", element: <EditMeeting /> },
+    { path: "/conference/:meetingId", element: <VideoConference /> },
+    { path: "/sitemap", element: <SiteMap /> },
+    { path: "/about", element: <AboutUs /> },
+    { path: "/support", element: <Support /> },
+    { path: "/chat", element: <Chat /> }, 
+];
 
 export const router = createBrowserRouter(routes);
