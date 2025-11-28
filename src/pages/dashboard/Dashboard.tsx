@@ -130,7 +130,15 @@ const Dashboard: React.FC = () => {
             <h2 className="container-title">Reuniones recientes</h2>
 
             <div className="container-actions">
-              <div className="icon-container"></div>
+              <div className="icon-container">
+                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="50" cy="50" r="45" fill="#0099FF" opacity="0.15"/>
+                  <path d="M45 35C45 32.24 47.24 30 50 30C52.76 30 55 32.24 55 35C55 37.76 52.76 40 50 40C47.24 40 45 37.76 45 35Z" fill="#155DFC"/>
+                  <path d="M35 50C35 47.24 37.24 45 40 45C42.76 45 45 47.24 45 50C45 52.76 42.76 55 40 55C37.24 55 35 52.76 35 50Z" fill="#155DFC"/>
+                  <path d="M55 50C55 47.24 57.24 45 60 45C62.76 45 65 47.24 65 50C65 52.76 62.76 55 60 55C57.24 55 55 52.76 55 50Z" fill="#155DFC"/>
+                  <path d="M45 65C45 62.24 47.24 60 50 60C52.76 60 55 62.24 55 65C55 67.76 52.76 70 50 70C47.24 70 45 67.76 45 65Z" fill="#155DFC"/>
+                </svg>
+              </div>
 
               <div className="text-container">
                 <h3>Diseño UI/UX Review</h3>
@@ -139,7 +147,15 @@ const Dashboard: React.FC = () => {
             </div>
 
             <div className="container-actions">
-              <div className="icon-container"></div>
+              <div className="icon-container">
+                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="50" cy="50" r="45" fill="#0099FF" opacity="0.15"/>
+                  <path d="M45 35C45 32.24 47.24 30 50 30C52.76 30 55 32.24 55 35C55 37.76 52.76 40 50 40C47.24 40 45 37.76 45 35Z" fill="#155DFC"/>
+                  <path d="M35 50C35 47.24 37.24 45 40 45C42.76 45 45 47.24 45 50C45 52.76 42.76 55 40 55C37.24 55 35 52.76 35 50Z" fill="#155DFC"/>
+                  <path d="M55 50C55 47.24 57.24 45 60 45C62.76 45 65 47.24 65 50C65 52.76 62.76 55 60 55C57.24 55 55 52.76 55 50Z" fill="#155DFC"/>
+                  <path d="M45 65C45 62.24 47.24 60 50 60C52.76 60 55 62.24 55 65C55 67.76 52.76 70 50 70C47.24 70 45 67.76 45 65Z" fill="#155DFC"/>
+                </svg>
+              </div>
 
               <div className="text-container">
                 <h3>Sprint Planning</h3>
@@ -148,7 +164,15 @@ const Dashboard: React.FC = () => {
             </div>
 
             <div className="container-actions">
-              <div className="icon-container"></div>
+              <div className="icon-container">
+                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="50" cy="50" r="45" fill="#0099FF" opacity="0.15"/>
+                  <path d="M45 35C45 32.24 47.24 30 50 30C52.76 30 55 32.24 55 35C55 37.76 52.76 40 50 40C47.24 40 45 37.76 45 35Z" fill="#155DFC"/>
+                  <path d="M35 50C35 47.24 37.24 45 40 45C42.76 45 45 47.24 45 50C45 52.76 42.76 55 40 55C37.24 55 35 52.76 35 50Z" fill="#155DFC"/>
+                  <path d="M55 50C55 47.24 57.24 45 60 45C62.76 45 65 47.24 65 50C65 52.76 62.76 55 60 55C57.24 55 55 52.76 55 50Z" fill="#155DFC"/>
+                  <path d="M45 65C45 62.24 47.24 60 50 60C52.76 60 55 62.24 55 65C55 67.76 52.76 70 50 70C47.24 70 45 67.76 45 65Z" fill="#155DFC"/>
+                </svg>
+              </div>
 
               <div className="text-container">
                 <h3>Team Standup</h3>
@@ -157,7 +181,15 @@ const Dashboard: React.FC = () => {
             </div>
 
             <div className="container-actions">
-              <div className="icon-container"></div>
+              <div className="icon-container">
+                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="50" cy="50" r="45" fill="#0099FF" opacity="0.15"/>
+                  <path d="M45 35C45 32.24 47.24 30 50 30C52.76 30 55 32.24 55 35C55 37.76 52.76 40 50 40C47.24 40 45 37.76 45 35Z" fill="#155DFC"/>
+                  <path d="M35 50C35 47.24 37.24 45 40 45C42.76 45 45 47.24 45 50C45 52.76 42.76 55 40 55C37.24 55 35 52.76 35 50Z" fill="#155DFC"/>
+                  <path d="M55 50C55 47.24 57.24 45 60 45C62.76 45 65 47.24 65 50C65 52.76 62.76 55 60 55C57.24 55 55 52.76 55 50Z" fill="#155DFC"/>
+                  <path d="M45 65C45 62.24 47.24 60 50 60C52.76 60 55 62.24 55 65C55 67.76 52.76 70 50 70C47.24 70 45 67.76 45 65Z" fill="#155DFC"/>
+                </svg>
+              </div>
 
               <div className="text-container">
                 <h3>Project Review</h3>
@@ -166,11 +198,87 @@ const Dashboard: React.FC = () => {
             </div>
 
             <div className="container-actions">
-              <div className="icon-container"></div>
+              <div className="icon-container">
+                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="50" cy="50" r="45" fill="#0099FF" opacity="0.15"/>
+                  <path d="M45 35C45 32.24 47.24 30 50 30C52.76 30 55 32.24 55 35C55 37.76 52.76 40 50 40C47.24 40 45 37.76 45 35Z" fill="#155DFC"/>
+                  <path d="M35 50C35 47.24 37.24 45 40 45C42.76 45 45 47.24 45 50C45 52.76 42.76 55 40 55C37.24 55 35 52.76 35 50Z" fill="#155DFC"/>
+                  <path d="M55 50C55 47.24 57.24 45 60 45C62.76 45 65 47.24 65 50C65 52.76 62.76 55 60 55C57.24 55 55 52.76 55 50Z" fill="#155DFC"/>
+                  <path d="M45 65C45 62.24 47.24 60 50 60C52.76 60 55 62.24 55 65C55 67.76 52.76 70 50 70C47.24 70 45 67.76 45 65Z" fill="#155DFC"/>
+                </svg>
+              </div>
 
               <div className="text-container">
                 <h3>Client Meeting</h3>
                 <p>9 Nov, 11:00 AM</p>
+              </div>
+            </div>
+
+            <div className="container-actions">
+              <div className="icon-container">
+                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="50" cy="50" r="45" fill="#0099FF" opacity="0.15"/>
+                  <path d="M45 35C45 32.24 47.24 30 50 30C52.76 30 55 32.24 55 35C55 37.76 52.76 40 50 40C47.24 40 45 37.76 45 35Z" fill="#155DFC"/>
+                  <path d="M35 50C35 47.24 37.24 45 40 45C42.76 45 45 47.24 45 50C45 52.76 42.76 55 40 55C37.24 55 35 52.76 35 50Z" fill="#155DFC"/>
+                  <path d="M55 50C55 47.24 57.24 45 60 45C62.76 45 65 47.24 65 50C65 52.76 62.76 55 60 55C57.24 55 55 52.76 55 50Z" fill="#155DFC"/>
+                  <path d="M45 65C45 62.24 47.24 60 50 60C52.76 60 55 62.24 55 65C55 67.76 52.76 70 50 70C47.24 70 45 67.76 45 65Z" fill="#155DFC"/>
+                </svg>
+              </div>
+
+              <div className="text-container">
+                <h3>Weekly Sync</h3>
+                <p>8 Nov, 2:00 PM</p>
+              </div>
+            </div>
+
+            <div className="container-actions">
+              <div className="icon-container">
+                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="50" cy="50" r="45" fill="#0099FF" opacity="0.15"/>
+                  <path d="M45 35C45 32.24 47.24 30 50 30C52.76 30 55 32.24 55 35C55 37.76 52.76 40 50 40C47.24 40 45 37.76 45 35Z" fill="#155DFC"/>
+                  <path d="M35 50C35 47.24 37.24 45 40 45C42.76 45 45 47.24 45 50C45 52.76 42.76 55 40 55C37.24 55 35 52.76 35 50Z" fill="#155DFC"/>
+                  <path d="M55 50C55 47.24 57.24 45 60 45C62.76 45 65 47.24 65 50C65 52.76 62.76 55 60 55C57.24 55 55 52.76 55 50Z" fill="#155DFC"/>
+                  <path d="M45 65C45 62.24 47.24 60 50 60C52.76 60 55 62.24 55 65C55 67.76 52.76 70 50 70C47.24 70 45 67.76 45 65Z" fill="#155DFC"/>
+                </svg>
+              </div>
+
+              <div className="text-container">
+                <h3>Budget Planning</h3>
+                <p>6 Nov, 4:30 PM</p>
+              </div>
+            </div>
+
+            <div className="container-actions">
+              <div className="icon-container">
+                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="50" cy="50" r="45" fill="#0099FF" opacity="0.15"/>
+                  <path d="M45 35C45 32.24 47.24 30 50 30C52.76 30 55 32.24 55 35C55 37.76 52.76 40 50 40C47.24 40 45 37.76 45 35Z" fill="#155DFC"/>
+                  <path d="M35 50C35 47.24 37.24 45 40 45C42.76 45 45 47.24 45 50C45 52.76 42.76 55 40 55C37.24 55 35 52.76 35 50Z" fill="#155DFC"/>
+                  <path d="M55 50C55 47.24 57.24 45 60 45C62.76 45 65 47.24 65 50C65 52.76 62.76 55 60 55C57.24 55 55 52.76 55 50Z" fill="#155DFC"/>
+                  <path d="M45 65C45 62.24 47.24 60 50 60C52.76 60 55 62.24 55 65C55 67.76 52.76 70 50 70C47.24 70 45 67.76 45 65Z" fill="#155DFC"/>
+                </svg>
+              </div>
+
+              <div className="text-container">
+                <h3>Training Session</h3>
+                <p>4 Nov, 1:00 PM</p>
+              </div>
+            </div>
+
+            <div className="container-actions">
+              <div className="icon-container">
+                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="50" cy="50" r="45" fill="#0099FF" opacity="0.15"/>
+                  <path d="M45 35C45 32.24 47.24 30 50 30C52.76 30 55 32.24 55 35C55 37.76 52.76 40 50 40C47.24 40 45 37.76 45 35Z" fill="#155DFC"/>
+                  <path d="M35 50C35 47.24 37.24 45 40 45C42.76 45 45 47.24 45 50C45 52.76 42.76 55 40 55C37.24 55 35 52.76 35 50Z" fill="#155DFC"/>
+                  <path d="M55 50C55 47.24 57.24 45 60 45C62.76 45 65 47.24 65 50C65 52.76 62.76 55 60 55C57.24 55 55 52.76 55 50Z" fill="#155DFC"/>
+                  <path d="M45 65C45 62.24 47.24 60 50 60C52.76 60 55 62.24 55 65C55 67.76 52.76 70 50 70C47.24 70 45 67.76 45 65Z" fill="#155DFC"/>
+                </svg>
+              </div>
+
+              <div className="text-container">
+                <h3>Performance Review</h3>
+                <p>1 Nov, 3:30 PM</p>
               </div>
             </div>
           </div>
