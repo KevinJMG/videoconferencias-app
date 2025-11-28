@@ -103,8 +103,8 @@ const Dashboard: React.FC = () => {
 
       {/* MAIN DASHBOARD CONTENT */}
       <main className="dashboard-content">
-        {/* LEFT SECTION: Hero card and upcoming meetings */}
-        <div className="left-content">
+        {/* TOP ROW: Hero section and Recent meetings side by side */}
+        <div className="top-row">
           {/* HERO SECTION: Welcome card with quick action buttons */}
           <div className="principal-containers">
             <div>
@@ -123,63 +123,6 @@ const Dashboard: React.FC = () => {
             <div className="img-container">
               <img src="assets/images/camara.svg" alt="camara" />
             </div>
-          </div>
-
-          {/* UPCOMING MEETINGS SECTION: List of scheduled meetings with action buttons */}
-          <div className="principal-containers meetings-block">
-            <h2 className="container-title">Próximas reuniones</h2>
-            {upcomingMeetings.length === 0 ? (
-              <div className="no-meetings">
-                <p>No hay reuniones programadas</p>
-              </div>
-            ) : (
-              upcomingMeetings.slice(0, 10).map((meeting) => (
-                <div key={meeting.id} className="meets-container">
-                  <div className="meeting-info">
-                    <h3 className="meeting-title">{meeting.meetingName}</h3>
-                    <p className="meeting-text">
-                      {meeting.startTime} - {meeting.endTime || "Sin hora de cierre"}
-                    </p>
-                  </div>
-                  <div className="meeting-actions">
-                    {/* Join meeting button */}
-                    <div
-                      className="play-container"
-                      onClick={() => navigate(`/conference/${meeting.id}`)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      <img src="assets/images/play.svg" alt="Unirse"></img>
-                    </div>
-
-                    {/* Edit meeting button */}
-                    <button
-                      className="edit-meeting-btn"
-                      onClick={() => navigate(`/edit-meeting/${meeting.id}`)}
-                      title="Editar reunión"
-                    >
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                      </svg>
-                    </button>
-
-                    {/* Delete meeting button */}
-                    <button
-                      className="delete-meeting-btn"
-                      onClick={() => handleDeleteMeeting(meeting.id, meeting.meetingName)}
-                      title="Eliminar reunión"
-                    >
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <polyline points="3 6 5 6 21 6"></polyline>
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                        <line x1="10" y1="11" x2="10" y2="17"></line>
-                        <line x1="14" y1="11" x2="14" y2="17"></line>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              ))
-            )}
           </div>
 
           {/* RECENT MEETINGS PANEL: Display recent meeting history */}
@@ -206,6 +149,62 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
+        {/* BOTTOM ROW: Upcoming meetings */}
+        <div className="principal-containers meetings-block">
+          <h2 className="container-title">Próximas reuniones</h2>
+          {upcomingMeetings.length === 0 ? (
+            <div className="no-meetings">
+              <p>No hay reuniones programadas</p>
+            </div>
+          ) : (
+            upcomingMeetings.slice(0, 10).map((meeting) => (
+              <div key={meeting.id} className="meets-container">
+                <div className="meeting-info">
+                  <h3 className="meeting-title">{meeting.meetingName}</h3>
+                  <p className="meeting-text">
+                    {meeting.startTime} - {meeting.endTime || "Sin hora de cierre"}
+                  </p>
+                </div>
+                <div className="meeting-actions">
+                  {/* Join meeting button */}
+                  <div
+                    className="play-container"
+                    onClick={() => navigate(`/conference/${meeting.id}`)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <img src="assets/images/play.svg" alt="Unirse"></img>
+                  </div>
+
+                  {/* Edit meeting button */}
+                  <button
+                    className="edit-meeting-btn"
+                    onClick={() => navigate(`/edit-meeting/${meeting.id}`)}
+                    title="Editar reunión"
+                  >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                  </button>
+
+                  {/* Delete meeting button */}
+                  <button
+                    className="delete-meeting-btn"
+                    onClick={() => handleDeleteMeeting(meeting.id, meeting.meetingName)}
+                    title="Eliminar reunión"
+                  >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <polyline points="3 6 5 6 21 6"></polyline>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                      <line x1="10" y1="11" x2="10" y2="17"></line>
+                      <line x1="14" y1="11" x2="14" y2="17"></line>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
       </main>
     </div>
    </>

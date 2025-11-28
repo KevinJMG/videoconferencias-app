@@ -132,6 +132,14 @@
 
 }
 
+/* TOP ROW: Hero and Recent meetings side by side */
+.top-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  min-height: 0;
+}
+
 /* LEFT COLUMN: Main content area */
 .left-content {
   display: grid;
