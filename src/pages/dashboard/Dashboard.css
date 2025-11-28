@@ -370,6 +370,24 @@
     font-size: 20px;
 }
 
+/* TEXT CONTAINER: For recent meetings text styling */
+.text-container {
+  flex: 1;
+}
+
+.text-container h3 {
+  margin: 0;
+  font-size: 15px;
+  color: white;
+  font-weight: 500;
+}
+
+.text-container p {
+  margin: 4px 0 0 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
 /* ACTION CONTAINERS */
 .container-actions {
     display: flex;

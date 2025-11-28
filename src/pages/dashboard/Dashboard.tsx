@@ -146,6 +146,33 @@ const Dashboard: React.FC = () => {
                 <p>13 Nov, 10:00 AM</p>
               </div>
             </div>
+
+            <div className="container-actions">
+              <div className="icon-container"></div>
+
+              <div className="text-container">
+                <h3>Team Standup</h3>
+                <p>12 Nov, 9:00 AM</p>
+              </div>
+            </div>
+
+            <div className="container-actions">
+              <div className="icon-container"></div>
+
+              <div className="text-container">
+                <h3>Project Review</h3>
+                <p>10 Nov, 2:30 PM</p>
+              </div>
+            </div>
+
+            <div className="container-actions">
+              <div className="icon-container"></div>
+
+              <div className="text-container">
+                <h3>Client Meeting</h3>
+                <p>9 Nov, 11:00 AM</p>
+              </div>
+            </div>
           </div>
         </div>
 
