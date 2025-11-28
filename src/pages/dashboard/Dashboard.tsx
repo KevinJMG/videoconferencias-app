@@ -8,7 +8,7 @@ const Dashboard: React.FC = () => {
   const navigate = useNavigate();
   const { logout } = useAuthStore();
   const { user } = useAuthStore() as any;
-  const { getUpcomingMeetings, removeMeeting } = useMeetingStore();
+  const { getUpcomingMeetings, softDeleteMeeting } = useMeetingStore();
   const { fetchMyMeetings } = useMeetingStore();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
@@ -31,9 +31,14 @@ const Dashboard: React.FC = () => {
     })();
   }, [fetchMyMeetings, user]);
 
-  const handleDeleteMeeting = (id: string, meetingName: string) => {
-    if (window.confirm(`¿Estás seguro de eliminar la reunión "${meetingName}"?`)) {
-      removeMeeting(id);
+  const handleDeleteMeeting = async (id: string, meetingName: string) => {
+    if (!window.confirm(`¿Estás seguro de eliminar la reunión "${meetingName}"?`)) return;
+    try {
+      // call backend to soft-delete; store will remove locally on success
+      await softDeleteMeeting(id);
+    } catch (e) {
+      console.error('Error al eliminar reunión', e);
+      alert('No se pudo eliminar la reunión. Intenta nuevamente.');
     }
   };
 

@@ -30,6 +30,7 @@ type MeetingStore = {
   addMeeting: (meeting: Omit<Meeting, 'id' | 'createdAt'>) => Promise<void>;
   fetchMyMeetings: () => Promise<void>;
   removeMeeting: (id: string) => void;
+  softDeleteMeeting: (id: string) => Promise<void>;
   updateMeeting: (id: string, meeting: Omit<Meeting, 'id' | 'createdAt'>) => void;
   getMeetingById: (id: string) => Meeting | undefined;
   getUpcomingMeetings: () => Meeting[];
@@ -211,6 +212,67 @@ const useMeetingStore = create<MeetingStore>()(
         } catch (err) {
           // Network or unexpected error — do not auto-logout for transient network errors.
           console.error('[useMeetingStore] Error fetching meetings (network/preflight/CORS?)', err);
+        }
+      },
+
+      // Soft-delete a meeting by setting status to 'inactive' on the server
+      softDeleteMeeting: async (id: string) => {
+        const getClientToken = async () => {
+          try {
+            if (auth.currentUser) {
+              const t = await auth.currentUser.getIdToken(true);
+              if (t) return { token: t, source: 'firebase' };
+            }
+          } catch (e) {
+            console.warn('[useMeetingStore] getClientToken: firebase getIdToken error', e);
+          }
+          const stored = localStorage.getItem('idToken');
+          if (stored) return { token: stored, source: 'localStorage' };
+          return { token: null, source: 'none' };
+        };
+
+        const doFetchWithRetry = async (input: RequestInfo, init?: RequestInit) => {
+          const t1 = await getClientToken();
+          const headers1 = Object.assign({ 'Content-Type': 'application/json' }, init?.headers || {}, t1.token ? { Authorization: `Bearer ${t1.token}` } : {});
+          let res;
+          try {
+            res = await fetch(input, { ...(init || {}), headers: headers1 });
+          } catch (err: any) {
+            console.error('[useMeetingStore] softDeleteMeeting fetch exception (first attempt):', err?.name, err?.message || err);
+            throw err;
+          }
+          if (res.status !== 401) return res;
+          try {
+            const t2 = await getClientToken();
+            const headers2 = Object.assign({ 'Content-Type': 'application/json' }, init?.headers || {}, t2.token ? { Authorization: `Bearer ${t2.token}` } : {});
+            try {
+              res = await fetch(input, { ...(init || {}), headers: headers2 });
+            } catch (err: any) {
+              console.error('[useMeetingStore] softDeleteMeeting fetch exception (second attempt):', err?.name, err?.message || err);
+              throw err;
+            }
+            return res;
+          } catch (e) {
+            return res;
+          }
+        };
+
+        try {
+          const url = `${API_BASE_CLEAN}/api/meetings/${encodeURIComponent(id)}/status`;
+          const res = await doFetchWithRetry(url, { method: 'PATCH', body: JSON.stringify({ status: 'inactive' }) });
+          if (!res.ok) {
+            const bodyText = await res.text().catch(() => '');
+            if (res.status === 401) {
+              console.warn('[useMeetingStore] softDeleteMeeting: unauthorized after retry — auto-logout disabled for debugging.', bodyText);
+              return;
+            }
+            console.error('[useMeetingStore] softDeleteMeeting failed', res.status, bodyText);
+            return;
+          }
+          // success -> remove locally
+          set((state) => ({ meetings: state.meetings.filter((m) => m.id !== id) }));
+        } catch (err) {
+          console.error('[useMeetingStore] softDeleteMeeting error', err);
         }
       },
 

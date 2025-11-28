@@ -30,12 +30,23 @@ const ChatPanel: React.FC<Props> = ({ meetingId }) => {
     // We still obtain an ID token when available; getIdToken will return null for guests.
 
     const run = async () => {
-      // local helper to obtain current ID token when needed
+      // local helper to obtain current ID token when needed.
+      // Prefer Firebase SDK currentUser, but fall back to localStorage.idToken for legacy/fast paths.
       const getIdToken = async () => {
         try {
           const current = auth.currentUser;
-          if (!current) return null;
-          return await current.getIdToken();
+          if (current) {
+            try {
+              return await current.getIdToken();
+            } catch (_e) {
+              // fall through to fallback
+            }
+          }
+          if (typeof window !== 'undefined' && window.localStorage) {
+            const fallback = window.localStorage.getItem('idToken');
+            return fallback || null;
+          }
+          return null;
         } catch (e) {
           return null;
         }
@@ -50,6 +61,17 @@ const ChatPanel: React.FC<Props> = ({ meetingId }) => {
         await new Promise<void>((resolve) => {
           socket.once('connect', () => resolve());
         });
+      }
+
+      // Announce identity to chat server so it can map socketId -> userId
+      try {
+        if (user?.uid) {
+          const s = getSocket();
+          s?.emit('newUser', user.uid);
+          console.debug('ChatPanel emitted newUser', user.uid);
+        }
+      } catch (e) {
+        // ignore
       }
 
       // join room if meetingId present
@@ -78,6 +100,16 @@ const ChatPanel: React.FC<Props> = ({ meetingId }) => {
           console.debug('ChatPanel socket connected event, socketId=', s?.id);
         } catch (e) {}
         if (meetingId) joinRoom(meetingId);
+        // On reconnect, re-announce identity so server updates mapping
+        try {
+          if (user?.uid) {
+            const s = getSocket();
+            s?.emit('newUser', user.uid);
+            console.debug('ChatPanel emitted newUser on reconnect', user.uid);
+          }
+        } catch (e) {
+          // ignore
+        }
       };
       socket.on('connect', onConnect);
 

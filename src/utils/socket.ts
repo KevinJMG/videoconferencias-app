@@ -10,7 +10,15 @@ let socket: Socket | null = null;
  */
 export async function initSocket(getToken: () => Promise<string | null>, url?: string) {
   if (socket) return socket;
-  const token = await getToken();
+  // Try getToken (Firebase SDK). If that yields nothing, fall back to localStorage.idToken
+  let token = null as string | null;
+  try {
+    token = await getToken();
+  } catch (_) {
+    token = null;
+  }
+  const fallbackToken = (typeof window !== 'undefined' && window.localStorage) ? window.localStorage.getItem('idToken') : null;
+  if (!token && fallbackToken) token = fallbackToken;
   const serverUrl = url || (import.meta.env.VITE_CHAT_SERVICE_URL as string) || '';
   socket = io(serverUrl, {
     auth: {
@@ -21,6 +29,20 @@ export async function initSocket(getToken: () => Promise<string | null>, url?: s
     // limit reconnection attempts to avoid hot loops when server rejects due to config
     reconnectionAttempts: 3,
     reconnectionDelay: 2000,
+  });
+
+  // Refresh the handshake token before reconnect attempts so reconnect uses fresh token.
+  socket.on('reconnect_attempt', async () => {
+    try {
+      const newToken = (await getToken()) || ((typeof window !== 'undefined' && window.localStorage) ? window.localStorage.getItem('idToken') : null);
+      if (socket && socket.io && socket.io.opts) {
+        // ManagerOptions typing may not include 'auth' depending on socket.io-client version;
+        // cast to any to safely set the auth token for reconnect attempts.
+        (socket.io.opts as any).auth = { token: newToken || undefined };
+      }
+    } catch (_e) {
+      // ignore
+    }
   });
 
   socket.on('connect_error', (err: any) => {
