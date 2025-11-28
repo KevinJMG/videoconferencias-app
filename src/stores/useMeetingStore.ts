@@ -1,5 +1,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { auth } from '../lib/firebase.config';
+
+const API_BASE = (import.meta.env.VITE_API_BASE as string) || 'http://localhost:3000';
 
 export interface Meeting {
   id: string;
@@ -22,7 +25,8 @@ export interface Meeting {
 
 type MeetingStore = {
   meetings: Meeting[];
-  addMeeting: (meeting: Omit<Meeting, 'id' | 'createdAt'>) => void;
+  addMeeting: (meeting: Omit<Meeting, 'id' | 'createdAt'>) => Promise<void>;
+  fetchMyMeetings: () => Promise<void>;
   removeMeeting: (id: string) => void;
   updateMeeting: (id: string, meeting: Omit<Meeting, 'id' | 'createdAt'>) => void;
   getMeetingById: (id: string) => Meeting | undefined;
@@ -34,16 +38,99 @@ const useMeetingStore = create<MeetingStore>()(
     (set, get) => ({
       meetings: [],
 
-      addMeeting: (meetingData) => {
-        const newMeeting: Meeting = {
-          ...meetingData,
-          id: `meeting-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-          createdAt: new Date().toISOString(),
-        };
+          // Persist meeting to backend and then store locally. Returns the created meeting from server.
+          addMeeting: async (meetingData) => {
+            try {
+              const token = auth.currentUser ? await auth.currentUser.getIdToken() : null;
+              const res = await fetch(`${API_BASE}/api/meetings`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                },
+                body: JSON.stringify({ metadata: meetingData }),
+              });
+              if (!res.ok) {
+                console.error('Failed to create meeting on server', await res.text());
+                // Fallback: still create a local meeting entry
+                const newMeeting: Meeting = {
+                  ...meetingData,
+                  id: `meeting-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+                  createdAt: new Date().toISOString(),
+                };
+                set((state) => ({ meetings: [...state.meetings, newMeeting] }));
+                return;
+              }
 
-        set((state) => ({
-          meetings: [...state.meetings, newMeeting],
-        }));
+              const payload = await res.json();
+              const created = payload?.data ?? null;
+              if (created) {
+                // normalize server meeting to frontend Meeting shape (metadata may contain UI fields)
+                const meta = created.metadata || {};
+                const normalized: Meeting = {
+                  id: created.id,
+                  meetingName: meta.meetingName || meta.name || '',
+                  description: meta.description || '',
+                  date: meta.date || '',
+                  startTime: meta.startTime || '',
+                  endTime: meta.endTime || '',
+                  duration: meta.duration || '',
+                  participants: meta.participants || [],
+                  settings: meta.settings || { waitingRoom: true, screenSharing: true, privateRoom: false, chat: true, requirePassword: false },
+                  createdAt: created.createdAt || new Date().toISOString(),
+                };
+                set((state) => ({ meetings: [...state.meetings, normalized] }));
+              }
+            } catch (err) {
+              console.error('Error creating meeting', err);
+              // Fallback local create
+              const newMeeting: Meeting = {
+                ...meetingData,
+                id: `meeting-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+                createdAt: new Date().toISOString(),
+              };
+              set((state) => ({ meetings: [...state.meetings, newMeeting] }));
+            }
+          },
+
+      // Fetch meetings owned by the authenticated user from backend
+      fetchMyMeetings: async () => {
+        try {
+          const token = auth.currentUser ? await auth.currentUser.getIdToken() : null;
+          const res = await fetch(`${API_BASE}/api/meetings`, {
+            method: 'GET',
+            headers: {
+              ...(token ? { Authorization: `Bearer ${token}` } : {}),
+            },
+          });
+          if (!res.ok) {
+            console.error('Failed to fetch meetings for user', await res.text());
+            return;
+          }
+          const payload = await res.json();
+          const data = payload?.data ?? [];
+          if (Array.isArray(data)) {
+            // Normalize meetings from server
+            const normalized = data.map((m: any) => {
+              const meta = m.metadata || {};
+              return {
+                id: m.id,
+                meetingName: meta.meetingName || meta.name || '',
+                description: meta.description || '',
+                date: meta.date || '',
+                startTime: meta.startTime || '',
+                endTime: meta.endTime || '',
+                duration: meta.duration || '',
+                participants: meta.participants || [],
+                settings: meta.settings || { waitingRoom: true, screenSharing: true, privateRoom: false, chat: true, requirePassword: false },
+                createdAt: m.createdAt || new Date().toISOString(),
+              } as Meeting;
+            });
+            set(() => ({ meetings: normalized }));
+          }
+        } catch (err) {
+          console.error('Error fetching meetings', err);
+        }
       },
 
       removeMeeting: (id) => {
