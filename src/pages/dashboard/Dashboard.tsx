@@ -131,11 +131,14 @@ const Dashboard: React.FC = () => {
 
             <div className="container-actions">
               <div className="icon-container">
-                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="20" y="30" width="60" height="40" rx="8" fill="#0099FF"/>
-                  <polygon points="55,45 55,55 70,50" fill="white"/>
-                  <circle cx="35" cy="70" r="8" fill="#0099FF"/>
-                  <circle cx="65" cy="70" r="8" fill="#0099FF"/>
+                <svg width="32" height="32" viewBox="0 0 466 466" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  {/* Phone handset */}
+                  <path d="M117.2 349.4C130.5 362.7 194.9 427.1 314.9 307.1C435 187.1 370.5 122.6 357.2 109.3C335 87.1 295.1 95.2 280 110.3L260 130.3C250 140.3 245 155.4 250 165.4C260 185.4 280 210.4 310 240.4C340 270.4 365 290.4 385 300.4C395 305.4 410 300.4 420 290.4L440 270.4C455.1 255.3 463.2 215.4 441 193.2C427.7 179.9 363.2 115.4 243.2 235.4C123.2 355.4 57.7 289.9 44.4 276.6" fill="#0099FF"/>
+
+                  {/* Video camera box with play button */}
+                  <rect x="246" y="130" width="175" height="140" rx="20" fill="#0055FF"/>
+                  <polygon points="315,165 315,215 375,190" fill="white"/>
+                  <circle cx="410" cy="175" r="30" fill="#0099FF" opacity="0.3"/>
                 </svg>
               </div>
 
@@ -147,11 +150,11 @@ const Dashboard: React.FC = () => {
 
             <div className="container-actions">
               <div className="icon-container">
-                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="20" y="30" width="60" height="40" rx="8" fill="#0099FF"/>
-                  <polygon points="55,45 55,55 70,50" fill="white"/>
-                  <circle cx="35" cy="70" r="8" fill="#0099FF"/>
-                  <circle cx="65" cy="70" r="8" fill="#0099FF"/>
+                <svg width="32" height="32" viewBox="0 0 466 466" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M117.2 349.4C130.5 362.7 194.9 427.1 314.9 307.1C435 187.1 370.5 122.6 357.2 109.3C335 87.1 295.1 95.2 280 110.3L260 130.3C250 140.3 245 155.4 250 165.4C260 185.4 280 210.4 310 240.4C340 270.4 365 290.4 385 300.4C395 305.4 410 300.4 420 290.4L440 270.4C455.1 255.3 463.2 215.4 441 193.2C427.7 179.9 363.2 115.4 243.2 235.4C123.2 355.4 57.7 289.9 44.4 276.6" fill="#0099FF"/>
+                  <rect x="246" y="130" width="175" height="140" rx="20" fill="#0055FF"/>
+                  <polygon points="315,165 315,215 375,190" fill="white"/>
+                  <circle cx="410" cy="175" r="30" fill="#0099FF" opacity="0.3"/>
                 </svg>
               </div>
 
@@ -163,11 +166,11 @@ const Dashboard: React.FC = () => {
 
             <div className="container-actions">
               <div className="icon-container">
-                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="20" y="30" width="60" height="40" rx="8" fill="#0099FF"/>
-                  <polygon points="55,45 55,55 70,50" fill="white"/>
-                  <circle cx="35" cy="70" r="8" fill="#0099FF"/>
-                  <circle cx="65" cy="70" r="8" fill="#0099FF"/>
+                <svg width="32" height="32" viewBox="0 0 466 466" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M117.2 349.4C130.5 362.7 194.9 427.1 314.9 307.1C435 187.1 370.5 122.6 357.2 109.3C335 87.1 295.1 95.2 280 110.3L260 130.3C250 140.3 245 155.4 250 165.4C260 185.4 280 210.4 310 240.4C340 270.4 365 290.4 385 300.4C395 305.4 410 300.4 420 290.4L440 270.4C455.1 255.3 463.2 215.4 441 193.2C427.7 179.9 363.2 115.4 243.2 235.4C123.2 355.4 57.7 289.9 44.4 276.6" fill="#0099FF"/>
+                  <rect x="246" y="130" width="175" height="140" rx="20" fill="#0055FF"/>
+                  <polygon points="315,165 315,215 375,190" fill="white"/>
+                  <circle cx="410" cy="175" r="30" fill="#0099FF" opacity="0.3"/>
                 </svg>
               </div>
 
@@ -179,11 +182,11 @@ const Dashboard: React.FC = () => {
 
             <div className="container-actions">
               <div className="icon-container">
-                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="20" y="30" width="60" height="40" rx="8" fill="#0099FF"/>
-                  <polygon points="55,45 55,55 70,50" fill="white"/>
-                  <circle cx="35" cy="70" r="8" fill="#0099FF"/>
-                  <circle cx="65" cy="70" r="8" fill="#0099FF"/>
+                <svg width="32" height="32" viewBox="0 0 466 466" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M117.2 349.4C130.5 362.7 194.9 427.1 314.9 307.1C435 187.1 370.5 122.6 357.2 109.3C335 87.1 295.1 95.2 280 110.3L260 130.3C250 140.3 245 155.4 250 165.4C260 185.4 280 210.4 310 240.4C340 270.4 365 290.4 385 300.4C395 305.4 410 300.4 420 290.4L440 270.4C455.1 255.3 463.2 215.4 441 193.2C427.7 179.9 363.2 115.4 243.2 235.4C123.2 355.4 57.7 289.9 44.4 276.6" fill="#0099FF"/>
+                  <rect x="246" y="130" width="175" height="140" rx="20" fill="#0055FF"/>
+                  <polygon points="315,165 315,215 375,190" fill="white"/>
+                  <circle cx="410" cy="175" r="30" fill="#0099FF" opacity="0.3"/>
                 </svg>
               </div>
 
@@ -195,11 +198,11 @@ const Dashboard: React.FC = () => {
 
             <div className="container-actions">
               <div className="icon-container">
-                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="20" y="30" width="60" height="40" rx="8" fill="#0099FF"/>
-                  <polygon points="55,45 55,55 70,50" fill="white"/>
-                  <circle cx="35" cy="70" r="8" fill="#0099FF"/>
-                  <circle cx="65" cy="70" r="8" fill="#0099FF"/>
+                <svg width="32" height="32" viewBox="0 0 466 466" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M117.2 349.4C130.5 362.7 194.9 427.1 314.9 307.1C435 187.1 370.5 122.6 357.2 109.3C335 87.1 295.1 95.2 280 110.3L260 130.3C250 140.3 245 155.4 250 165.4C260 185.4 280 210.4 310 240.4C340 270.4 365 290.4 385 300.4C395 305.4 410 300.4 420 290.4L440 270.4C455.1 255.3 463.2 215.4 441 193.2C427.7 179.9 363.2 115.4 243.2 235.4C123.2 355.4 57.7 289.9 44.4 276.6" fill="#0099FF"/>
+                  <rect x="246" y="130" width="175" height="140" rx="20" fill="#0055FF"/>
+                  <polygon points="315,165 315,215 375,190" fill="white"/>
+                  <circle cx="410" cy="175" r="30" fill="#0099FF" opacity="0.3"/>
                 </svg>
               </div>
 
@@ -211,11 +214,11 @@ const Dashboard: React.FC = () => {
 
             <div className="container-actions">
               <div className="icon-container">
-                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="20" y="30" width="60" height="40" rx="8" fill="#0099FF"/>
-                  <polygon points="55,45 55,55 70,50" fill="white"/>
-                  <circle cx="35" cy="70" r="8" fill="#0099FF"/>
-                  <circle cx="65" cy="70" r="8" fill="#0099FF"/>
+                <svg width="32" height="32" viewBox="0 0 466 466" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M117.2 349.4C130.5 362.7 194.9 427.1 314.9 307.1C435 187.1 370.5 122.6 357.2 109.3C335 87.1 295.1 95.2 280 110.3L260 130.3C250 140.3 245 155.4 250 165.4C260 185.4 280 210.4 310 240.4C340 270.4 365 290.4 385 300.4C395 305.4 410 300.4 420 290.4L440 270.4C455.1 255.3 463.2 215.4 441 193.2C427.7 179.9 363.2 115.4 243.2 235.4C123.2 355.4 57.7 289.9 44.4 276.6" fill="#0099FF"/>
+                  <rect x="246" y="130" width="175" height="140" rx="20" fill="#0055FF"/>
+                  <polygon points="315,165 315,215 375,190" fill="white"/>
+                  <circle cx="410" cy="175" r="30" fill="#0099FF" opacity="0.3"/>
                 </svg>
               </div>
 
@@ -227,11 +230,11 @@ const Dashboard: React.FC = () => {
 
             <div className="container-actions">
               <div className="icon-container">
-                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="20" y="30" width="60" height="40" rx="8" fill="#0099FF"/>
-                  <polygon points="55,45 55,55 70,50" fill="white"/>
-                  <circle cx="35" cy="70" r="8" fill="#0099FF"/>
-                  <circle cx="65" cy="70" r="8" fill="#0099FF"/>
+                <svg width="32" height="32" viewBox="0 0 466 466" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M117.2 349.4C130.5 362.7 194.9 427.1 314.9 307.1C435 187.1 370.5 122.6 357.2 109.3C335 87.1 295.1 95.2 280 110.3L260 130.3C250 140.3 245 155.4 250 165.4C260 185.4 280 210.4 310 240.4C340 270.4 365 290.4 385 300.4C395 305.4 410 300.4 420 290.4L440 270.4C455.1 255.3 463.2 215.4 441 193.2C427.7 179.9 363.2 115.4 243.2 235.4C123.2 355.4 57.7 289.9 44.4 276.6" fill="#0099FF"/>
+                  <rect x="246" y="130" width="175" height="140" rx="20" fill="#0055FF"/>
+                  <polygon points="315,165 315,215 375,190" fill="white"/>
+                  <circle cx="410" cy="175" r="30" fill="#0099FF" opacity="0.3"/>
                 </svg>
               </div>
 
@@ -243,11 +246,11 @@ const Dashboard: React.FC = () => {
 
             <div className="container-actions">
               <div className="icon-container">
-                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="20" y="30" width="60" height="40" rx="8" fill="#0099FF"/>
-                  <polygon points="55,45 55,55 70,50" fill="white"/>
-                  <circle cx="35" cy="70" r="8" fill="#0099FF"/>
-                  <circle cx="65" cy="70" r="8" fill="#0099FF"/>
+                <svg width="32" height="32" viewBox="0 0 466 466" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M117.2 349.4C130.5 362.7 194.9 427.1 314.9 307.1C435 187.1 370.5 122.6 357.2 109.3C335 87.1 295.1 95.2 280 110.3L260 130.3C250 140.3 245 155.4 250 165.4C260 185.4 280 210.4 310 240.4C340 270.4 365 290.4 385 300.4C395 305.4 410 300.4 420 290.4L440 270.4C455.1 255.3 463.2 215.4 441 193.2C427.7 179.9 363.2 115.4 243.2 235.4C123.2 355.4 57.7 289.9 44.4 276.6" fill="#0099FF"/>
+                  <rect x="246" y="130" width="175" height="140" rx="20" fill="#0055FF"/>
+                  <polygon points="315,165 315,215 375,190" fill="white"/>
+                  <circle cx="410" cy="175" r="30" fill="#0099FF" opacity="0.3"/>
                 </svg>
               </div>
 
@@ -259,11 +262,11 @@ const Dashboard: React.FC = () => {
 
             <div className="container-actions">
               <div className="icon-container">
-                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="20" y="30" width="60" height="40" rx="8" fill="#0099FF"/>
-                  <polygon points="55,45 55,55 70,50" fill="white"/>
-                  <circle cx="35" cy="70" r="8" fill="#0099FF"/>
-                  <circle cx="65" cy="70" r="8" fill="#0099FF"/>
+                <svg width="32" height="32" viewBox="0 0 466 466" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M117.2 349.4C130.5 362.7 194.9 427.1 314.9 307.1C435 187.1 370.5 122.6 357.2 109.3C335 87.1 295.1 95.2 280 110.3L260 130.3C250 140.3 245 155.4 250 165.4C260 185.4 280 210.4 310 240.4C340 270.4 365 290.4 385 300.4C395 305.4 410 300.4 420 290.4L440 270.4C455.1 255.3 463.2 215.4 441 193.2C427.7 179.9 363.2 115.4 243.2 235.4C123.2 355.4 57.7 289.9 44.4 276.6" fill="#0099FF"/>
+                  <rect x="246" y="130" width="175" height="140" rx="20" fill="#0055FF"/>
+                  <polygon points="315,165 315,215 375,190" fill="white"/>
+                  <circle cx="410" cy="175" r="30" fill="#0099FF" opacity="0.3"/>
                 </svg>
               </div>
 
