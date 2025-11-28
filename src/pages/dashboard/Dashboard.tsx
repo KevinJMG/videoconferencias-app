@@ -103,8 +103,8 @@ const Dashboard: React.FC = () => {
 
       {/* MAIN DASHBOARD CONTENT */}
       <main className="dashboard-content">
-        {/* TOP ROW: Hero section and Recent meetings side by side */}
-        <div className="top-row">
+        {/* LEFT COLUMN: Hero section and Recent meetings */}
+        <div className="left-column">
           {/* HERO SECTION: Welcome card with quick action buttons */}
           <div className="principal-containers">
             <div>
@@ -266,7 +266,7 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* BOTTOM ROW: Upcoming meetings */}
+        {/* RIGHT COLUMN: Upcoming meetings - Full height */}
         <div className="principal-containers meetings-block">
           <h2 className="container-title">Próximas reuniones</h2>
           {upcomingMeetings.length === 0 ? (
