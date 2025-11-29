@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuthStore from "../../stores/useAuthStore"; 
 import "../login/Login.css";
+import { getAuth, signInWithPopup, GithubAuthProvider } from "firebase/auth";
 
 /**
  * Register Component
@@ -12,7 +13,8 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
   const { loginWithGoogle } = useAuthStore();
   const { setUser } = useAuthStore() as any;
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+  const rawApi = (import.meta.env.VITE_API_URL as string) || (import.meta.env.VITE_API_BASE as string) || '';
+  const API_URL = rawApi.replace(/\/$/, '');
 
 
   // Local state for form fields
@@ -98,7 +100,7 @@ const Register: React.FC = () => {
 
       if (!idToken) {
         try {
-          const loginResp = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
+          const loginResp = await fetch(`${API_URL}/api/auth/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: form.email, password: form.password }),
@@ -123,7 +125,7 @@ const Register: React.FC = () => {
        */
       if (idToken) {
         try {
-          const meResp = await fetch(`${import.meta.env.VITE_API_URL}/api/users/me`, {
+          const meResp = await fetch(`${API_URL}/api/users/me`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -161,6 +163,30 @@ const Register: React.FC = () => {
       console.error("Error al registrarte con Google:", err);
       setError("No se pudo registrar con Google");
     }
+  };
+  /**
+   * Register/Login using Github
+   */
+  const handleLoginGithub = async () => {
+          try {
+              const auth = getAuth();
+              const provider = new GithubAuthProvider();
+                  provider.setCustomParameters({
+                  allow_signup: "false"
+              });
+  
+              const result = await signInWithPopup(auth, provider);
+              const idToken = await result.user.getIdToken();
+  
+              localStorage.setItem("idToken", idToken);
+  
+              console.log("🐱 GitHub login OK:", result.user);
+              navigate("/dashboard");
+  
+          } catch (err) {
+              console.error("GitHub error:", err);
+              setError("Error al iniciar sesión con GitHub");
+          }
   };
 
   return (
@@ -258,7 +284,13 @@ const Register: React.FC = () => {
                 <img src="/assets/images/google.png" alt="Google" width={24} height={24} />
                 <span>Google</span>
               </button>
+              {/* GITHUB */}
+              <button onClick={handleLoginGithub} type="button" className="login-google-btn">
+                  <img src="/assets/images/github-mark.png" alt="GitHub" width={24} height={24} />
+                  <span>GitHub</span>
+              </button>
             </div>
+
 
             {/* Error message */}
             {error && <p className="login-error">{error}</p>}

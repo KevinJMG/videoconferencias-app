@@ -117,7 +117,7 @@ const ScheduleMeeting: React.FC = () => {
     return options;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setError("");
 
     if (!meetingName.trim()) {
@@ -193,7 +193,7 @@ const ScheduleMeeting: React.FC = () => {
       return;
     }
 
-    addMeeting({
+    await addMeeting({
       meetingName: meetingName,
       description: "",
       date: date,
@@ -203,7 +203,6 @@ const ScheduleMeeting: React.FC = () => {
       participants: participants,
       settings: settings,
     });
-
     navigate("/dashboard");
   };
 

@@ -11,6 +11,10 @@ const Profile: React.FC = () => {
   const { user, logout, setUser } = useAuthStore() as any;
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
+  // Prefer VITE_API_URL or VITE_API_BASE; fall back to relative path
+  const _rawApi = (import.meta.env.VITE_API_URL as string) || (import.meta.env.VITE_API_BASE as string) || '';
+  const API_BASE = _rawApi.replace(/\/$/, '');
+
   const [editMode, setEditMode] = useState(false);
 
   // Editable fields
@@ -107,6 +111,9 @@ const Profile: React.FC = () => {
 
     try {
       // Get fresh Firebase ID token (fallback to localStorage)
+      const rawApi = (import.meta.env.VITE_API_URL as string) || (import.meta.env.VITE_API_BASE as string) || '';
+      const API_BASE = rawApi.replace(/\/$/, '');
+
       const storedToken = localStorage.getItem("idToken");
       let token: string | null | undefined = storedToken;
 
@@ -126,7 +133,7 @@ const Profile: React.FC = () => {
 
       console.log('Sending PUT with token (first 20 chars):', token?.slice?.(0, 20));
 
-      const res = await fetch('http://localhost:3000/api/users/me', {
+      const res = await fetch(`${API_BASE}/api/users/me`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -221,7 +228,7 @@ const Profile: React.FC = () => {
         return;
       }
 
-      const res = await fetch('http://localhost:3000/api/auth/change-password', {
+      const res = await fetch(`${API_BASE}/api/auth/change-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

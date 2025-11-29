@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./VideoConference.css";
 import { useNavigate, useParams } from "react-router-dom";
 import useMeetingStore from "../../stores/useMeetingStore";
+import ChatPanel from "../../components/chat/ChatPanel";
 
 /**
  * VideoConference Component
@@ -47,33 +48,20 @@ const VideoConference: React.FC = () => {
   const [isVideoOff, setIsVideoOff] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isParticipantsOpen, setIsParticipantsOpen] = useState(false);
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([
-    { id: 1, user: "Sistema", text: "Bienvenido a la videoconferencia", time: "10:00" },
-  ]);
   const [participants] = useState([
     { id: 1, name: "Usuario Principal" },
     { id: 2, name: "Usuario 1" },
     { id: 3, name: "Usuario 2" },
   ]);
 
-  /**
-   * Sends a chat message in the conference
-   * Adds message to chat history with timestamp
-   * Clears input field after sending
-   */
-  const handleSendMessage = () => {
-    if (message.trim()) {
-      const newMessage = {
-        id: messages.length + 1,
-        user: "You",
-        text: message,
-        time: new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }),
-      };
-      setMessages([...messages, newMessage]);
-      setMessage("");
-    }
-  };
+  useEffect(() => {
+    // If a meetingId is present (user joined by code), open chat panel by default
+    if (meetingId) setIsChatOpen(true);
+  }, [meetingId]);
+
+  // Chat messages are handled by the `ChatPanel` component and the global store.
+  // Local optimistic message state was removed to avoid duplication and unused-symbol
+  // TypeScript errors. Use the chat store or `ChatPanel`'s API to send messages.
 
   /**
    * Ends the current call and returns to dashboard
@@ -88,7 +76,34 @@ const VideoConference: React.FC = () => {
       <header className="conference-header">
         <div className="header-info">
           <h1 className="logo-text">JoinGo</h1>
-          <span className="meeting-id">{meeting?.meetingName || "Reunión"}</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <div>
+              <div className="meeting-id">{meeting?.meetingName || "Reunión"}</div>
+              <div style={{ color: '#bbb', fontSize: 12, marginTop: 6 }}>
+                ID: <strong style={{ color: '#fff' }}>{meetingId || '—'}</strong>
+              </div>
+            </div>
+            <button
+              className="btn-copy-meeting"
+              onClick={async () => {
+                if (!meetingId) return;
+                try {
+                  await navigator.clipboard.writeText(meetingId);
+                } catch (e) {
+                  // fallback
+                  const el = document.createElement('textarea');
+                  el.value = meetingId;
+                  document.body.appendChild(el);
+                  el.select();
+                  document.execCommand('copy');
+                  document.body.removeChild(el);
+                }
+              }}
+              title="Copiar ID de la reunión"
+            >
+              Copiar ID
+            </button>
+          </div>
         </div>
       </header>
 
@@ -131,42 +146,8 @@ const VideoConference: React.FC = () => {
           </div>
         </div>
 
-        {/* Chat Panel */}
-        {isChatOpen && (
-          <div className="chat-panel">
-            <div className="chat-header">
-              <h3>Chat</h3>
-              <button className="btn-close-chat" onClick={() => setIsChatOpen(false)}>×</button>
-            </div>
-            <div className="chat-messages">
-              {messages.map((msg) => (
-                <div key={msg.id} className="chat-message">
-                  <div className="message-header">
-                    <span className="message-user">{msg.user}</span>
-                    <span className="message-time">{msg.time}</span>
-                  </div>
-                  <p className="message-text">{msg.text}</p>
-                </div>
-              ))}
-            </div>
-            <div className="chat-input-container">
-              <input
-                type="text"
-                className="chat-input"
-                placeholder="Escribe un mensaje..."
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
-              />
-              <button className="btn-send" onClick={handleSendMessage}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <line x1="22" y1="2" x2="11" y2="13"></line>
-                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                </svg>
-              </button>
-            </div>
-          </div>
-        )}
+        {/* Chat Panel (integrated) */}
+        {isChatOpen && <ChatPanel meetingId={meetingId} />}
 
         {/* Participants Panel */}
         {isParticipantsOpen && (
