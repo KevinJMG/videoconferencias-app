@@ -25,8 +25,25 @@ const useAuthStore = create<AuthStore>((set) => ({
     setUser: (user) => set({ user }),
 
     initAuthObserver: () => {
-    const unsubscribe = onAuthStateChanged(auth, async (fbUser) => {
+    // Subscribe to both auth state and id token changes so we always persist
+    // a fresh idToken and keep Zustand user in sync.
+    const unsubAuth = onAuthStateChanged(auth, async (fbUser) => {
         if (fbUser) {
+
+            // Persist a fresh idToken for backend requests (legacy fallback)
+            try {
+                const token = await fbUser.getIdToken(true);
+                if (token) {
+                    try {
+                        localStorage.setItem('idToken', token);
+                        try { window.dispatchEvent(new CustomEvent('idTokenUpdated')); } catch (e) { /** ignore */ }
+                    } catch (e) {
+                        // ignore storage errors
+                    }
+                }
+            } catch (e) {
+                console.warn('useAuthStore: failed to refresh idToken on auth state change', e);
+            }
 
             // 1️⃣ Crear/actualizar usuario en Firestore
             await UserDAO.createUser({
@@ -44,10 +61,32 @@ const useAuthStore = create<AuthStore>((set) => ({
 
         } else {
             set({ user: null });
+            try { localStorage.removeItem('idToken'); } catch (e) { /** ignore */ }
+            try { window.dispatchEvent(new CustomEvent('idTokenUpdated')); } catch (e) { /** ignore */ }
         }
     });
 
-    return unsubscribe;
+    // Keep idToken up-to-date when Firebase refreshes it (token rotation)
+    const unsubToken = (auth as any).onIdTokenChanged
+        ? (auth as any).onIdTokenChanged(async (fbUser: any) => {
+            if (fbUser) {
+                try {
+                    const token = await fbUser.getIdToken(true);
+                    if (token) {
+                        try { localStorage.setItem('idToken', token); } catch (e) { /** ignore */ }
+                        try { window.dispatchEvent(new CustomEvent('idTokenUpdated')); } catch (e) { /** ignore */ }
+                    }
+                } catch (e) {
+                    console.warn('useAuthStore: onIdTokenChanged failed to refresh token', e);
+                }
+            }
+        })
+        : () => {};
+
+    return () => {
+        try { unsubAuth(); } catch (e) { /* ignore */ }
+        try { unsubToken(); } catch (e) { /* ignore */ }
+    };
 },
 
 

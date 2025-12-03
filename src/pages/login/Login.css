@@ -48,47 +48,54 @@
 /* Contenedor de los botones juntos */
 .login-buttons-container {
   display: flex;
-  gap: 15px;        /* espacio entre botones */
-  justify-content: flex-start;  /* alinea al inicio del contenedor */
+  flex-direction: column;   /* Los pone uno debajo del otro */
+  gap: 12px;                /* Espacio entre botones */
+  width: 100%;
   align-items: center;
 }
 
 /* Botón login email */
 .btn-email-login {
+   width: 100%;
+  padding: 14px;
+  height: 50px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   background: linear-gradient(180deg, #155DFC, #2B7FFF, #00D3F2);
   color: white;
-  border-radius: 6px;
-  cursor: pointer;
 
-  padding: 12px 30px;   /* mismo padding que Google */
-  height: 45px;         /* mismo alto que Google */
-  
-  flex: 1;
-  max-width: 200px;
+  border-radius: 12px;      
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+
+  box-shadow: 0 1px 2px rgba(0,0,0,0.12);   
+  transition: transform 0.1s ease, opacity 0.1s ease;
 }
 
 /* Botón Google */
 .login-google-btn {
+  width: 100%;
+  padding: 14px;
+  height: 50px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-
-  background: white;    /* mantiene el color blanco */
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-
-  padding: 12px 30px;   /* mismo padding */
-  height: 45px;         /* mismo alto */
-  
   gap: 12px;
-  cursor: pointer;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
 
-  flex: 1;
-  max-width: 200px;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+
+  font-weight: 500;
+  cursor: pointer;
+
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  transition: all 0.2s ease-in-out;
 }
 
 /* Texto registro */
